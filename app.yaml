@@ -1,0 +1,18 @@
+runtime: python27
+threadsafe: true
+handlers:
+  - url: /favicon.png
+    static_files: build/favicon.png
+    upload: build/favicon.png
+    secure: always
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+    secure: always
+  - url: /static
+    static_dir: build/static
+    secure: always
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+    secure: always

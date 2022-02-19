@@ -1,0 +1,3 @@
+dispatch:
+  - url: "dashboard.notbot.in/*"
+    service: default
