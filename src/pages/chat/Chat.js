@@ -17,7 +17,7 @@ import {
 import  Autocomplete from  "@material-ui/lab/Autocomplete"
 import { useTheme } from "@material-ui/styles";
 import SendIcon from '@material-ui/icons/Send';
-import { CloudUpload, Description, Face, InsertPhoto, Send } from "@material-ui/icons";
+import {CloudUpload, Description, Face, InsertPhoto, Send, AttachFile, Image} from "@material-ui/icons";
 // styles
 import useStyles from "./styles";
 import { capitalize, removeUnderscoreAndCapitalize, timeConverter } from "../../utils/date-parse";
@@ -30,7 +30,7 @@ import Table from "./components/Table/Table";
 import Modal from "../../components/Modal";
 import { useDispatch , useStore , useSelector} from "react-redux";
 import { setTemplateMessages , fetchTemplateMessages , sendTemplateMessage , sendBulkUploadTemplateMessage } from "../../store/reducer/broadcast";
-import { getBackgroundChatHistory, sendMediaChat, setTemplateChatHistory } from "../../store/reducer/chat";
+import {getBackgroundChatHistory, sendDocChat, sendMediaChat, setTemplateChatHistory} from "../../store/reducer/chat";
 import PhoneInput from "react-phone-number-input"
 import 'react-phone-number-input/style.css'
 import {isValidPhoneNumber} from "react-phone-number-input"
@@ -39,6 +39,7 @@ import { AccountCircle } from "@material-ui/icons";
 import { getContacts, getSelectedChatHistory } from "../../store/reducer/chat";
 import classnames from "classnames";
 import Av1 from "../../images/av1.png"
+import DocIcon from "../../images/docs.png"
 
 
 export default function Chat(props) {
@@ -62,7 +63,6 @@ export default function Chat(props) {
   const [chatWindowScroll , setChatWindowScroll] = useState(false)
 
   useEffect(()=>{
-    console.log(selectedChat)
     setChatWindowScroll(true)
   },[selectedChat])
   useEffect(()=>{
@@ -70,7 +70,6 @@ export default function Chat(props) {
     if(divHeight != undefined){
       if( chatListRef.current.scrollTop == 0 && chatWindowScroll){
         chatListRef.current.scrollTop = divHeight;
-        console.log("inner",chatWindowScroll)
         setChatWindowScroll(false)
       }
     }
@@ -136,7 +135,7 @@ export default function Chat(props) {
     let url  =  URL.createObjectURL(file)
     let obj = new FormData()
     obj.append("file" , file)
-    obj.append("phone" , selectedChat)
+    obj.append("phone" , selectedChat.toString())
     obj.append("caption" , "")
     let newMsg = {
       fromMe: true,
@@ -153,6 +152,29 @@ export default function Chat(props) {
     let newChatHistory = [...chatHistory , newMsg]
     dispatch(setTemplateChatHistory(newChatHistory))
     dispatch(sendMediaChat(obj))
+  }
+
+  const onDocLoad = ({target}) => {
+    let file = target.files[0]
+    let url  =  URL.createObjectURL(file)
+    let obj = new FormData()
+    obj.append("file" , file)
+    obj.append("phone" , selectedChat)
+    let newMsg = {
+      fromMe: true,
+      filename: file?.name,
+      document: url,
+      url: url,
+      send_type: "single",
+      status: "sending",
+      type: "document",
+      phone: selectedChat,
+      timestamp: 1643197893,
+      _id: "gBEGkXhRiGVlAgnRrgK6hgWe5_M"
+    }
+    let newChatHistory = [...chatHistory , newMsg]
+    dispatch(setTemplateChatHistory(newChatHistory))
+    dispatch(sendDocChat(obj))
   }
 
   const sendMsg = (e)=>{
@@ -176,7 +198,7 @@ export default function Chat(props) {
         dispatch(sendTemplateMessage(obj))
         let newChatHistory = [...chatHistory , newMsg]
         dispatch(setTemplateChatHistory(newChatHistory))
-        // setTimeout(()=>dispatch(getSelectedChatHistory(selectedChat)),1000)
+        setTimeout(()=>dispatch(getSelectedChatHistory(selectedChat)),1000)
         setTypedMsg("")
       }
     }
@@ -286,6 +308,28 @@ export default function Chat(props) {
           </div>
         </>
       )
+    }else if(item?.type == "document") {
+      return (
+          <>
+            <div className={classnames(classes.msgText, classes.templateMsgBlock,
+                item?.fromMe ? classes.fromMe : classes.fromSender)}>
+              <div className={classes.flexTitle}>
+                <Typography variant={"h6"} className={classes.templateHeading}>
+                  {removeUnderscoreAndCapitalize(item?.filename)}
+                </Typography>
+              </div>
+              <a href={item?.document.toString()} target={"_blank"}>
+                <img src={DocIcon} style={{width: "200px"}}/>
+              </a>
+            </div>
+            <div>
+              <Typography variant={"caption"}
+                          style={{marginRight: "10px", color: "#797979"}}>
+                {item?.timestamp && timeConverter(item?.timestamp)}
+              </Typography>
+              {item?.status && getStatusText(item?.status)}
+            </div>
+          </>)
     }else{
       return (<div/>)
     }
@@ -364,19 +408,35 @@ export default function Chat(props) {
             </IconButton>
             <div>
               <input
-                accept=".png,.jpg,.jpeg"
-                className={classes.inputFile}
-                id="contained-button-file"
-                onChange={onFileLoad}
-                disabled={chatDisabled}
-                type="file"
+                  accept="image/png, image/jpeg ,.png,.jpg,.jpeg"
+                  className={classes.inputFile}
+                  id="contained-button-image"
+                  onChange={onFileLoad}
+                  disabled={chatDisabled}
+                  type="file"
               />
-              <label htmlFor="contained-button-file">
+              <label htmlFor="contained-button-image">
                 <IconButton disabled={chatDisabled} color={"secondary"} component={"span"}>
-                  <InsertPhoto />
+                  <Image />
                 </IconButton>
               </label>
             </div>
+            <div>
+              <input
+                  accept="application/pdf"
+                  className={classes.inputFile}
+                  id="contained-button-file"
+                  onChange={onDocLoad}
+                  disabled={chatDisabled}
+                  type="file"
+              />
+              <label htmlFor="contained-button-file">
+                <IconButton disabled={chatDisabled} color={"secondary"} component={"span"}>
+                  <AttachFile />
+                </IconButton>
+              </label>
+            </div>
+
           </Box>
         </div>
       </Grid>

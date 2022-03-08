@@ -36,6 +36,16 @@ export const downloadUserHistoryData = createAsyncThunk('users/downloadUserHisto
     return response.data
   })
 
+//update user password
+export const updateUserPassword = createAsyncThunk('users/updateUserPassword',
+    async(data)=>{
+        const response = await axiosInstance.post("update_password",data)
+        return response.data
+    })
+
+
+
+
 export const usersSlice = createSlice({
   name:'users',
   initialState:{
@@ -43,6 +53,7 @@ export const usersSlice = createSlice({
     chatHistoryDownloaded : false,
     loading:false,
     error:undefined,
+      passwordUpdated:false,
   },
   extraReducers:builder=>{
     builder.addCase(getUsers.pending , (state , action)=>{
@@ -57,7 +68,7 @@ export const usersSlice = createSlice({
       .addCase(getUsers.rejected, (state , action)=>{
         state.loading = false
         state.usersList = []
-        state.error = !!action.error && action.error
+        state.error = !!action.payload && action.payload
       })
     .addCase(downloadUserHistoryData.pending , (state , action)=>{
       state.loading = true
@@ -67,13 +78,27 @@ export const usersSlice = createSlice({
       .addCase(downloadUserHistoryData.fulfilled,(state , action )=>{
         state.loading = false
         state.chatHistoryDownloaded = true
+        state.error = undefined
       })
       .addCase(downloadUserHistoryData.rejected, (state , action)=>{
         state.loading = false
-        state.error = !!action.error && action.error
+        state.error = !!action.payload && action.payload
         state.chatHistoryDownloaded = false
-
       })
+        .addCase(updateUserPassword.pending , (state , action)=>{
+            state.loading = true
+            state.passwordUpdated = false
+        })
+        .addCase(updateUserPassword.fulfilled,(state , action )=>{
+            state.loading = false
+            state.passwordUpdated = action?.payload?.success
+            state.error = undefined
+        })
+        .addCase(updateUserPassword.rejected, (state , action)=>{
+            state.loading = false
+            state.error = !!action.payload && action.payload
+            state.chatHistoryDownloaded = false
+        })
   }
 })
 

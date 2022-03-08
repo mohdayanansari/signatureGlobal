@@ -23,7 +23,7 @@ export default makeStyles(theme => ({
   logotypeContainer: {
     position:"relative",
     borderRadius:20,
-    backgroundColor: theme.palette.homebck.main,
+    // backgroundColor: theme.palette.homebck.main,
     width: "60%",
     height: "100%",
     display: "flex",
@@ -46,7 +46,7 @@ export default makeStyles(theme => ({
   },
   logotypeImage: {
     width: "50%",
-    // marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
   logotypeText: {
     color: theme.palette.primary.main,
@@ -59,6 +59,7 @@ export default makeStyles(theme => ({
   formContainer: {
     width: "40%",
     height: "100%",
+    backgroundColor: theme.palette.homebck.main,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

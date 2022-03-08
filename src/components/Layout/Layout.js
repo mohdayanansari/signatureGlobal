@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Route,
   Switch,
@@ -34,15 +34,33 @@ import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
+import Contacts from "../../pages/contacts";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import {useSelector} from "react-redux";
+import jwtDecode from "jwt-decode";
 
 function Layout(props) {
   var classes = useStyles();
 
   // global
   var layoutState = useLayoutState();
+
+  const accessToken = useSelector((state)=>state.login.access_token)
+  const [isAdmin , setIsAdmin] = useState(false)
+
+  useEffect(()=>{
+      if(accessToken){
+          const jDecode = jwtDecode(accessToken)
+          if(jDecode?.sub === "admin@signatureglobal.in"){
+            setIsAdmin(true)
+          }else{
+            setIsAdmin(false)
+          }
+      }
+  },[accessToken])
+
 
   return (
     <div className={classes.root}>
@@ -59,9 +77,10 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Broadcast} />
               <Route path="/app/chat" component={Chat} />
               <Route path="/app/users" component={Users} />
-              <Route path="/app/typography" component={Typography} />
-              <Route path="/app/tables" component={Tables} />
-              <Route path="/app/notifications" component={Notifications} />
+              <Route path="/app/contacts" component={Contacts} />
+              {/*<Route path="/app/typography" component={Typographyss} />*/}
+              {/*<Route path="/app/tables" component={Tables} />*/}
+              {/*<Route path="/app/notifications" component={Notifications} />*/}
               <Route
                 exact
                 path="/app/ui"

@@ -17,7 +17,7 @@ import classnames from "classnames";
 import useStyles from "./styles";
 
 // logo
-import logo from "../../images/login-header.png";
+import logo from "../../images/header.jpg";
 import notBotLogo from "../../images/notbot-logo.png";
 import google from "../../images/google.svg";
 
@@ -36,10 +36,7 @@ function Login(props) {
   var [activeTabId, setActiveTabId] = useState(0);
   var [nameValue, setNameValue] = useState("");
   var [loginValue, setLoginValue] = useState("");
-  // var [loginValue, setLoginValue] = useState("admin@signatureglobal.in");
-  // var [passwordValue, setPasswordValue] = useState("admin@1234");
   var [passwordValue, setPasswordValue] = useState("");
-
   const loginError = useSelector((state)=>state.login.error)
   const isLoading = useSelector((state)=>state.login.loading)
 
@@ -67,6 +64,7 @@ function Login(props) {
       <div className={classes.wrapper}>
         <div className={classes.logotypeContainer}>
           <img src={"https://signaturegurgaonindia.com/images/builder-logo.png"} alt="logo" className={classes.notBotLogo} />
+          {/*<img src={notBotLogo} alt="logo" className={classes.notBotLogo} />*/}
           <img src={logo} alt="logo" className={classes.logotypeImage} />
           <Typography className={classes.logotypeText}>Whatsapp Dashboard</Typography>
         </div>
@@ -96,7 +94,7 @@ function Login(props) {
                 {/*  <Typography className={classes.formDividerWord}>or</Typography>*/}
                 {/*  <div className={classes.formDivider} />*/}
                 {/*</div>*/}
-                {error &&<Fade in={error}>
+                {error && <Fade in={error}>
                   <Typography color="secondary" className={classes.errorMessage}>
                     Something is wrong with your login or password :(
                   </Typography>

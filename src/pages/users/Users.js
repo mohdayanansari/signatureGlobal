@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-  Grid,
-  Button, Box, TextField, InputLabel, Divider, MuiThemeProvider, createMuiTheme,
+    Grid,
+    Button, Box, TextField, InputLabel, Divider, MuiThemeProvider, createMuiTheme, InputAdornment, IconButton, Snackbar,
 } from "@material-ui/core";
 import  Autocomplete from  "@material-ui/lab/Autocomplete"
 import { useTheme } from "@material-ui/styles";
 import SendIcon from '@material-ui/icons/Send';
-import { CloudUpload, Description } from "@material-ui/icons";
+import {CloudUpload, Description, Email, Visibility, VisibilityOff, VpnKey} from "@material-ui/icons";
 // styles
 import useStyles from "./styles";
 import ImageShowCase from "../../images/image-column.PNG"
@@ -26,7 +26,8 @@ import 'react-phone-number-input/style.css'
 import {isValidPhoneNumber} from "react-phone-number-input"
 import { useRouteMatch } from "react-router-dom";
 import { timeConverter } from "../../utils/date-parse";
-import { downloadHistoryData, downloadUserHistoryData, getUsers } from "../../store/reducer/users";
+import {downloadHistoryData, downloadUserHistoryData, getUsers, updateUserPassword} from "../../store/reducer/users";
+import Alert from "@material-ui/lab/Alert";
 
 
 const PhoneNumberStep = ({onChangeNumber ,number, classes})=>{
@@ -57,6 +58,51 @@ const PhoneNumberStep = ({onChangeNumber ,number, classes})=>{
   )
 }
 
+const ChangePasswordStep = ({onChangePassword ,password,email, classes , onEyeClick,passwordVisible})=>{
+  return(
+    <div>
+      <TextField fullWidth
+                 variant={"outlined"}
+                 disabled
+                 value={email}
+                 label="User Email"
+                 type="email"
+                 margin={"normal"}
+                 InputProps={{
+                   startAdornment: (
+                       <InputAdornment position="start">
+                         <Email />
+                       </InputAdornment>
+                   )
+                 }}
+                 id="email" />
+      <br/>
+
+      <TextField fullWidth
+                 label="Enter New Password"
+                 type={passwordVisible ? "text":"password"}
+                 margin={"normal"}
+                 variant={"outlined"}
+                 InputProps={{
+                   startAdornment: (
+                       <InputAdornment position="start">
+                         <VpnKey/>
+                       </InputAdornment>
+                   ),
+                   endAdornment:(
+                       <InputAdornment position="start">
+                         <IconButton onClick={onEyeClick}>
+                           {passwordVisible ? <VisibilityOff/> :<Visibility/>}
+                         </IconButton>
+                       </InputAdornment>
+                   )
+                 }}
+                 value={password}
+                 onChange={onChangePassword}/>
+    </div>
+  )
+}
+
 
 export default function Users(props) {
   var classes = useStyles();
@@ -67,6 +113,7 @@ export default function Users(props) {
 
   const error = useSelector((state)=>state.users.error)
   const chatHistoryDownloaded = useSelector((state)=>state.users.chatHistoryDownloaded)
+  const passwordUpdated = useSelector((state)=>state.users.passwordUpdated)
 
   //loader for sending request
   const loading = useSelector((state)=>state.users.loading)
@@ -80,6 +127,12 @@ export default function Users(props) {
   const [openChatModal, setOpenChatModal] = useState(false)
   const [currentChatModalStepIndex, setChatCurrentModalStepIndex] = useState(0)
   const [contactNumber , setContactNumber] = useState("")
+  const [currentUser , setCurrentUser] = useState("")
+
+  const [editUserModal , setEditUserModal] = useState(false)
+  const [password , setPassword] = useState("")
+  const [passwordVisible , setPasswordVisible] = useState(false)
+    const [showSnackBar , setShowSnackBar] = useState(false)
 
   const onChangeNumber = (value)=>{
     setContactNumber(value)
@@ -90,11 +143,39 @@ export default function Users(props) {
       onChangeNumber={onChangeNumber}
       classes={classes}/>
   ]
+  const onChangePassword = (e)=>{
+    setPassword(e.target.value)
+  }
+  const onEyeClick = ()=>{
+    setPasswordVisible(!passwordVisible)
+  }
+  const EditChatModal = [
+      <ChangePasswordStep
+          onEyeClick={onEyeClick}
+          passwordVisible={passwordVisible}
+          password={password}
+          email={currentUser}
+          onChangePassword={onChangePassword}
+          classes={classes}
+      />
+  ]
   useEffect(()=>{
     if(chatHistoryDownloaded){
+      setCurrentUser("")
       setOpenChatModal(false)
+      setContactNumber("")
     }
   },[chatHistoryDownloaded])
+
+  useEffect(()=>{
+    if(passwordUpdated){
+      setCurrentUser("")
+      setEditUserModal(false)
+      setPassword("")
+        setPasswordVisible(false)
+        setShowSnackBar(true)
+    }
+  },[passwordUpdated])
 
   
   const onDownloadHistory = (user)=>{
@@ -103,6 +184,25 @@ export default function Users(props) {
       formData.append("user" , user)
       dispatch(downloadHistoryData(formData))
     }
+  }
+
+  const onEditUser = (user)=>{
+    setCurrentUser(user)
+    setEditUserModal(true)
+  }
+  const onEditUserNextClick = ()=>{
+    if(currentUser != "" && password !== ""){
+      let formData = new FormData()
+      formData.append("password" , password)
+      formData.append("user" , currentUser)
+      dispatch(updateUserPassword(formData))
+    }
+  }
+  const onEditUserCancelClick = ()=>{
+    setCurrentUser("")
+    setEditUserModal(false)
+      setPasswordVisible(false)
+    setPassword("")
   }
 
   const onChatModalNextClick = ()=>{
@@ -120,7 +220,6 @@ export default function Users(props) {
     setContactNumber("")
   }
 
-  const [currentUser , setCurrentUser] = useState("")
 
   const onDownloadUserHistory = (user)=>{
     setCurrentUser(user)
@@ -128,11 +227,24 @@ export default function Users(props) {
     setChatCurrentModalStepIndex(0)
   }
 
+  const handleCloseSnackbar = ()=>{
+      setShowSnackBar(false)
+  }
+
 
   return (
     <Box margin={2}>
       <PageTitle title="Users History" />
-      {/*single sending modal*/}
+        <Snackbar
+            anchorOrigin={{ vertical:"top", horizontal:"center" }}
+            open={showSnackBar}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}>
+            <Alert onClose={handleCloseSnackbar} severity="success">
+                Password updated successfully!
+            </Alert>
+        </Snackbar>
+      {/*download chat modal*/}
       <Modal title={"Download Chat History"}
              onNext={onChatModalNextClick}
              onCancel={onChatModalCancelClick}
@@ -141,6 +253,16 @@ export default function Users(props) {
              theme={theme}
              open={openChatModal} >
         {ChatHistoryModal[currentChatModalStepIndex]}
+      </Modal>
+      {/*edit user modal*/}
+      <Modal title={"Edit user details"}
+             onNext={onEditUserNextClick}
+             onCancel={onEditUserCancelClick}
+             loading={loading}
+             error={error}
+             theme={theme}
+             open={editUserModal} >
+        {EditChatModal[0]}
       </Modal>
       <Grid container spacing={4}>
         <Grid item xs={12}>
@@ -153,6 +275,7 @@ export default function Users(props) {
           >
             <Table
               data={userList}
+              onEditUser={onEditUser}
               onDownloadHistory={onDownloadHistory}
               onDownloadUserHistory={onDownloadUserHistory}/>
           </Widget>

@@ -5,20 +5,22 @@ import {
   TableHead,
   TableBody,
   TableCell,
-  Chip, Box, Button,
+  Chip, Box, IconButton,
 } from "@material-ui/core";
 import useStyles from "../../styles";
 import { Typography } from "../../../../components/Wrappers";
 import { removeUnderscoreAndCapitalize, timeConverter } from "../../../../utils/date-parse";
 import SendIcon from "@material-ui/icons/Send";
-import GetAppIcon from '@material-ui/icons/GetApp';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import {Edit} from "@material-ui/icons";
+
 const states = {
   sent: "success",
   pending: "warning",
   declined: "secondary",
 };
 
-export default function TableComponent({ data, onDownloadHistory, onDownloadUserHistory }) {
+export default function TableComponent({ data, onDownloadHistory, onDownloadUserHistory,onEditUser }) {
   const classes = useStyles();
 
   if(data.length > 0){
@@ -31,6 +33,9 @@ export default function TableComponent({ data, onDownloadHistory, onDownloadUser
             {keys.map(key => (
               <TableCell key={key} style={{fontWeight:"bold"}}>{key}</TableCell>
             ))}
+            <TableCell align={"center"} style={{fontWeight:"bold"}}>Download Contacted List</TableCell>
+            <TableCell align={"center"} style={{fontWeight:"bold"}}>Download Chat List</TableCell>
+            <TableCell align={"center"} style={{fontWeight:"bold"}}> Edit User</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -38,22 +43,29 @@ export default function TableComponent({ data, onDownloadHistory, onDownloadUser
             <TableRow key={index}>
               <TableCell align={"left"}>{index+1}</TableCell>
               <TableCell align={"left"}>{username}</TableCell>
-              <TableCell align={"left"}>
-                <Button
-                  variant="contained"
+              <TableCell align={"center"}>
+                <IconButton
                   size="medium"
                   color="secondary"
-                  onClick={()=>onDownloadHistory(username)}
-                  startIcon={<GetAppIcon/>}>Download Contacted List</Button>
+                  onClick={()=>onDownloadHistory(username)}>
+                  <CloudDownloadIcon/>
+                </IconButton>
               </TableCell>
-              <TableCell align={"left"}>
-                <Button
-                  style={{marginLeft:"20px"}}
-                  variant="contained"
+              <TableCell align={"center"}>
+                <IconButton
                   size="medium"
                   color="secondary"
-                  onClick={()=>onDownloadUserHistory(username)}
-                  startIcon={<GetAppIcon/>}>Download Chat History</Button>
+                  onClick={()=>onDownloadUserHistory(username)}>
+                  <CloudDownloadIcon/>
+                </IconButton>
+              </TableCell>
+              <TableCell align={"center"}>
+                <IconButton
+                    size="medium"
+                    color="secondary"
+                    onClick={()=>onEditUser(username)}>
+                  <Edit/>
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

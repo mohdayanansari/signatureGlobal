@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Drawer, IconButton, List } from "@material-ui/core";
+import {Box, Button, Drawer, IconButton, List, MuiThemeProvider, TextField, Typography} from "@material-ui/core";
+import {createMuiTheme} from "@material-ui/core/styles"
 import {
   Home as HomeIcon,
   RecordVoiceOver as SurroundSoundIcon,
@@ -12,11 +13,14 @@ import {
   LibraryBooks as LibraryIcon,
   HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
+  People as PeopleIcon, Add,
+   ContactPhone as ContactsIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import classNames from "classnames";
 import jwtDecode from "jwt-decode";
+import Modal from "../Modal"
 // styles
 import useStyles from "./styles";
 
@@ -35,6 +39,8 @@ import { useSelector } from "react-redux";
 const structure = [
   { id: 0, label: "Broadcast History", link: "/app/dashboard", icon: <SurroundSoundIcon /> },
   { id: 1, label: "Individual Chat", link: "/app/chat", icon: <ChatIcon /> },
+  // { id: 2, label: "Contacts", link: "/app/contacts", icon: <ContactsIcon/> },
+
   // {
   //   id: 1,
   //   label: "Typography",
@@ -86,9 +92,10 @@ const structure = [
   // },
 ];
 const adminStructure = [
-  { id: 0, label: "Broadcast History", link: "/app/dashboard", icon: <SurroundSoundIcon /> },
-  { id: 1, label: "Individual Chat", link: "/app/chat", icon: <ChatIcon /> },
-  { id: 3, label: "Users", link: "/app/users", icon: <ChatIcon /> },
+  // { id: 0, label: "Broadcast History", link: "/app/dashboard", icon: <SurroundSoundIcon /> },
+  // { id: 1, label: "Individual Chat", link: "/app/chat", icon: <ChatIcon /> },
+  { id: 2, label: "Users", link: "/app/users", icon: <PeopleIcon /> },
+  // { id: 3, label: "Contacts", link: "/app/contacts", icon: <ContactsIcon/> },
   // {
   //   id: 1,
   //   label: "Typography",
@@ -152,13 +159,20 @@ function Sidebar({ location }) {
   var [isPermanent, setPermanent] = useState(true);
 
   const accessToken = useSelector((state)=>state.login.access_token)
-  const [jDecode , setJDecode] = useState("")
+  const [isAdmin , setIsAdmin] = useState(false)
+
   useEffect(()=>{
     if(accessToken){
       const jDecode = jwtDecode(accessToken)
-      setJDecode(jDecode)
+      if(jDecode?.sub === "admin@signatureglobal.in"){
+        setIsAdmin(true)
+      }else{
+        setIsAdmin(false)
+      }
     }
   },[accessToken])
+
+
   useEffect(function() {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
@@ -166,6 +180,32 @@ function Sidebar({ location }) {
       window.removeEventListener("resize", handleWindowWidthChange);
     };
   });
+
+  const [openApiKeyModal , setOpenApiKeyModal] = useState(false)
+  const [apiKey , setApiKey] = useState("")
+  const error = useSelector((state)=>state.utils.error)
+  const loading = useSelector((state)=>state.utils.loading)
+
+
+
+
+  const onApiKeyCancelClick = ()=>{
+    setOpenApiKeyModal(false)
+    setApiKey("")
+  }
+
+  const onApiKeyNextClick = ()=>{
+
+  }
+
+  const TextFieldTheme = createMuiTheme({
+    palette: {
+      primary: {
+        main: theme.palette.primary.main
+      }
+    },
+  });
+
 
   return (
     <Drawer
@@ -192,9 +232,47 @@ function Sidebar({ location }) {
           />
         </IconButton>
       </div>
+
+      <Modal title={"Add API Key"}
+             onNext={onApiKeyNextClick}
+             onCancel={onApiKeyCancelClick}
+             loading={loading}
+             error={error}
+             theme={theme}
+             open={openApiKeyModal} >
+        <MuiThemeProvider theme={TextFieldTheme}>
+          <br/>
+          <Typography variant={"body"}>Enter your API Key which you can get from 360 dialog dashboard</Typography>
+          <br/><br/>
+          <TextField
+              autoFocus
+              margin="dense"
+              id="api-key"
+              label="API KEY"
+              value={apiKey}
+              type="text"
+              variant={"outlined"}
+              onChange={(e)=>setApiKey(e.target.value)}
+              fullWidth
+          />
+        </MuiThemeProvider>
+
+      </Modal>
       <List className={classes.sidebarList}>
 
-        {jDecode?.sub == "admin@signatureglobal.in" ?
+        {/*{isAdmin &&*/}
+        {/*<Box marginTop={"20px"} marginBottom={"20px"} display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>*/}
+        {/*  <Button*/}
+        {/*      variant={"contained"}*/}
+        {/*      color={"primary"}*/}
+        {/*      startIcon={<Add/>}*/}
+        {/*      onClick={()=>setOpenApiKeyModal(true)}*/}
+        {/*  >*/}
+        {/*    {isSidebarOpened && "Add API Key"}*/}
+        {/*  </Button>*/}
+        {/*</Box>}*/}
+
+        {isAdmin ?
           <>
             {adminStructure.map(link => (
               <SidebarLink

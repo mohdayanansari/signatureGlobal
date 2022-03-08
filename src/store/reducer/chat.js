@@ -32,6 +32,13 @@ export const sendMediaChat = createAsyncThunk('chat/sendMediaChat',
     return response.data
   })
 
+// send documents in chat
+export const sendDocChat = createAsyncThunk('chat/sendDocChat',
+    async(obj)=>{
+      const response = await axiosInstance.post(`/document` ,obj)
+      return response.data
+    })
+
 
 export const chatSlice = createSlice({
   name:'chat',
@@ -40,61 +47,7 @@ export const chatSlice = createSlice({
     loading:false,
     chatHistoryLoading:false,
     mediaSendingLoading:false,
-    chatHistory:[
-      {
-        "_id": "gBEGkXMHR2JkAglXW9yegcttOOM",
-        "send_type":"broadcast",
-        "title":"if broadcast name otherwise / null",
-        "fromMe": false,
-        "phone": 918890293146,
-        "status": "read",
-        "text": {
-          "name": "1sttemplate"
-        },
-        "timestamp": 1641228843,
-        "type": "template"
-      },
-      {
-        "_id": "gBEGkXMHR2JkAglXW9yegcttOOM",
-        "send_type":"broadcast",
-        "title":"kjasfnaklfsnmlk",
-        "fromMe": false,
-        "phone": 918890293146,
-        "status": "read",
-        "text": {
-          "name": "1sttemplate"
-        },
-        "timestamp": 1641228843,
-        "type": "template"
-      },
-      {
-        "_id": "gBEGkXMHR2JkAglXW9yegcttOOM",
-        "send_type":"broadcast",
-        "title":"if broadcast name otherwise / null",
-        "fromMe": true,
-        "phone": 918890293146,
-        "status": "read",
-        "text": {
-          "name": "1sttemplate"
-        },
-        "timestamp": 1641228843,
-        "type": "template"
-      },
-      {
-        "_id": "gBEGkXMHR2JkAglXW9yegcttOOM",
-        "send_type":"broadcast",
-        "title":"if broadcast name otherwise / null",
-        "fromMe": true,
-        "phone": 918890293146,
-        "status": "read",
-        "text": {
-          "name": "1sttemplate"
-        },
-        "timestamp": 1641228843,
-        "type": "template"
-      }
-
-    ],
+    chatHistory:[],
     error:null
   },
   reducers:{
@@ -141,6 +94,18 @@ export const chatSlice = createSlice({
         state.mediaSendingLoading = false
         state.error = true
       })
+        .addCase(sendDocChat.pending,(state , action )=>{
+          state.mediaSendingLoading = true
+          state.error = null
+        })
+        .addCase(sendDocChat.fulfilled, (state , action)=>{
+          state.mediaSendingLoading = false
+          state.error = false
+        })
+        .addCase(sendDocChat.rejected, (state , action)=>{
+          state.mediaSendingLoading = false
+          state.error = true
+        })
       .addCase(getBackgroundChatHistory .pending,(state , action )=>{
         state.error = null
       })
