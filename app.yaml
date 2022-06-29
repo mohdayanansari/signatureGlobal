@@ -1,3 +1,4 @@
+service: singapore
 runtime: python27
 threadsafe: true
 handlers:

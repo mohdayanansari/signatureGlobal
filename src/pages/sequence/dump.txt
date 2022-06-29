@@ -1,0 +1,42 @@
+<TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow className="bg-appGray-700 font-bold">
+                <TableCell className="text-white font-bold">
+                  Sequence Name
+                </TableCell>
+                <TableCell className="text-white font-bold" align="right">
+                  Username
+                </TableCell>
+                <TableCell className="text-white font-bold" align="right">
+                  Templates
+                </TableCell>
+                <TableCell className="text-white font-bold" align="right">
+                  Time Difference
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, i) => (
+                <TableRow
+                  key={i}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  className="bg-appGray-300 text-white"
+                >
+                  <TableCell component="th" scope="row" className="text-white">
+                    {row.name}
+                  </TableCell>
+                  <TableCell className="text-white" align="right">
+                    {row.username}
+                  </TableCell>
+                  <TableCell className="text-white" align="right">
+                    {row.template}
+                  </TableCell>
+                  <TableCell className="text-white" align="right">
+                    {row.timeDifference}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>

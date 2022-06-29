@@ -2,31 +2,20 @@ import React, { useState, useEffect } from "react";
 import {Box, Button, Drawer, IconButton, List, MuiThemeProvider, TextField, Typography} from "@material-ui/core";
 import {createMuiTheme} from "@material-ui/core/styles"
 import {
-  Home as HomeIcon,
-  RecordVoiceOver as SurroundSoundIcon,
-  Sms as ChatIcon,
-  NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
-  BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
-  ArrowBack as ArrowBackIcon,
   People as PeopleIcon, Add,
-   ContactPhone as ContactsIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
-import { withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import classNames from "classnames";
 import jwtDecode from "jwt-decode";
+import { ChatIcon  , StatusOnlineIcon , MenuAlt1Icon, ArrowLeftIcon , UserCircleIcon , LogoutIcon , AdjustmentsIcon} from "@heroicons/react/outline";
+
 import Modal from "../Modal"
 // styles
 import useStyles from "./styles";
 
 // components
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import Dot from "./components/Dot";
 
 // context
 import {
@@ -34,120 +23,21 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+import {logout} from "../../store/reducer/login";
 
 const structure = [
-  { id: 0, label: "Broadcast History", link: "/app/dashboard", icon: <SurroundSoundIcon /> },
-  { id: 1, label: "Individual Chat", link: "/app/chat", icon: <ChatIcon /> },
-  // { id: 2, label: "Contacts", link: "/app/contacts", icon: <ContactsIcon/> },
-
-  // {
-  //   id: 1,
-  //   label: "Typography",
-  //   link: "/app/typography",
-  //   icon: <TypographyIcon />,
-  // },
-  // { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  // {
-  //   id: 3,
-  //   label: "Notifications",
-  //   link: "/app/notifications",
-  //   icon: <NotificationsIcon />,
-  // },
-  // {
-  //   id: 4,
-  //   label: "UI Elements",
-  //   link: "/app/ui",
-  //   icon: <UIElementsIcon />,
-  //   children: [
-  //     { label: "Icons", link: "/app/ui/icons" },
-  //     { label: "Charts", link: "/app/ui/charts" },
-  //     { label: "Maps", link: "/app/ui/maps" },
-  //   ],
-  // },
-  // { id: 5, type: "divider" },
-  // { id: 6, type: "title", label: "HELP" },
-  // { id: 7, label: "Library", link: "https://flatlogic.com/templates", icon: <LibraryIcon /> },
-  // { id: 8, label: "Support", link: "https://flatlogic.com/forum", icon: <SupportIcon /> },
-  // { id: 9, label: "FAQ", link: "https://flatlogic.com/forum", icon: <FAQIcon /> },
-  // { id: 10, type: "divider" },
-  // { id: 11, type: "title", label: "PROJECTS" },
-  // {
-  //   id: 12,
-  //   label: "My recent",
-  //   link: "",
-  //   icon: <Dot size="small" color="warning" />,
-  // },
-  // {
-  //   id: 13,
-  //   label: "Starred",
-  //   link: "",
-  //   icon: <Dot size="small" color="primary" />,
-  // },
-  // {
-  //   id: 14,
-  //   label: "Background",
-  //   link: "",
-  //   icon: <Dot size="small" color="secondary" />,
-  // },
+  { id: 0, label: "Broadcast History", uid:"broadcast-history", link: "/app/dashboard", activeIcon: <StatusOnlineIcon className="w-8 h-8 text-appPurple-300"  /> , inActiveIcon: <StatusOnlineIcon className="w-8 h-8 text-appWhiteText-200"  />},
+  { id: 1, label: "Individual Chat",uid:"chats", link: "/app/chat", activeIcon: <ChatIcon className="w-8 h-8 text-appPurple-300"  /> , inActiveIcon: <ChatIcon className="w-8 h-8 text-appWhiteText-200" />},
+  { id: 1, label: "Sequence", uid:"sequence",link: "/app/sequence", activeIcon:<AdjustmentsIcon className="w-8 h-8 text-appPurple-300"  />, inActiveIcon: <AdjustmentsIcon className="w-8 h-8 text-appWhiteText-200" />},
 ];
 const adminStructure = [
-  // { id: 0, label: "Broadcast History", link: "/app/dashboard", icon: <SurroundSoundIcon /> },
-  // { id: 1, label: "Individual Chat", link: "/app/chat", icon: <ChatIcon /> },
   { id: 2, label: "Users", link: "/app/users", icon: <PeopleIcon /> },
-  // { id: 3, label: "Contacts", link: "/app/contacts", icon: <ContactsIcon/> },
-  // {
-  //   id: 1,
-  //   label: "Typography",
-  //   link: "/app/typography",
-  //   icon: <TypographyIcon />,
-  // },
-  // { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  // {
-  //   id: 3,
-  //   label: "Notifications",
-  //   link: "/app/notifications",
-  //   icon: <NotificationsIcon />,
-  // },
-  // {
-  //   id: 4,
-  //   label: "UI Elements",
-  //   link: "/app/ui",
-  //   icon: <UIElementsIcon />,
-  //   children: [
-  //     { label: "Icons", link: "/app/ui/icons" },
-  //     { label: "Charts", link: "/app/ui/charts" },
-  //     { label: "Maps", link: "/app/ui/maps" },
-  //   ],
-  // },
-  // { id: 5, type: "divider" },
-  // { id: 6, type: "title", label: "HELP" },
-  // { id: 7, label: "Library", link: "https://flatlogic.com/templates", icon: <LibraryIcon /> },
-  // { id: 8, label: "Support", link: "https://flatlogic.com/forum", icon: <SupportIcon /> },
-  // { id: 9, label: "FAQ", link: "https://flatlogic.com/forum", icon: <FAQIcon /> },
-  // { id: 10, type: "divider" },
-  // { id: 11, type: "title", label: "PROJECTS" },
-  // {
-  //   id: 12,
-  //   label: "My recent",
-  //   link: "",
-  //   icon: <Dot size="small" color="warning" />,
-  // },
-  // {
-  //   id: 13,
-  //   label: "Starred",
-  //   link: "",
-  //   icon: <Dot size="small" color="primary" />,
-  // },
-  // {
-  //   id: 14,
-  //   label: "Background",
-  //   link: "",
-  //   icon: <Dot size="small" color="secondary" />,
-  // },
 ];
 
-function Sidebar({ location }) {
+function Sidebar(props) {
+  const {location} = props;
   var classes = useStyles();
   var theme = useTheme();
 
@@ -160,6 +50,10 @@ function Sidebar({ location }) {
 
   const accessToken = useSelector((state)=>state.login.access_token)
   const [isAdmin , setIsAdmin] = useState(false)
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen(!dropdownOpen);
+
 
   useEffect(()=>{
     if(accessToken){
@@ -205,34 +99,37 @@ function Sidebar({ location }) {
       }
     },
   });
+  var layoutState = useLayoutState();
 
+  const dispatch = useDispatch()
 
   return (
-    <Drawer
-      variant={isPermanent ? "permanent" : "temporary"}
-      className={classNames(classes.drawer, {
-        [classes.drawerOpen]: isSidebarOpened,
-        [classes.drawerClose]: !isSidebarOpened,
-      })}
-      classes={{
-        paper: classNames(classes.paper,{
-          [classes.drawerOpen]: isSidebarOpened,
-          [classes.drawerClose]: !isSidebarOpened,
-        }),
-      }}
-      open={isSidebarOpened}
-    >
-      <div className={classes.toolbar} />
-      <div className={classes.mobileBackButton}>
-        <IconButton onClick={() => toggleSidebar(layoutDispatch)}>
-          <ArrowBackIcon
-            classes={{
-              root: classNames(classes.headerIcon, classes.headerIconCollapse),
-            }}
-          />
-        </IconButton>
-      </div>
-
+   <div className={classNames(
+       {
+         [classes.drawerOpen]:layoutState.isSidebarOpened,
+         [classes.drawerClose]:!layoutState.isSidebarOpened,
+       }
+     ,"h-screen bg-appGray-300 hidden lg:col-span-2 lg:flex flex-col items-center  shadow-xl")}>
+     {/*<IconButton*/}
+     {/*    color="inherit"*/}
+     {/*    onClick={() => toggleSidebar(layoutDispatch)}*/}
+     {/*    className={classNames(*/}
+     {/*        classes.headerMenuButtonSandwich,*/}
+     {/*        classes.headerMenuButtonCollapse,*/}
+     {/*    )}*/}
+     {/*>*/}
+       {layoutState.isSidebarOpened ? (
+           <Link className={"bg-appGray-200 my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60"}
+                 onClick={() => toggleSidebar(layoutDispatch)}>
+             <ArrowLeftIcon className={" w-10 h-10 text-appWhiteText-200 "}/>
+           </Link>
+       ) : (
+           <Link className={"my-2 w-20 h-14 flex justify-center items-center rounded-xl opacity-60"}
+                 onClick={() => toggleSidebar(layoutDispatch)}>
+             <MenuAlt1Icon className={"text-appPurple-300 w-8 h-8 "}/>
+           </Link>
+       )}
+     {/*</IconButton>*/}
       <Modal title={"Add API Key"}
              onNext={onApiKeyNextClick}
              onCancel={onApiKeyCancelClick}
@@ -258,20 +155,8 @@ function Sidebar({ location }) {
         </MuiThemeProvider>
 
       </Modal>
-      <List className={classes.sidebarList}>
-
-        {/*{isAdmin &&*/}
-        {/*<Box marginTop={"20px"} marginBottom={"20px"} display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>*/}
-        {/*  <Button*/}
-        {/*      variant={"contained"}*/}
-        {/*      color={"primary"}*/}
-        {/*      startIcon={<Add/>}*/}
-        {/*      onClick={()=>setOpenApiKeyModal(true)}*/}
-        {/*  >*/}
-        {/*    {isSidebarOpened && "Add API Key"}*/}
-        {/*  </Button>*/}
-        {/*</Box>}*/}
-
+      {/*<List className={classes.sidebarList}>*/}
+     <div className={"pt-[5vh]"}></div>
         {isAdmin ?
           <>
             {adminStructure.map(link => (
@@ -295,8 +180,20 @@ function Sidebar({ location }) {
             ))}
           </>
         }
-      </List>
-    </Drawer>
+     <div className={"pt-[50vh]"}></div>
+
+     <div
+         onClick={()=>{
+           dispatch(logout())
+           props.history.push("/login")
+         }}
+         className="cursor-pointer my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+
+       <LogoutIcon className="w-8 h-8 text-appWhiteText-200"/>
+       {isSidebarOpened && <p className="text-appWhiteText-200 ml-2">Logout</p>}
+
+     </div>
+   </div>
   );
 
   // ##################################################################

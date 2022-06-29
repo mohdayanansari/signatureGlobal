@@ -17,16 +17,19 @@ import useStyles from "./styles";
 
 // components
 import Dot from "../Dot";
+import {UncontrolledTooltip} from "reactstrap";
 
 export default function SidebarLink({
   link,
-  icon,
+  activeIcon,
+  inActiveIcon,
   label,
   children,
   location,
   isSidebarOpened,
   nested,
   type,
+    uid
 }) {
   var classes = useStyles();
 
@@ -67,7 +70,7 @@ export default function SidebarLink({
             [classes.linkIconActive]: isLinkActive,
           })}
         >
-          {nested ? <Dot color={isLinkActive && "primary"} /> : icon}
+          {nested ? <Dot color={isLinkActive && "primary"} /> : activeIcon}
         </ListItemIcon>
         <ListItemText
           classes={{
@@ -82,39 +85,34 @@ export default function SidebarLink({
       </ListItem>
     )
   }
-  if (!children)
-    return (
-      <ListItem
-        button
-        component={link && Link}
-        to={link}
-        className={classes.link}
-        classes={{
-          root: classnames(classes.linkRoot, {
-            [classes.linkActive]: isLinkActive && !nested,
-            [classes.linkNested]: nested,
-          }),
-        }}
-        disableRipple
-      >
-        <ListItemIcon
-          className={classnames(classes.linkIcon, {
-            [classes.linkIconActive]: isLinkActive,
-          })}
-        >
-          {nested ? <Dot color={isLinkActive && "primary"} /> : icon}
-        </ListItemIcon>
-        <ListItemText
-          classes={{
-            primary: classnames(classes.linkText, {
-              [classes.linkTextActive]: isLinkActive,
-              [classes.linkTextHidden]: !isSidebarOpened,
-            }),
-          }}
-          primary={label}
-        />
-      </ListItem>
-    );
+  if (!children){
+      if(isLinkActive){
+          return (
+              <>
+                  <Link to={link} id={uid} className="bg-appGray-200 my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+                      {activeIcon}
+                      {isSidebarOpened && <p className="text-appPurple-300 ml-2">{label}</p>}
+                  </Link>
+                  {/*<UncontrolledTooltip target={uid} placement="top">*/}
+                  {/*    {label}*/}
+                  {/*</UncontrolledTooltip>*/}
+              </>
+          )
+      }else{
+          return (
+              <>
+                  <Link to={link} id={uid} className="my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+                      {inActiveIcon}
+                      {isSidebarOpened && <p className="text-appWhiteText-200 ml-2">{label}</p>}
+                  </Link>
+                  {/*<UncontrolledTooltip target={uid} placement="top">*/}
+                  {/*    {label}*/}
+                  {/*</UncontrolledTooltip>*/}
+              </>
+          );
+      }
+  }
+
 
   return (
     <>
@@ -131,7 +129,7 @@ export default function SidebarLink({
             [classes.linkIconActive]: isLinkActive,
           })}
         >
-          {icon ? icon : <InboxIcon />}
+          {activeIcon ? activeIcon : <InboxIcon />}
         </ListItemIcon>
         <ListItemText
           classes={{

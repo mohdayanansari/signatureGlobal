@@ -27,6 +27,9 @@ import Sidebar from "../Sidebar";
 import Dashboard from "../../pages/dashboard";
 import Broadcast from "../../pages/broadcast";
 import Chat from "../../pages/chat";
+import Newchat from "../../pages/newchatpage/Dashboard"
+import Sequence from "../../pages/sequence/Sequence"
+import OldSequence from "../../pages/sequence/OldSequence"
 import Users from "../../pages/users/Users";
 import Typography from "../../pages/typography";
 import Notifications from "../../pages/notifications";
@@ -65,17 +68,18 @@ function Layout(props) {
   return (
     <div className={classes.root}>
         <>
-          <Header history={props.history} />
-          <Sidebar />
+          {/*<Header history={props.history} />*/}
+          <Sidebar history={props.history} />
           <div
             className={classnames(classes.content, {
               [classes.contentShift]: layoutState.isSidebarOpened,
             })}
           >
-            <div className={classes.fakeToolbar} />
             <Switch>
               <Route path="/app/dashboard" component={Broadcast} />
               <Route path="/app/chat" component={Chat} />
+              <Route path="/app/sequence" component={Sequence} />
+              <Route path="/app/oldsequence" component={OldSequence} />
               <Route path="/app/users" component={Users} />
               <Route path="/app/contacts" component={Contacts} />
               {/*<Route path="/app/typography" component={Typographyss} />*/}

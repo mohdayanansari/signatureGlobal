@@ -96,9 +96,7 @@ const PhoneNumberStep = ({data , onChangeNumber ,number, onChangeTemplate , clas
         options={data}
         size={"small"}
         onChange={onChangeTemplate}
-        getOptionLabel={(option) => option.name.toString()
-          .replaceAll("_"," ")+"_".toString()
-          .concat((option.language.toString()))}
+        getOptionLabel={(option) => option.name.toString()}
         fullWidth
         renderInput={(params) =>
           <TextField {...params} label="Select Template" variant="outlined"/>}
@@ -210,7 +208,7 @@ const ThirdStep = (props)=>{
 const ShowCaseTemplate = (props)=>{
   const {classes ,  variables} = props
 
-  const showCaseTextItems = variables.map((item)=>{
+  const showCaseTextItems = variables?.map((item)=>{
     if(item?.format.toLowerCase() == "text"){
       let no_of_variable = item?.no_of_variable
       return(<>
@@ -241,7 +239,7 @@ const ShowCaseTemplate = (props)=>{
 const FillingTemplates = (props)=>{
   const {classes ,  variables , onVariableChange , templateData , templateName} = props
 
-  const variablesItem = variables.map((item)=>{
+  const variablesItem = variables?.map((item)=>{
     if(item?.format == "text"){
       let no_of_variable = item?.no_of_variable
       let variableIndexes = []
@@ -323,7 +321,7 @@ const FillingTemplates = (props)=>{
 }
 
 
-export default function Broadcast(props) {
+export default function Broadcast() {
   var classes = useStyles();
   var theme = useTheme();
   const dispatch = useDispatch()
@@ -618,9 +616,9 @@ export default function Broadcast(props) {
       if(currentMessageModalStepIndex == 0 && isValidPhoneNumber(contactNumber)
         && selectedTemplate ){
         let requestObj = {
-          template_name:selectedTemplate.name,
-          language: selectedTemplate.language,
+          id:selectedTemplate?.id
         }
+        console.log(requestObj)
         dispatch(fetchVariablesFromTemplates(requestObj))
         setMessageCurrentModalStepIndex(currentMessageModalStepIndex+1)
       }else
@@ -683,24 +681,26 @@ export default function Broadcast(props) {
       <Button
         variant="contained"
         size="medium"
-        color="secondary"
+        color="primary"
         onClick={addNewBroadCast}
         startIcon={<SendIcon/>}>New Broadcast</Button>
       <Button
         style={{marginLeft:"20px"}}
         variant="contained"
         size="medium"
-        color="secondary"
+        color="primary"
         onClick={addNewMessage}
-        startIcon={<SendIcon/>}>New Message</Button>
+        startIcon={<SendIcon/>}>New Template Message</Button>
     </Box>
   )
 
   return (
-    <Box margin={2}>
-      <PageTitle title="Braodcast History"
+   <div className="grid lg:grid-cols-12 w-full bg-appGray-500 h-screen ">
+     <div className="col-span-12 overflow-auto">
+
+     <PageTitle title="Template History"
                  button={<HeaderBtnComponent/>} />
-      {/*broadcast modal*/}
+       {/*broadcast modal*/}
       <Modal title={"New Broadcast"}
              onNext={onBroadcastModalNextClick}
              loading={loading}
@@ -720,7 +720,8 @@ export default function Broadcast(props) {
              open={openMessageModal} >
         {MessageModalStepArray[currentMessageModalStepIndex]}
       </Modal>
-      <Grid container spacing={4}>
+
+      {/*<Grid container spacing={4}>*/}
         {/*overview stats listing*/}
         {/*<Grid item xs={12}>*/}
         {/*  <Box display={"flex"} justifyContent={"space-between"}*/}
@@ -736,7 +737,7 @@ export default function Broadcast(props) {
         {/*    ))}*/}
         {/*  </Box>*/}
         {/*</Grid>*/}
-        <Grid item xs={12}>
+        {/*<Grid item xs={12}>*/}
           <Widget
             title="Recipients List"
             upperTitle
@@ -746,8 +747,9 @@ export default function Broadcast(props) {
           >
             <Table data={listData} />
           </Widget>
-        </Grid>
-      </Grid>
-    </Box>
+      {/*  </Grid>*/}
+      {/*</Grid>*/}
+       </div>
+    </div>
   );
 }

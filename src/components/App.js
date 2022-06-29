@@ -74,7 +74,6 @@ export default function App() {
 
 
   function DemoRoute({isAdmin}){
-      console.log(isAdmin)
       if(isAdmin){
           return(<Redirect to={"/app/users"} />)
       }else{

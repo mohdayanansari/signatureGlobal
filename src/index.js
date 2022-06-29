@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./styles/global.scss"
+import "./styles/tailwind.css"
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
 
@@ -10,6 +12,7 @@ import { LayoutProvider } from "./context/LayoutContext";
 import { UserProvider } from "./context/UserContext";
 import {Provider} from "react-redux";
 import store from "../src/store/index";
+
 
 ReactDOM.render(
   <Provider store={store}>

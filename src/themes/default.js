@@ -2,8 +2,8 @@ import tinycolor from "tinycolor2";
 
 // const primary = "#536DFE";
 // const primary = "#1e2833";
-const primary = "#128C7E";
-const secondary = "#4dc247";
+const primary = "#7269ee";
+const secondary = "#7269ee";
 const warning = "#FFC260";
 const success = "#3CD4A0";
 const info = "#9013FE";

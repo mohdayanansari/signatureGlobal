@@ -18,6 +18,16 @@ export default makeStyles(theme => ({
   paper:{
     backgroundColor:theme.palette.background
   },
+  headerMenuButtonSandwich: {
+    marginLeft: 9,
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 0
+    },
+    padding: theme.spacing(0.5),
+  },
+  headerMenuButtonCollapse: {
+    marginRight: theme.spacing(2),
+  },
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create("width", {
@@ -31,7 +41,7 @@ export default makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
-    width: theme.spacing(7) + 40,
+    width: theme.spacing(7) + 20,
     [theme.breakpoints.down("sm")]: {
       width: drawerWidth,
     },
