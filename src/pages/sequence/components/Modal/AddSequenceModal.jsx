@@ -155,7 +155,7 @@ const AddSequenceModal = () => {
                 onChange={(e) => setSequence(e.target.value)}
               />
               {/* date time */}
-
+              {/* 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Select Date"
@@ -173,14 +173,14 @@ const AddSequenceModal = () => {
                   onChange={(newValue) => setTimeValue(newValue)}
                   renderInput={(params) => <TextField {...params} />}
                 />
-                {/* <TimePicker
+                <TimePicker
                   value={timeValue}
                   format="hh:mm:ss"
                   onChange={(newValue) => {
                     setTimeValue(newValue);
                   }}
-                /> */}
-              </LocalizationProvider>
+                />
+              </LocalizationProvider> */}
               {/* Sequence Details */}
               <div className="bg-gray-100 flex flex-col gap-4 p-5 rounded-md">
                 <h1 className="text-2xl text-gray-800 font-bold">

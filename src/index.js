@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/global.scss"
 import "./styles/tailwind.css"
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ThemeProvider } from "@material-ui/styles";
 import { CssBaseline } from "@material-ui/core";
 

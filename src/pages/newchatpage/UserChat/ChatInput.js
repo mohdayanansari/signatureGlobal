@@ -21,10 +21,17 @@ import {
   FolderAddIcon,
 } from "@heroicons/react/solid";
 import classnames from "classnames";
+import QuickRepliesModal from "./Modals/QuickRepliesModal";
 
 const ChatInput = (props) => {
-
-  const {textValue, disabled, onSubmit, onChangeText, onFileLoad, onDocLoad} = props
+  const {
+    textValue,
+    disabled,
+    onSubmit,
+    onChangeText,
+    onFileLoad,
+    onDocLoad,
+  } = props;
 
   const [textMessage, settextMessage] = useState("");
   // const [isOpen, setisOpen] = useState(false);
@@ -85,31 +92,35 @@ const ChatInput = (props) => {
   //   settextMessage(textMessage + emoji);
   // };
 
+  // sd
+  const getQuickReplyMsg = (message) => {
+    onChangeText(message);
+  };
+
   return (
     <div className="grid place-items-center  bg-appGray-700 w-full h-[80px] px-[30px] text-white text-opacity-80 font-bold font-[24px]  shadow-xl border-t border-white border-opacity-10">
       <div className="grid items-center w-full">
         <Form>
-          <div className="flex w-full gap-10">
+          <div className="flex w-full gap-2">
             {/* col-1 */}
-            <div className="w-[80%] ">
+            <div className="w-[70%] ">
               <Input
                 type="text"
                 value={textValue}
-                onChange={(e)=>onChangeText(e.target.value)}
-                className={classnames((disabled && "disabled:cursor-not-allowed"),"w-full bg-appGray-300 border-none py-[10px] px-[15px] rounded-lg focus:ring focus:ring--appPurple-300 focus:outline-none")}
+                onChange={(e) => onChangeText(e.target.value)}
+                className={classnames(
+                  disabled && "disabled:cursor-not-allowed",
+                  "w-full bg-appGray-300 border-none py-[10px] px-[15px] rounded-lg focus:ring focus:ring--appPurple-300 focus:outline-none",
+                )}
                 placeholder="Enter Message..."
                 disabled={disabled}
               />
             </div>
 
             {/* col-2 */}
-            <div className="w-[20%] flex items-center gap-2">
-              <div id="emoji hidden">
-                {/* <Picker onSelect={addEmoji} /> */}
-              </div>
-              {/* <UncontrolledTooltip target="emoji" placement="top">
-                Emoji
-              </UncontrolledTooltip> */}
+            <div className="w-[30%] flex items-center gap-2 justify-end">
+              {/* ------------------------===Quick Replies Modal===------------------------- */}
+              <QuickRepliesModal getQuickReplyMsg={getQuickReplyMsg} />
 
               <div
                 className="relative group  flex justify-center items-center w-[40px] h-[40px] p-[5px] "
@@ -170,7 +181,10 @@ const ChatInput = (props) => {
                 color="primary"
                 disabled={disabled}
                 onClick={onSubmit}
-                className={classnames((disabled && "disabled:cursor-not-allowed"),"bg-appPurple-300 p-[10px] rounded-lg hover:bg-appPurple-400")}
+                className={classnames(
+                  disabled && "disabled:cursor-not-allowed",
+                  "bg-appPurple-300 p-[10px] rounded-lg hover:bg-appPurple-400",
+                )}
               >
                 <PaperAirplaneIcon className="w-[20px]" />
               </button>
