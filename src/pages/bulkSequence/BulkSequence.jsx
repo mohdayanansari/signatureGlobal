@@ -34,15 +34,25 @@ const BulkSequence = () => {
     e.preventDefault();
     let data = new FormData();
 
-    const date = `${dateValue.getFullYear()}-${dateValue.getMonth()}-${dateValue.getDate()}`;
+    // const date = `${dateValue.getFullYear()}-${dateValue.getMonth()}-${dateValue.getDate()}`;
+    const year = dateValue.getFullYear();
+    const month =
+      dateValue.getMonth() < 10
+        ? `0${dateValue.getMonth()}`
+        : dateValue.getMonth();
+    const day =
+      dateValue.getDate() < 10
+        ? `0${dateValue.getDate()}`
+        : dateValue.getDate();
+    const date = `${year}-${month}-${day}`;
     let hours = timeValue.getHours();
     let mins = timeValue.getMinutes();
-    hours = hours / 10 < 1 ? "0" + hours : hours;
-    mins = mins / 10 < 1 ? "0" + mins : mins;
+    hours = hours / 10 < 1 ? `0${hours}` : hours;
+    mins = mins / 10 < 1 ? `0${mins}` : mins;
     console.log("mins::", mins, "hours::", hours);
     const time = `${hours}:${mins}:00`;
 
-    console.log("bulkcsv", bulkCSV)
+    // console.log("bulkcsv", bulkCSV);
     data.append("file", bulkCSV);
     data.append("template_name", bulkInput.template_name);
     data.append("namespace", bulkInput.namespace);
@@ -60,7 +70,8 @@ const BulkSequence = () => {
       data: data,
     };
 
-    console.log(data);
+    console.log("Date::", date);
+    console.log("Time::", time);
     try {
       await axios(config);
     } catch (error) {
@@ -72,7 +83,7 @@ const BulkSequence = () => {
     <div className="h-screen bg-appGray-500">
       {/* Navbar */}
       <div className="h-[80px] flex items-center px-[30px] py-[20px]">
-        <h1 className="text-white font-bold text-3xl">Send Sequence in Bulk</h1>
+        <h1 className="text-3xl font-bold text-white">Send Sequence in Bulk</h1>
       </div>
       {/* Navbar END*/}
 
@@ -192,7 +203,7 @@ const BulkSequence = () => {
               constiant="contained"
               type="submit"
               endIcon={<SendIcon />}
-              className="bg-gray-800 text-white sticky bottom-0 ml-3"
+              className="sticky bottom-0 ml-3 text-white bg-gray-800"
             >
               Submit
             </Button>

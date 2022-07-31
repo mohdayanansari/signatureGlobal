@@ -50,7 +50,7 @@ const AddSequenceModal = () => {
           {
             headers: {
               Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTgyNDYxNiwianRpIjoiNzNjMzRjNGEtZGQ0ZC00MzcwLWFmMDMtMDU1MDU3MWY5MWM4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im92QHBhYXBvcy5jb20iLCJuYmYiOjE2NTE4MjQ2MTZ9.93IxW_y8leotMOKnfV_1XglGPgbhgyvxillSOn8OIWc",
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
             },
           },
         );
@@ -118,7 +118,7 @@ const AddSequenceModal = () => {
     <div>
       <Button
         onClick={handleOpen}
-        className="p-2 bg-purple-400 rounded-md text-white px-5 font-bold shadow"
+        className="p-2 px-5 font-bold text-white bg-purple-400 rounded-md shadow"
       >
         Add Sequence
       </Button>
@@ -139,7 +139,7 @@ const AddSequenceModal = () => {
             sx={style}
             className="rounded-lg outline-none border-none shadow-md w-[600px]"
           >
-            <h1 className="text-2xl text-gray-800 font-bold">Add Sequence</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Add Sequence</h1>
             <hr className="mb-2" />
             <form
               onSubmit={handleSubmit}
@@ -182,8 +182,8 @@ const AddSequenceModal = () => {
                 />
               </LocalizationProvider> */}
               {/* Sequence Details */}
-              <div className="bg-gray-100 flex flex-col gap-4 p-5 rounded-md">
-                <h1 className="text-2xl text-gray-800 font-bold">
+              <div className="flex flex-col gap-4 p-5 bg-gray-100 rounded-md">
+                <h1 className="text-2xl font-bold text-gray-800">
                   Sequence Details
                 </h1>
                 {generateArray().map((jobNumber, index) => (
@@ -209,7 +209,7 @@ const AddSequenceModal = () => {
                 constiant="contained"
                 type="submit"
                 endIcon={<SendIcon />}
-                className="bg-gray-800 text-white sticky bottom-0 ml-3"
+                className="sticky bottom-0 ml-3 text-white bg-gray-800"
               >
                 Submit
               </Button>
