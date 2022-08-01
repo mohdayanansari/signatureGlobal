@@ -80,18 +80,18 @@ const BulkSequence = () => {
   };
 
   return (
-    <div className="h-screen bg-appGray-500">
+    <div className="h-screen ">
       {/* Navbar */}
-      <div className="h-[80px] flex items-center px-[30px] py-[20px]">
-        <h1 className="text-3xl font-bold text-white">Send Sequence in Bulk</h1>
+      <div className="h-[60px] flex items-center px-[30px] border-b border-white/20 py-[20px]">
+        <h1 className="text-lg font-semibold text-white/80">Send Sequence in Bulk</h1>
       </div>
       {/* Navbar END*/}
 
       {/* form */}
-      <div>
+      <div className="py-5 overflow-y-auto h-[90vh]">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-10 rounded-md mx-[30px] max-w-max bg-opacity-90"
+          className="bg-white/60 p-10 rounded-md mx-[30px] max-w-max bg-opacity-90"
         >
           <Box
             component="form"
@@ -106,11 +106,11 @@ const BulkSequence = () => {
               <input
                 type="file"
                 id="file-input"
-                className="file-input__input"
+                className="file-input__input text-white"
                 accept=".csv"
                 onChange={(e) => setBulkCSV(e.target.files[0])}
               />
-              <label className="file-input__label" for="file-input">
+              <label className="file-input__label " for="file-input">
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -141,7 +141,7 @@ const BulkSequence = () => {
               id="standard-basic"
               label="Template Name"
               variant="standard"
-              className="w-full"
+              className="w-full "
               name="template_name"
               value={bulkInput.template_name}
               onChange={handleChange}

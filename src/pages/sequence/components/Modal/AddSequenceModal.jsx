@@ -118,7 +118,7 @@ const AddSequenceModal = () => {
     <div>
       <Button
         onClick={handleOpen}
-        className="p-2 px-5 font-bold text-white bg-purple-400 rounded-md shadow"
+        className="p-2 px-5 font-semibold bg-[#FED500] text-black rounded-md shadow"
       >
         Add Sequence
       </Button>

@@ -12,7 +12,7 @@ const Sequence = () => {
   return (
     <div>
       {/* Nabvar */}
-      <div className="flex  justify-between px-[30px] items-center h-[80px] bg-white shadow-lg w-full ">
+      <div className="flex  justify-between px-[30px] items-center h-[80px] border-b border-white border-opacity-20 shadow-lg w-full ">
         <SearchSequenceModal />
         <div className="flex gap-4">
           <SendSequenceModal />
@@ -23,14 +23,14 @@ const Sequence = () => {
       {/* Show data */}
       <div className="pt-10 p-20 overflow-y-auto h-[85vh]">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <Tab.List className="flex space-x-1 rounded-xl bg-white/10 p-1">
             <Tab
               className={({ selected }) =>
                 `${
                   selected
-                    ? "bg-white shadow"
-                    : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-                } w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2`
+                    ? "bg-[#FED500] shadow"
+                    : "text-white hover:bg-white/[0.12] hover:text-white"
+                } w-full rounded-lg py-2.5 text-sm font-medium leading-5 focus:outline-none focus:ring-2`
               }
             >
               <h1>Sequence</h1>
@@ -39,9 +39,9 @@ const Sequence = () => {
               className={({ selected }) =>
                 `${
                   selected
-                    ? "bg-white shadow"
+                    ? "bg-[#FED500] shadow"
                     : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-                } w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2`
+                } w-full rounded-lg py-2.5 text-sm font-medium leading-5 `
               }
             >
               <h1>Jobs</h1>
@@ -54,14 +54,14 @@ const Sequence = () => {
             {/* --------------------------TAB--1--------------------------------- */}
             <Tab.Panel
               className={
-                "rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+                "rounded-xl p-3  focus:outline-none"
               }
             >
               <SequenceTabOne />
             </Tab.Panel>
             <Tab.Panel
               className={
-                "rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+                "rounded-xl  p-3"
               }
             >
               <JobsTabTwo />

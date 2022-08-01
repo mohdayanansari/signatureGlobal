@@ -26,18 +26,18 @@ const ShowSequence = () => {
   return (
     <div>
       {/* Nabvar */}
-      <div className="flex  justify-between px-[30px] items-center h-[80px] bg-white shadow-lg w-full ">
-        <h1 className="text-xl font-bold text-gray-700">List of Sequences</h1>
+      <div className="flex  justify-between px-[30px] items-center h-[80px] border-b border-white/10 shadow-lg w-full ">
+        <h1 className="text-xl font-semibold text-white/80">List of Sequences</h1>
       </div>
       {/* ================ */}
-      <div className="p-5 overflow-y-auto h-[90vh]">
+      <div className="p-5 overflow-y-auto h-[85vh]">
         {sequences.length > 0 &&
           sequences.map((item, index) => (
             <div
               key={index}
               className={`${
-                index % 2 ? "bg-purple-200" : "bg-purple-100"
-              }  transition-all duration-100 transform  ease-in-out hover:cursor-pointer hover:bg-purple-400 hover:shadow hover:z-10 hover:rounded-md font-bold text-lg text-gray-700 hover:text-white hover:text-2xl px-10 py-5` }
+                index % 2 ? "bg-white/10" : "bg-white/20"
+              }  transition-all duration-100 transform  ease-in-out hover:cursor-pointer hover:bg-white/50 hover:shadow hover:z-10 hover:rounded-md font-bold text-lg text-white/80 hover:text-white hover:text-2xl px-10 py-5` }
             >
               <div>
                 <h1>

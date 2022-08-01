@@ -33,7 +33,7 @@ export default function Widget({
 
   return (
     <div className={classes.widgetWrapper} style={style && {...style}}>
-      <div className={classnames(classes.paper,"bg-appGray-500")} classes={{ root: classnames(classes.widgetRoot, {
+      <div className={classnames(classes.paper,"")} classes={{ root: classnames(classes.widgetRoot, {
         [classes.noWidgetShadow]: noWidgetShadow
         }) }}>
         <div className={classnames(classes.widgetHeader, {
@@ -44,7 +44,7 @@ export default function Widget({
             header
           ) : (
             <React.Fragment>
-              <Typography variant="h5" className="text-white opacity-80 font-semibold" noWrap>
+              <Typography variant="h5" className="text-white text-opacity-75 text-center ml-2 font-medium" noWrap>
                 {title}
               </Typography>
               {!disableWidgetMenu && (

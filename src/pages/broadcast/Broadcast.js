@@ -681,21 +681,21 @@ export default function Broadcast() {
       <Button
         variant="contained"
         size="medium"
-        color="primary"
+        className="bg-[#FED500] hover:bg-[#caa901] hover:text-white hover:text-opacity-80"
         onClick={addNewBroadCast}
         startIcon={<SendIcon/>}>New Broadcast</Button>
       <Button
         style={{marginLeft:"20px"}}
         variant="contained"
         size="medium"
-        color="primary"
+        className="bg-[#FED500] hover:bg-[#caa901] hover:text-white hover:text-opacity-80"
         onClick={addNewMessage}
         startIcon={<SendIcon/>}>New Template Message</Button>
     </Box>
   )
 
   return (
-   <div className="grid lg:grid-cols-12 w-full bg-appGray-500 h-screen ">
+   <div className="grid lg:grid-cols-12 w-full h-screen ">
      <div className="col-span-12 overflow-auto">
 
      <PageTitle title="Template History"

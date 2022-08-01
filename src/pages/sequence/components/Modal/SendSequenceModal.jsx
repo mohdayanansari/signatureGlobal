@@ -69,7 +69,7 @@ const SendSequenceModal = () => {
     <div>
       <Button
         onClick={handleOpen}
-        className="p-2  ring-1 ring-purple-400 rounded-md text-purple-400 px-5 font-bold shadow"
+        className="p-2  ring-1 ring-white ring-opacity-70 text-opacity-70 rounded-md text-white px-5 font-bold shadow"
       >
         Send Sequence
       </Button>

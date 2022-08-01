@@ -44,19 +44,22 @@ const SequenceTabOne = () => {
               {({ open }) => (
                 <>
                   <Disclosure.Button
-                    className="flex shadow w-full ring ring-offset-2  justify-between rounded-lg text-white  px-4 py-5 text-left text-sm font-medium ring-purple-200  hover:bg-white hover:text-gray-600 hover:border focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 mb-5 transition-all ease-linear duration-100 transform"
+                    className="flex shadow w-full   justify-between rounded-lg text-white  px-4 py-5 text-left text-sm font-medium    hover:text-gray-600 hover:border focus:outline-none  mb-5 transition-all ease-linear duration-100 transform"
                     style={{
-                      backgroundColor: index % 2 ? "#8058c4" : "#a16ef5",
+                      backgroundColor:
+                        index % 2
+                          ? "rgba(255, 255, 255, 0.10)"
+                          : "rgba(255, 255, 255, 0.15)",
                     }}
                   >
-                    <span className="text-xl">
-                      <span className="font-bold">Sequence Name: </span>
-                      {sequence.sequence_name}
+                    <span className="text-lg">
+                      <span className="text-white/90 font-semibold">Sequence Name: </span>
+                      <span className="text-white/60">{sequence.sequence_name}</span>
                     </span>
                     <ChevronUpIcon
                       className={`${
                         open ? "rotate-180 transform" : ""
-                      } h-5 w-5 text-purple-900 transition-all ease-in-out duration-300`}
+                      } h-5 w-5 text-white/50 transition-all ease-in-out duration-300`}
                     />
                   </Disclosure.Button>
                   <Transition
@@ -81,8 +84,8 @@ const SequenceTabOne = () => {
                               <div
                                 key={i}
                                 className={`${
-                                  i % 2 ? " bg-purple-200" : "bg-purple-300"
-                                } p-2 rounded mb-[5px] transform transition-all ease-in-out duration-200 hover:scale-105 hover:cursor-pointer hover:shadow-xl text-purple-500 font-bold`}
+                                  i % 2 ? " bg-[#d4b100]" : "bg-[#FED500]"
+                                } p-2 rounded mb-[5px] transform transition-all ease-in-out duration-200 hover:scale-105 hover:cursor-pointer hover:shadow-xl text-black  font-semibold`}
                               >
                                 {sqItem.template}
                               </div>
@@ -97,8 +100,8 @@ const SequenceTabOne = () => {
                               <div
                                 key={j}
                                 className={`${
-                                  j % 2 ? " bg-purple-200" : "bg-purple-300"
-                                } p-2 rounded mb-[5px] transform transition-all ease-in-out duration-200 hover:scale-105 hover:cursor-pointer hover:shadow-xl text-purple-500 font-bold`}
+                                  j % 2 ? " bg-[#d4b100]" : "bg-[#FED500]"
+                                } p-2 rounded mb-[5px] transform transition-all ease-in-out duration-200 hover:scale-105 hover:cursor-pointer hover:shadow-xl text-black font-semibold`}
                               >
                                 {formatTimeDiff(sqItem.timediff)}
                               </div>

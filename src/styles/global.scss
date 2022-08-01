@@ -3,7 +3,20 @@
   padding: 0px;
   box-sizing: border-box;
 }
-
+body {
+  background-image: url("../images/bgsaad.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.glass-des {
+  background: rgba(255, 255, 255, 0.123);
+  // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  // backdrop-filter: blur(4px);
+  // -webkit-backdrop-filter: blur(4px);
+  // border-radius: 10px;
+  // border: 1px solid rgba(255, 255, 255, 0.18);
+}
 .custom-scroll {
   height: calc(100vh - 190px);
 }
@@ -35,11 +48,11 @@
   // transform: rotate(10deg);
   z-index: 1;
 }
-.custom-design-chat-right-container{
+.custom-design-chat-right-container {
   position: relative;
   z-index: 100;
 }
-.custom-design-chat-right-container::after{
+.custom-design-chat-right-container::after {
   content: "";
   position: absolute;
   width: 30px;
@@ -136,24 +149,21 @@
   }
 }
 
-
 // !!! INPUT FORM
 /*********************************
    CUSTOM INPUT FILES FOR IMAGES
  *********************************/
 
-
 /*** GENERAL STYLES ***/
 
-#page{
+#page {
   text-align: center;
-  h1{
+  h1 {
     // margin-bottom: 4rem;
-    font-family: 'Lemonada', cursive;
+    font-family: "Lemonada", cursive;
     text-transform: uppercase;
     font-weight: normal;
     color: #fff;
-    font-size: 2rem; 
+    font-size: 2rem;
   }
 }
-

@@ -89,9 +89,9 @@ export default function SidebarLink({
       if(isLinkActive){
           return (
               <>
-                  <Link to={link} id={uid} className="bg-appGray-200 my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+                  <Link to={link} id={uid} className="glass-des my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
                       {activeIcon}
-                      {isSidebarOpened && <p className="text-appPurple-300 ml-2">{label}</p>}
+                      {isSidebarOpened && <p className="text-white ml-2">{label}</p>}
                   </Link>
                   {/*<UncontrolledTooltip target={uid} placement="top">*/}
                   {/*    {label}*/}

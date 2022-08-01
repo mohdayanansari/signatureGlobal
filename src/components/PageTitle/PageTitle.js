@@ -11,7 +11,7 @@ export default function PageTitle(props) {
 
   return (
     <div className={classNames(classes.pageTitleContainer, "px-[30px] shadow-xl border-b border-white border-opacity-10")}>
-        <h1 className="text-white opacity-80 text-[30px] font-semibold">
+        <h1 className="text-white opacity-80 text-[22px] font-medium">
             {props.title}
         </h1>
       {props.button && props.button}

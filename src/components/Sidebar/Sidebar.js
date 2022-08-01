@@ -55,42 +55,40 @@ const structure = [
     label: "Broadcast History",
     uid: "broadcast-history",
     link: "/app/dashboard",
-    activeIcon: <StatusOnlineIcon className="w-8 h-8 text-appPurple-300" />,
-    inActiveIcon: (
-      <StatusOnlineIcon className="w-8 h-8 text-appWhiteText-200" />
-    ),
+    activeIcon: <StatusOnlineIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <StatusOnlineIcon className="w-8 h-8 text-[#c0a002]" />,
   },
   {
     id: 1,
     label: "Individual Chat",
     uid: "chats",
     link: "/app/chat",
-    activeIcon: <ChatIcon className="w-8 h-8 text-appPurple-300" />,
-    inActiveIcon: <ChatIcon className="w-8 h-8 text-appWhiteText-200" />,
+    activeIcon: <ChatIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <ChatIcon className="w-8 h-8 text-[#c0a002]" />,
   },
   {
     id: 2,
     label: "Sequence",
     uid: "sequence",
     link: "/app/sequence",
-    activeIcon: <AdjustmentsIcon className="w-8 h-8 text-appPurple-300" />,
-    inActiveIcon: <AdjustmentsIcon className="w-8 h-8 text-appWhiteText-200" />,
+    activeIcon: <AdjustmentsIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <AdjustmentsIcon className="w-8 h-8 text-[#c0a002]" />,
   },
   {
     id: 3,
     label: "Show Sequence",
     uid: "showSequence",
     link: "/app/show-sequence",
-    activeIcon: <CollectionIcon className="w-8 h-8 text-appPurple-300" />,
-    inActiveIcon: <CollectionIcon className="w-8 h-8 text-appWhiteText-200" />,
+    activeIcon: <CollectionIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <CollectionIcon className="w-8 h-8 text-[#c0a002]" />,
   },
   {
     id: 4,
     label: "Bulk Sequence",
     uid: "bulkSequence",
     link: "/app/bulk-sequence",
-    activeIcon: <DatabaseIcon className="w-8 h-8 text-appPurple-300" />,
-    inActiveIcon: <DatabaseIcon className="w-8 h-8 text-appWhiteText-200" />,
+    activeIcon: <DatabaseIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <DatabaseIcon className="w-8 h-8 text-[#c0a002]" />,
   },
 ];
 const adminStructure = [
@@ -164,7 +162,7 @@ function Sidebar(props) {
           [classes.drawerOpen]: layoutState.isSidebarOpened,
           [classes.drawerClose]: !layoutState.isSidebarOpened,
         },
-        "h-screen bg-appGray-300 hidden lg:col-span-2 lg:flex flex-col items-center  shadow-xl",
+        "h-screen border-r border-gray-100 border-opacity-20 hidden lg:col-span-2 lg:flex flex-col items-center  shadow-xl",
       )}
     >
       {/*<IconButton*/}
@@ -178,11 +176,11 @@ function Sidebar(props) {
       {layoutState.isSidebarOpened ? (
         <Link
           className={
-            "bg-appGray-200 my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60"
+            "bg-appGray-700 my-2 w-4/5 [#FED500] h-14 flex justify-center items-center rounded-xl opacity-60"
           }
           onClick={() => toggleSidebar(layoutDispatch)}
         >
-          <ArrowLeftIcon className={" w-10 h-10 text-appWhiteText-200 "} />
+          <ArrowLeftIcon className={" w-10 h-10 text-[#FED500] "} />
         </Link>
       ) : (
         <Link
@@ -191,7 +189,7 @@ function Sidebar(props) {
           }
           onClick={() => toggleSidebar(layoutDispatch)}
         >
-          <MenuAlt1Icon className={"text-appPurple-300 w-8 h-8 "} />
+          <MenuAlt1Icon className={"text-[#FED500] w-8 h-8 "} />
         </Link>
       )}
       {/*</IconButton>*/}
@@ -225,7 +223,6 @@ function Sidebar(props) {
         </MuiThemeProvider>
       </Modal>
       {/*<List className={classes.sidebarList}>*/}
-      <div className={"pt-[5vh]"}></div>
       {isAdmin ? (
         <>
           {adminStructure.map((link) => (
@@ -249,14 +246,14 @@ function Sidebar(props) {
           ))}
         </>
       )}
-      <div className={"pt-[50vh]"}></div>
+      <div className={"pt-[30vh]"}></div>
 
       <div
         onClick={() => {
           dispatch(logout());
           props.history.push("/login");
         }}
-        className="cursor-pointer my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60"
+        className="cursor-pointer bg-white/10 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60"
       >
         <LogoutIcon className="w-8 h-8 text-appWhiteText-200" />
         {isSidebarOpened && (

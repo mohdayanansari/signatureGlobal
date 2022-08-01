@@ -1,0 +1,42 @@
+<svg width="1728" height="1117" viewBox="0 0 1728 1117" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_20_2)">
+<rect width="1728" height="1117" fill="black"/>
+<g filter="url(#filter0_f_20_2)">
+<circle cx="1747" cy="181" r="378" fill="#0E2133"/>
+</g>
+<g filter="url(#filter1_f_20_2)">
+<circle cx="991" cy="324" r="378" fill="#211724"/>
+</g>
+<g filter="url(#filter2_f_20_2)">
+<circle cx="426" cy="339" r="378" fill="#0E2133"/>
+</g>
+<g filter="url(#filter3_f_20_2)">
+<rect y="434" width="1771" height="885" fill="#0B2435"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_20_2" x="1065" y="-501" width="1364" height="1364" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="152" result="effect1_foregroundBlur_20_2"/>
+</filter>
+<filter id="filter1_f_20_2" x="309" y="-358" width="1364" height="1364" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="152" result="effect1_foregroundBlur_20_2"/>
+</filter>
+<filter id="filter2_f_20_2" x="-385" y="-472" width="1622" height="1622" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="216.5" result="effect1_foregroundBlur_20_2"/>
+</filter>
+<filter id="filter3_f_20_2" x="-571" y="-137" width="2913" height="2027" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="285.5" result="effect1_foregroundBlur_20_2"/>
+</filter>
+<clipPath id="clip0_20_2">
+<rect width="1728" height="1117" fill="white"/>
+</clipPath>
+</defs>
+</svg>

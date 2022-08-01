@@ -52,7 +52,7 @@ const SearchSequenceModal = () => {
     <div>
       <Button
         onClick={handleOpen}
-        className="p-2 bg-purple-400 rounded-md text-white px-5 font-bold shadow transform transition-all duration-300 hover:bg-purple-500 "
+        className="p-2 bg-[#FED500] text-black rounded-md  px-5 font-semibold shadow transform transition-all duration-300 hover:scale-95 "
       >
         Search Sequence
       </Button>
