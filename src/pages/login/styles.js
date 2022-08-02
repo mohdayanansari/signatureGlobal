@@ -1,13 +1,15 @@
 import { makeStyles } from "@material-ui/styles";
 
-export default makeStyles(theme => ({
-  wrapper:{
+export default makeStyles((theme) => ({
+  wrapper: {
     width: "90%",
     display: "flex",
-    height: "90%" ,
-    borderRadius:20,
-    backgroundColor:theme.palette.secondary.contrastText,
-    boxShadow: "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset"
+    height: "90%",
+    borderRadius: 20,
+    border: "1px solid rgba(255, 255, 255, 0.25)",
+    // backgroundColor:theme.palette.secondary.contrastText,
+    boxShadow:
+      "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
   },
   container: {
     height: "100vh",
@@ -15,14 +17,14 @@ export default makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    backgroundColor:theme.palette.primary.main
+    // position: "absolute",
+    // top: 0,
+    // left: 0,
+    // backgroundColor:theme.palette.primary.main
   },
   logotypeContainer: {
-    position:"relative",
-    borderRadius:20,
+    position: "relative",
+    borderRadius: 20,
     // backgroundColor: theme.palette.homebck.main,
     width: "60%",
     height: "100%",
@@ -37,20 +39,20 @@ export default makeStyles(theme => ({
       display: "none",
     },
   },
-  notBotLogo:{
+  notBotLogo: {
     width: "150px",
     position: "absolute",
     top: "20px",
-    left: "40px"
-
+    left: "40px",
   },
   logotypeImage: {
     width: "50%",
+    border: 10,
     marginBottom: theme.spacing(4),
   },
   logotypeText: {
-    color: theme.palette.primary.main,
-    fontWeight: 500,
+    color: "#FED500",
+    fontWeight: 900,
     fontSize: 40,
     [theme.breakpoints.down("md")]: {
       fontSize: 48,
@@ -59,8 +61,10 @@ export default makeStyles(theme => ({
   formContainer: {
     width: "40%",
     height: "100%",
-    backgroundColor: theme.palette.homebck.main,
+    backgroundColor: "rgba(255, 255, 255, 0.80)",
     display: "flex",
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -69,7 +73,7 @@ export default makeStyles(theme => ({
     },
   },
   form: {
-    padding:"0px 50px",
+    padding: "0px 50px",
     minWidth: 320,
   },
   tab: {
@@ -157,8 +161,8 @@ export default makeStyles(theme => ({
   loginLoader: {
     marginLeft: theme.spacing(4),
   },
-  loginBtn:{
-    color:theme.palette.secondary.contrastText
+  loginBtn: {
+    color: theme.palette.secondary.contrastText,
   },
   copyright: {
     marginTop: theme.spacing(4),

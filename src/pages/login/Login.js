@@ -7,9 +7,11 @@ import {
   Tabs,
   Tab,
   TextField,
-  Fade, FormLabel, InputAdornment,
+  Fade,
+  FormLabel,
+  InputAdornment,
 } from "@material-ui/core";
-import {Email, VpnKey} from "@material-ui/icons"
+import { Email, VpnKey } from "@material-ui/icons";
 import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 
@@ -22,7 +24,7 @@ import notBotLogo from "../../images/notbot-logo.png";
 import google from "../../images/google.svg";
 
 // context
-import { useDispatch , useStore , useSelector} from "react-redux";
+import { useDispatch, useStore, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducer/login";
 import { Label } from "@material-ui/icons";
 
@@ -30,43 +32,49 @@ function Login(props) {
   var classes = useStyles();
 
   // global
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // local
   var [error, setError] = useState(null);
   var [activeTabId, setActiveTabId] = useState(0);
   var [nameValue, setNameValue] = useState("");
   var [loginValue, setLoginValue] = useState("");
   var [passwordValue, setPasswordValue] = useState("");
-  const loginError = useSelector((state)=>state.login.error)
-  const isLoading = useSelector((state)=>state.login.loading)
+  const loginError = useSelector((state) => state.login.error);
+  const isLoading = useSelector((state) => state.login.loading);
 
-  useEffect(()=>{
-    setError(loginError)
-  },[loginError])
+  useEffect(() => {
+    setError(loginError);
+  }, [loginError]);
 
-
-  const getLoggedIn = ()=>{
-    if(loginValue.toString().length > 4 && passwordValue.toString().length > 4){
+  const getLoggedIn = () => {
+    if (
+      loginValue.toString().length > 4 &&
+      passwordValue.toString().length > 4
+    ) {
       let obj = {
-        "email": loginValue,
-        "password": passwordValue
-      }
-      dispatch(loginUser(obj))
-
-    }else{
-      setError(true)
+        email: loginValue,
+        password: passwordValue,
+      };
+      dispatch(loginUser(obj));
+    } else {
+      setError(true);
     }
-  }
-
+  };
 
   return (
     <Grid container className={classes.container}>
       <div className={classes.wrapper}>
         <div className={classes.logotypeContainer}>
-          <img src={"https://signaturegurgaonindia.com/images/builder-logo.png"} alt="logo" className={classes.notBotLogo} />
+          <img
+            src={"https://signaturegurgaonindia.com/images/builder-logo.png"}
+            alt="logo"
+            className={classes.notBotLogo}
+          />
           {/*<img src={notBotLogo} alt="logo" className={classes.notBotLogo} />*/}
           <img src={logo} alt="logo" className={classes.logotypeImage} />
-          <Typography className={classes.logotypeText}>Whatsapp Dashboard</Typography>
+          <Typography className={classes.logotypeText}>
+            WHATSAPP DASHBOARD
+          </Typography>
         </div>
         <div className={classes.formContainer}>
           <div className={classes.form}>
@@ -94,11 +102,16 @@ function Login(props) {
                 {/*  <Typography className={classes.formDividerWord}>or</Typography>*/}
                 {/*  <div className={classes.formDivider} />*/}
                 {/*</div>*/}
-                {error && <Fade in={error}>
-                  <Typography color="secondary" className={classes.errorMessage}>
-                    Something is wrong with your login or password :(
-                  </Typography>
-                </Fade>}
+                {error && (
+                  <Fade in={error}>
+                    <Typography
+                      color="secondary"
+                      className={classes.errorMessage}
+                    >
+                      Something is wrong with your login or password :(
+                    </Typography>
+                  </Fade>
+                )}
                 {/*<FormLabel for={"email"}>Enter Email</FormLabel>*/}
                 <TextField
                   id="email"
@@ -110,7 +123,7 @@ function Login(props) {
                   }}
                   variant={"outlined"}
                   value={loginValue}
-                  onChange={e => setLoginValue(e.target.value)}
+                  onChange={(e) => setLoginValue(e.target.value)}
                   margin="normal"
                   placeholder="Email Adress"
                   type="email"
@@ -132,10 +145,9 @@ function Login(props) {
                       input: classes.textField,
                     },
                   }}
-
                   value={passwordValue}
                   variant={"outlined"}
-                  onChange={e => setPasswordValue(e.target.value)}
+                  onChange={(e) => setPasswordValue(e.target.value)}
                   margin="normal"
                   placeholder="Password"
                   type="password"
@@ -150,7 +162,10 @@ function Login(props) {
                 />
                 <div className={classes.formButtons}>
                   {isLoading ? (
-                    <CircularProgress size={26} className={classes.loginLoader} />
+                    <CircularProgress
+                      size={26}
+                      className={classes.loginLoader}
+                    />
                   ) : (
                     <Button
                       disabled={
