@@ -29,6 +29,7 @@ const Jobs = ({ templates, sequenceName, index, deleteJob }) => {
     });
   }, [template, day, sec, min, hour, index, dispatch]);
 
+
   return (
     <div className="flex bg-gray-200 p-3 rounded-lg ">
       <div className="flex-1 flex flex-col gap-4">
@@ -56,7 +57,7 @@ const Jobs = ({ templates, sequenceName, index, deleteJob }) => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={templates.map((template, i) => ({
+          options={templates?.map((template, i) => ({
             label: `${template.name}_${template.language}`,
             index: i,
           }))}
@@ -122,7 +123,7 @@ const Jobs = ({ templates, sequenceName, index, deleteJob }) => {
       </div>
       {index > 0 && (
         <button
-          className=" shadow-md bg-slate-700 text-white font-bold text-xl rounded-full w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-500"
+          className=" shadow-md bg-red-300 text-red-600 font-bold text-xl rounded-full w-[30px] h-[30px] flex justify-center items-center hover:bg-red-400"
           type="button"
           onClick={() => deleteJob(index)}
         >

@@ -34,7 +34,7 @@ const RemoveJobModal = ({jobPhone}) => {
     <div>
       <Button
         onClick={handleOpen}
-        className="bg-white w-[200px] shadow-lg border border-gray-100 first-letter: p-4 rounded-md text-gray-600 font-bold transform transition-all duration-300 ease-in-out hover:bg-purple-200 hover:scale-95 "
+        className="bg-[#FED500] w-[200px] shadow-lg border border-gray-100 first-letter: p-4 rounded-md text-black font-bold transform transition-all duration-300 ease-in-out hover:bg-purple-200 hover:scale-95 "
       >
         Remove Job
       </Button>
@@ -75,7 +75,7 @@ const RemoveJobModal = ({jobPhone}) => {
                 constiant="contained"
                 type="submit"
                 endIcon={<SendIcon />}
-                className="bg-purple-500 shadow text-white sticky bottom-0 ml-3"
+                className="bg-[#FED500] shadow text-black sticky bottom-0 ml-3"
               >
                 Submit
               </Button>

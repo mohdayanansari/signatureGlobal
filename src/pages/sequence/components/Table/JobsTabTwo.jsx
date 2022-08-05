@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 // Headless UI
@@ -11,9 +11,11 @@ import RemoveJobModal from "../Modal/RemoveJobModal";
 const JobsTabTwo = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const componentMounted = useRef(true);
 
   useEffect(() => {
     (async () => {
+      // setIsLoading(true);
       var config = {
         method: "get",
         url: "https://api.notbot.in/alljobs",
@@ -24,8 +26,15 @@ const JobsTabTwo = () => {
       };
       try {
         const res = await axios(config);
-        setJobs(res.data);
-        setIsLoading(true);
+        if (componentMounted.current) {
+          // (5) is component still mounted?
+          setJobs(res.data); // (1) write data to state
+          setIsLoading(true); // (2) write some value to state
+        }
+        return () => {
+          // This code runs when component is unmounted
+          componentMounted.current = false; // (4) set it to false when we leave the page
+        };
       } catch (error) {
         console.log(error);
       }
@@ -51,7 +60,9 @@ const JobsTabTwo = () => {
                   }}
                 >
                   <span className="text-lg">
-                    <span className="text-white/90 font-semibold">Sequence Name: </span>
+                    <span className="text-white/90 font-semibold">
+                      Sequence Name:{" "}
+                    </span>
                     <span className="text-white/60">{job.sequence}</span>
                   </span>
                   <ChevronUpIcon

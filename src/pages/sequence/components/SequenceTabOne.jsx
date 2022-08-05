@@ -7,6 +7,7 @@ import UpdateSequenceModal from "./Modal/UpdateSequenceModal";
 
 const SequenceTabOne = () => {
   const [sequences, setSequences] = useState([]);
+  const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -21,6 +22,27 @@ const SequenceTabOne = () => {
       try {
         const res = await axios(config);
         setSequences(res.data.sequence);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(
+          "https://api.notbot.in/v1/configs/templates",
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
+            },
+          },
+        );
+        // console.log("templates data:::", resp.data);
+        setTemplates(res.data.waba_templates);
+        console.log("Templates::", res.data);
       } catch (error) {
         console.log(error);
       }
@@ -53,8 +75,12 @@ const SequenceTabOne = () => {
                     }}
                   >
                     <span className="text-lg">
-                      <span className="text-white/90 font-semibold">Sequence Name: </span>
-                      <span className="text-white/60">{sequence.sequence_name}</span>
+                      <span className="text-white/90 font-semibold">
+                        Sequence Name:{" "}
+                      </span>
+                      <span className="text-white/60">
+                        {sequence.sequence_name}
+                      </span>
                     </span>
                     <ChevronUpIcon
                       className={`${
@@ -112,6 +138,7 @@ const SequenceTabOne = () => {
                       <div className="pt-10 flex justify-end">
                         <UpdateSequenceModal
                           sequenceData={sequence}
+                          templates={templates}
                           index={index}
                         />
                       </div>

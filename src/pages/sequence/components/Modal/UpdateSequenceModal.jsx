@@ -29,38 +29,17 @@ const style = {
   p: 4,
 };
 
-const UpdateSequenceModal = ({ sequenceData, index }) => {
+const UpdateSequenceModal = ({ sequenceData, index, templates }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [sequence, setSequence] = useState("");
-  const [templates, setTemplates] = useState([]);
   const [jobCount, setJobCount] = useState(1);
   const [dateValue, setDateValue] = useState(new Date());
   const [timeValue, setTimeValue] = useState(new Date());
 
   const JobsArray = useSelector((state) => state.jobs.jobs);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const resp = await axios.get(
-          "https://api.notbot.in/v1/configs/templates",
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTgyNDYxNiwianRpIjoiNzNjMzRjNGEtZGQ0ZC00MzcwLWFmMDMtMDU1MDU3MWY5MWM4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im92QHBhYXBvcy5jb20iLCJuYmYiOjE2NTE4MjQ2MTZ9.93IxW_y8leotMOKnfV_1XglGPgbhgyvxillSOn8OIWc",
-            },
-          },
-        );
-        // console.log("templates data:::", resp.data);
-        setTemplates(resp.data.waba_templates);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   const addJob = () => {
     setJobCount(jobCount + 1);
@@ -199,7 +178,7 @@ const UpdateSequenceModal = ({ sequenceData, index }) => {
                   />
                 ))}
                 <button
-                  className=" shadow-md bg-blue-500 text-white font-bold text-xl rounded-full w-[30px] h-[30px] flex justify-center items-center hover:bg-blue-700"
+                  className=" shadow-md bg-[#FED500] text-black font-bold text-xl rounded-full w-[30px] h-[30px] flex justify-center items-center hover:bg-[#b49600]"
                   type="button"
                   onClick={addJob}
                 >
@@ -211,7 +190,7 @@ const UpdateSequenceModal = ({ sequenceData, index }) => {
                 constiant="contained"
                 type="submit"
                 endIcon={<SendIcon />}
-                className="bg-purple-500 shadow text-white sticky bottom-0 ml-3"
+                className="bg-[#FED500] shadow text-black sticky bottom-0 ml-3"
               >
                 Submit
               </Button>

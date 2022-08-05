@@ -66,23 +66,36 @@ function Login(props) {
       <div className={classes.wrapper}>
         <div className={classes.logotypeContainer}>
           <img
-            src={"https://signaturegurgaonindia.com/images/builder-logo.png"}
+            src={
+              "https://notbot.in/wp-content/uploads/2022/05/Notbot_Logo-Green.svg"
+            }
             alt="logo"
             className={classes.notBotLogo}
           />
           {/*<img src={notBotLogo} alt="logo" className={classes.notBotLogo} />*/}
-          <img src={logo} alt="logo" className={classes.logotypeImage} />
-          <Typography className={classes.logotypeText}>
-            WHATSAPP DASHBOARD
-          </Typography>
+          <div className="flex w-full pl-10 flex-col pt-24">
+            <Typography className="text-6xl text-white/90 font-bold mb-10">
+              <span className="text-[#FED500]">Grow</span> your <br />
+              business <span className="text-[#0085f8]">faster</span>
+              <br />
+              with <span className="text-[#4ec247]">whatsapp</span>.
+            </Typography>
+            <img
+            src={
+              "https://notbot.in/wp-content/uploads/2022/05/info-1536x849.png"
+            }
+            alt="description notbot"
+            className="w-[500px]"
+          />
+          </div>
         </div>
         <div className={classes.formContainer}>
           <div className={classes.form}>
             <Tabs
               value={activeTabId}
               onChange={(e, id) => setActiveTabId(id)}
-              indicatorColor="primary"
-              textColor="primary"
+              indicatorColor="#0085f8"
+              textColor="#0085f8"
               centered
             >
               <Tab label="Login" classes={{ root: classes.tab }} />
@@ -91,7 +104,7 @@ function Login(props) {
             {activeTabId === 0 && (
               <React.Fragment>
                 <Typography variant="h2" className={classes.greeting}>
-                  Welcome User
+                  Welcome User👋
                 </Typography>
                 {/*<Button size="large" className={classes.googleButton}>*/}
                 {/*  <img src={google} alt="google" className={classes.googleIcon} />*/}

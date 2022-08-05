@@ -45,7 +45,7 @@ const FirstStep = ({data , onChangeBroadcastName , onChangeTemplate , selectedTe
           label="Broadcast Name"
           value={broadcastName}
           type="text"
-          variant={"outlined"}
+          variant={"standard"}
           onChange={onChangeBroadcastName}
           size={"medium"}
           fullWidth
@@ -61,7 +61,7 @@ const FirstStep = ({data , onChangeBroadcastName , onChangeTemplate , selectedTe
             .concat((option.language.toString()))}
           fullWidth
           renderInput={(params) =>
-            <TextField {...params} label="Select Template" variant="outlined"/>}
+            <TextField {...params} label="Select Template" variant="standard"/>}
         />
     </div>
   )
