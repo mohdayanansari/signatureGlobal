@@ -74,7 +74,7 @@ function Login(props) {
           />
           {/*<img src={notBotLogo} alt="logo" className={classes.notBotLogo} />*/}
           <div className="flex w-full pl-10 flex-col pt-24">
-            <Typography className="text-6xl text-white/90 font-bold mb-10">
+            <Typography className="text-[42px] text-white/90 font-bold mb-10">
               <span className="text-[#FED500]">Grow</span> your <br />
               business <span className="text-[#0085f8]">faster</span>
               <br />
