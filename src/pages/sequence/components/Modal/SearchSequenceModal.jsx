@@ -71,7 +71,7 @@ const SearchSequenceModal = () => {
         <Fade in={open}>
           <Box
             sx={style}
-            className="rounded-lg outline-none border-none shadow-md w-[90vw] h-[90vh] mx-auto "
+            className="rounded-lg outline-none border-none shadow-md w-[90vw] h-[90vh] mx-auto bg-white/80 backdrop-blur-sm"
           >
             <h1 className="text-2xl text-gray-800 font-bold">
               Search Sequence
@@ -95,7 +95,7 @@ const SearchSequenceModal = () => {
                 constiant="contained"
                 type="submit"
                 endIcon={<SendIcon />}
-                className="bg-purple-500 shadow text-white sticky bottom-0 ml-3"
+                className="bg-[#FED500] shadow text-black sticky bottom-0 ml-3"
               >
                 Submit
               </Button>

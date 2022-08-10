@@ -1,5 +1,5 @@
 import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance, customInstance, wabaInstance } from "../../utils/axios-instance";
+import { axiosInstance, customInstance, wabaInstance,  } from "../../utils/axios-instance";
 import { responsiveFontSizes } from "@material-ui/core";
 // thunk actions
 

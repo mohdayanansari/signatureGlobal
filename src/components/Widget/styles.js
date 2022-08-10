@@ -4,6 +4,8 @@ export default makeStyles(theme => ({
   widgetWrapper: {
     display: "flex",
     minHeight: "100%",
+    padding: 0,
+    margin: 0 , 
   },
   widgetHeader: {
     padding: theme.spacing(3),
@@ -16,9 +18,9 @@ export default makeStyles(theme => ({
     boxShadow: theme.customShadows.widget,
   },
   widgetBody: {
-    paddingBottom: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    paddingLeft: theme.spacing(3),
+    // paddingBottom: theme.spacing(3),
+    // paddingRight: theme.spacing(3),
+    // paddingLeft: theme.spacing(3),
   },
   noPadding: {
     padding: 0,

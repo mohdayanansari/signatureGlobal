@@ -41,9 +41,9 @@ export default function Modal({
         MuiDialog: {
           paper: {
             width: "100%",
-            backgroundColor: "rgba(255, 255, 255, 0.10)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
           },
         },
       },
@@ -73,7 +73,7 @@ export default function Modal({
             onClose={onCancel}
             aria-labelledby="form-dialog-title"
           >
-            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+            <DialogTitle id="form-dialog-title" className="text-black">{title}</DialogTitle>
             <Divider />
             <DialogContent>{children}</DialogContent>
             <DialogActions>

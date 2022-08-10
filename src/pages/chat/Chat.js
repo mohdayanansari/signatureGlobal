@@ -332,7 +332,7 @@ export default function Chat(props) {
         <div
           key={id}
           className="p-[15px] my-[5px] flex w-full rounded cursor-pointer hover:bg-appGray-200"
-          onClick={() => onClickItem(id, name)}
+          onClick={() => onClickItem(id, name, number)}
         >
           {/* User Image Container */}
           <div>
@@ -349,7 +349,7 @@ export default function Chat(props) {
               </div>
             </div>
             <div className="flex w-full justify-between pr-[10px]">
-              <p className=" text-sm">{number}</p>
+              <p className="text-sm ">{number}</p>
               {unseenCount === 0 ? (
                 ""
               ) : (
@@ -363,12 +363,12 @@ export default function Chat(props) {
       </>
     );
   };
-  const onClickItem = (item, name) => {
+  const onClickItem = (item, name, number) => {
     if (item !== null) {
       clearInterval(intRef);
       setSelectedChat(item);
       setSelectedChatName(name);
-      dispatch(getSelectedChatHistory(item));
+      dispatch(getSelectedChatHistory(number));
     }
   };
 
@@ -633,7 +633,7 @@ export default function Chat(props) {
               <div>
                 {/* ----- */}
                 <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     {item?.text?.body}
                   </h4>
                   <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
@@ -659,7 +659,7 @@ export default function Chat(props) {
               <div className="">
                 {/* ----- */}
                 <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     {item?.text?.body}
                   </h4>
                   <div className="flex justify-start my-[5px] text-white text-opacity-50 gap-[2px] items-center ">
@@ -699,7 +699,7 @@ export default function Chat(props) {
               <div>
                 {/* ----- */}
                 <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     Template
                   </h4>
                   <div
@@ -797,7 +797,7 @@ export default function Chat(props) {
               <div>
                 {/* ----- */}
                 <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
                   <img src={item?.image} />
@@ -824,7 +824,7 @@ export default function Chat(props) {
               <div className="">
                 {/* ----- */}
                 <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
                   <img src={item?.image} />
@@ -865,7 +865,7 @@ export default function Chat(props) {
               <div>
                 {/* ----- */}
                 <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-white text-opacity-80 font-semibold text-sm">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80">
                     Document
                   </h4>
                   <div className={"p-10 bg-appPurple-200"}>
@@ -947,7 +947,7 @@ export default function Chat(props) {
   const chatDisabled = timestamp ? new Date(timestamp) < new Date() : false;
 
   return (
-    <div className="grid lg:grid-cols-12 w-full">
+    <div className="grid w-full lg:grid-cols-12">
       <div className="col-span-12 overflow-hidden">
         <div className="grid grid-cols-12">
           <div className="col-span-4 h-screen bg-appGray-500  px-[30px] py-[30px] overflow-hidden">
@@ -957,7 +957,7 @@ export default function Chat(props) {
               </h2>
 
               {/* Search Field */}
-              <div className="relative text-gray-600 focus-within:text-gray-400 mt-5">
+              <div className="relative mt-5 text-gray-600 focus-within:text-gray-400">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                   <button
                     type="submit"
@@ -971,8 +971,7 @@ export default function Chat(props) {
                   name="searchChat"
                   placeholder="Search message or users"
                   id=""
-                  className="py-3 text-base text-opacity-80 text-white bg-appGray-300 w-full rounded-md pl-12 focus:outline-none
-          focus:text-white"
+                  className="w-full py-3 pl-12 text-base text-white rounded-md text-opacity-80 bg-appGray-300 focus:outline-none focus:text-white"
                 />
               </div>
             </div>

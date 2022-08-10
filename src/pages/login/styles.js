@@ -77,14 +77,15 @@ export default makeStyles((theme) => ({
     minWidth: 320,
   },
   tab: {
-    fontWeight: 400,
-    fontSize: 18,
+    fontWeight: 500,
+    fontSize: 12,
   },
   greeting: {
-    fontWeight: 500,
+    fontWeight: 700,
     textAlign: "center",
-    color:"#0085f8",
-    marginTop: theme.spacing(4),
+    color: "#4ec247",
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   subGreeting: {
     fontWeight: 500,
@@ -163,7 +164,15 @@ export default makeStyles((theme) => ({
     marginLeft: theme.spacing(4),
   },
   loginBtn: {
-    color: theme.palette.secondary.contrastText,
+    fontWeight: 700,
+    boxShadow: "none",
+    backgroundColor: "#4ec247",
+    color: "white",
+    "&:hover": {
+      color: "black",
+      boxShadow: "none",
+      backgroundColor: "#FED500",
+    },
   },
   copyright: {
     marginTop: theme.spacing(4),
