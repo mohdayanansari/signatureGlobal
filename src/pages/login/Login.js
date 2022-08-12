@@ -106,8 +106,30 @@ function Login(props) {
                 </Fade>
               )}
               {/*<FormLabel for={"email"}>Enter Email</FormLabel>*/}
-              <div className="bg-white/80 pt-1 pb-3 px-4 rounded-lg">
-                <TextField
+              <div className="pt-1 pb-3 px-4 rounded-lg">
+                <div className="flex items-center relative gap-2 p-4 border border-white/20 rounded-lg w-[500px] mb-5">
+                  <Email className="text-white/90" />
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={loginValue}
+                    onChange={(e) => setLoginValue(e.target.value)}
+                    className="outline-none focus:outline-none bg-transparent text-white/70 text-lg font-semibold flex-1 caret-[#FED500]"
+                  />
+                </div>
+                <div className="flex items-center relative gap-2 p-4 border border-white/20 rounded-lg w-[500px]">
+                  <VpnKey className="text-white/90" />
+                  <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    value={passwordValue}
+                    onChange={(e) => setPasswordValue(e.target.value)}
+                    className="outline-none focus:outline-none bg-transparent text-white/70 text-lg font-semibold flex-1 caret-[#FED500]"
+                  />
+                </div>
+                {/* <TextField
                   id="email"
                   InputProps={{
                     classes: {
@@ -129,9 +151,9 @@ function Login(props) {
                     ),
                   }}
                   fullWidth
-                />
+                /> */}
                 {/*<FormLabel for={"password"}>Enter Password</FormLabel>*/}
-                <TextField
+                {/* <TextField
                   id="password"
                   InputProps={{
                     classes: {
@@ -153,7 +175,7 @@ function Login(props) {
                     ),
                   }}
                   fullWidth
-                />
+                /> */}
               </div>
               <div className={classes.formButtons}>
                 {isLoading ? (
@@ -186,7 +208,9 @@ function Login(props) {
           {activeTabId === 1 && (
             <>
               <div className="flex justify-center items-center p-5">
-                <h1 className="text-white/70 text-xl ">This feature is coming soon...</h1>
+                <h1 className="text-white/70 text-xl ">
+                  This feature is coming soon...
+                </h1>
               </div>
             </>
           )}
