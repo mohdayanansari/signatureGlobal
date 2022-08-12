@@ -76,6 +76,7 @@ const ResumeJobModal = ({jobPhone}) => {
                 type="submit"
                 endIcon={<SendIcon />}
                 className="bg-[#FED500] shadow text-black sticky bottom-0 ml-3"
+                
               >
                 Submit
               </Button>

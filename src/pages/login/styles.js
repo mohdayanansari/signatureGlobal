@@ -79,6 +79,7 @@ export default makeStyles((theme) => ({
   tab: {
     fontWeight: 500,
     fontSize: 12,
+    color: "white"
   },
   greeting: {
     fontWeight: 700,
