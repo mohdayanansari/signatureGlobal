@@ -67,8 +67,13 @@ import classnames from "classnames";
 import Av1 from "../../images/av1.png";
 import DocIcon from "../../images/docs.png";
 import Chats from "../newchatpage/Tabs/Chats";
-import { ClockIcon, SearchIcon } from "@heroicons/react/outline";
-import { DocumentTextIcon } from "@heroicons/react/solid";
+import { CheckIcon, ClockIcon, SearchIcon } from "@heroicons/react/outline";
+import {
+  DocumentTextIcon,
+  ExclamationCircleIcon,
+  SupportIcon,
+  UserCircleIcon,
+} from "@heroicons/react/solid";
 import TypingAnimation from "../../components/TypingAnimation";
 import UserHead from "../newchatpage/UserChat/UserHead";
 import avatar4 from "../../images/av1.png";
@@ -94,11 +99,21 @@ export default function Chat(props) {
   );
 
   const chatListRef = useRef(null);
+  const scrollToBottomRef = useRef(null);
 
   let intRef = useRef();
   let conRef = useRef();
 
   const [chatWindowScroll, setChatWindowScroll] = useState(false);
+  // Search Chat State
+  const [querry, setQuerry] = useState("");
+  const [searchParams] = useState(["name", "number"]);
+  const [filterParam, setFilterParam] = useState(["name"]);
+
+  // scroll to bottom
+  useEffect(() => {
+    scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatHistory]);
 
   useEffect(() => {
     setChatWindowScroll(true);
@@ -122,139 +137,7 @@ export default function Chat(props) {
       );
     }
   }, [chatHistory]);
-  const newobj = [
-    {
-      _id: 918890293146,
-      messages: [
-        {
-          _id: "gBEGkYiQKTFGAgm0cp5Vo7ePPCA",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkLbF2Yr4o2ZYA",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmOncEatsiZYtU",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkO7r52Ng8Tiww",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkNA7XG0n6daVc",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgm3hC0Tf7XuNWA",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkMXLeBrjenRrY",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgk_-ACtdAZTtJs",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkBDilqfUS9ej0",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkI0WBqvahtSXQ",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgllOIy1ea7le3Q",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkcuMrG018vGtA",
-          fromMe: true,
-        },
-        {
-          _id: "ABEGkYiQKTFGAhAFYNhocgCBPTqrhPyY7UXg",
-          fromMe: false,
-        },
-        {
-          _id: "ABEGkYiQKTFGAhDVEHdC14RvGDkP0ow8dqZ6",
-          fromMe: false,
-        },
-        {
-          _id: "ABEGkYiQKTFGAhDynvsS4pVioELDYWtXuxLM",
-          fromMe: false,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkI_sptqQmM-BQ",
-          brodcast_name: "none",
-          fromMe: true,
-        },
-        {
-          _id: "ABEGkYiQKTFGAgo-sJnxWwnPtk43",
-          fromMe: false,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmMFcHE8KuCj_I",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmKLODm2sDw55E",
-          brodcast_name: "",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmjGMHZPBPGHIE",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmIOUy66BIWxmQ",
-          brodcast_name: "",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgnsHfCNgelBB1c",
-          brodcast_name: "seq1",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgkQSK5amopMROQ",
-          brodcast_name: "seq1",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAglSGQRv9cw6mQQ",
-          brodcast_name: "seq1",
-          fromMe: true,
-        },
-        {
-          _id: "ABEGkYiQKTFGAhD9SO0K4_z76jIASBgpHLwF",
-          fromMe: false,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgmrPa_jf0hRKuk",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgngU-dwfazHHkg",
-          brodcast_name: "none",
-          fromMe: true,
-        },
-        {
-          _id: "gBEGkYiQKTFGAgl43VdnZt03MGo",
-          fromMe: true,
-        },
-      ],
-      name: "Aayush",
-      number: 918890293146,
-      status: "In Progress",
-      timestamp: 1647364415,
-      unseen: 0,
-      unseen_count: 2,
-      username: "foo@foo.foo",
-    },
-  ];
+
   useEffect(() => {
     let number = contacts[0]?.number;
     let name = contacts[0]?.name;
@@ -281,6 +164,34 @@ export default function Chat(props) {
         },
       },
     });
+
+  const handleChatSearch = (e) => {
+    e.preventDefault();
+    contacts?.filter((item) => {
+      return searchParams.some((newContact) => {
+        return (
+          item[newContact]
+            .toString()
+            .toLowerCase()
+            .indexOf(querry.toLowerCase()) > -1
+        );
+      });
+    });
+  };
+  // CONTACT SEARCH COMPONENTS
+  const searchData = Object.values(contacts);
+  const Search = (contacts) => {
+    return contacts?.filter((item) => {
+      return searchParams.some((newContact) => {
+        return (
+          item[newContact]
+            .toString()
+            .toLowerCase()
+            .indexOf(querry.toLowerCase()) > -1
+        );
+      });
+    });
+  };
 
   const AvatarArray = [Av1];
 
@@ -318,6 +229,7 @@ export default function Chat(props) {
   };
 
   const NewChatListItem = ({
+    data,
     name,
     number,
     status,
@@ -422,6 +334,7 @@ export default function Chat(props) {
   const sendMsg = (e) => {
     if (e.keyCode == 13 || e.keyCode == undefined) {
       if (typedMsg != null && selectedChat != null) {
+        //todo: conditon to set the user or sender phone number in "phone key value pair"::
         let obj = {
           phone: selectedChat,
           type: "text",
@@ -447,8 +360,9 @@ export default function Chat(props) {
   };
 
   const getChatListItems = () => {
-    let listItems = contacts.map((item) => (
+    let listItems = contacts.map((item, index) => (
       <NewChatListItem
+        key={index}
         name={item?.name}
         number={item?.number}
         status={item?.status}
@@ -463,43 +377,39 @@ export default function Chat(props) {
   };
 
   const getStatusText = (param) => {
-    if (param == "read") {
+    if (param === "read") {
       return (
-        <Typography
-          variant={"caption"}
-          color={"primary"}
-          className={classes.read}
-          style={{ marginRight: "10px" }}
-        >
-          {capitalize(param)}
-        </Typography>
+        <>
+          <CheckIcon className="w-4 text-green-600 " />
+          <CheckIcon className="w-4 text-green-600  -ml-[13px]" />
+        </>
       );
     } else if (param == "failed") {
       return (
-        <Typography
-          variant={"caption"}
-          color={"secondary"}
-          className={classes.failed}
-          style={{ marginRight: "10px" }}
-        >
-          {capitalize(param)}
-        </Typography>
+        <>
+          <Typography
+            variant={"caption"}
+            color={"secondary"}
+            className={classes.failed}
+            style={{ marginRight: "10px" }}
+          >
+            {capitalize(param)}
+          </Typography>
+          <ExclamationCircleIcon className="w-4 text-red-600 " />
+        </>
       );
     } else {
       return (
-        <Typography
-          variant={"caption"}
-          color={"secondary"}
-          style={{ marginRight: "10px", color: "#797979" }}
-        >
-          {capitalize(param)}
-        </Typography>
+        <>
+          <CheckIcon className="w-4 text-[#FED500]" />
+          <CheckIcon className="w-4 text-[#FED500] -ml-[13px]" />
+        </>
       );
     }
   };
 
   const GetMessages = ({ classes, item }) => {
-    if (item?.type == "template") {
+    if (item?.type === "template") {
       return (
         <>
           <div
@@ -531,7 +441,7 @@ export default function Chat(props) {
           </div>
         </>
       );
-    } else if (item?.type == "text") {
+    } else if (item?.type === "text") {
       return (
         <>
           <Typography
@@ -554,7 +464,7 @@ export default function Chat(props) {
           </div>
         </>
       );
-    } else if (item?.type == "image") {
+    } else if (item?.type === "image") {
       return (
         <>
           <div
@@ -569,7 +479,7 @@ export default function Chat(props) {
                 {removeUnderscoreAndCapitalize(item?.filename)}
               </Typography>
             </div>
-            <img src={item?.image} style={{ width: "200px" }} />
+            <img src={item?.image} style={{ width: "200px" }} alt="Notbot" />
           </div>
           <div>
             <Typography
@@ -582,7 +492,7 @@ export default function Chat(props) {
           </div>
         </>
       );
-    } else if (item?.type == "document") {
+    } else if (item?.type === "document") {
       return (
         <>
           <div
@@ -597,8 +507,12 @@ export default function Chat(props) {
                 {removeUnderscoreAndCapitalize(item?.filename)}
               </Typography>
             </div>
-            <a href={item?.document.toString()} target={"_blank"}>
-              <img src={DocIcon} style={{ width: "200px" }} />
+            <a
+              href={item?.document.toString()}
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <img src={DocIcon} style={{ width: "200px" }} alt="Notbot" />
             </a>
           </div>
           <div>
@@ -617,74 +531,84 @@ export default function Chat(props) {
     }
   };
 
+  //! <-- -----------------------TEXT MESSAGES-- SEND BY USER--------------- -->
   const GetNewMessages = ({ item }) => {
-    if (item?.type == "text") {
+    if (item?.type === "text") {
       if (!item.fromMe) {
+        // console.log(item);
         return (
-          <div className={classnames("flex justify-start mb-[20px]")}>
+          <div className={classnames("flex justify-start mb-[30px]")}>
             <div className="flex gap-4 ">
               {/* Avatar */}
-              <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
+              {/* <div className="flex items-start">
+                <div className="w-[40px] h-[40px] bg-[#FED500] rounded-full flex justify-center items-center text-black/80 font-bold">
+                  {item.phone.toString()[2]}
                 </div>
-              </div>
+              </div> */}
               {/* Message, Time & UserName  */}
-              <div>
+              <div className="relative">
+                {/* <div className="absolute -top-[10px] -right-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
+                  <UserCircleIcon className="w-6 text-white/50" />
+                </div> */}
                 {/* ----- */}
-                <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
+                <div className="glassed min-w-[200px] rounded-tl-none rounded-2xl  p-[10px] px-[15px]">
+                  <h4 className="text-sm font-semibold text-white/90 ">
                     {item?.text?.body}
                   </h4>
-                  <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
+                  <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
                     {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
                     <p className="text-xs">{timeConverter(item?.timestamp)}</p>
                   </div>
-                  <span className="custom-triangle"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
+                <h4 className=" text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +{item?.phone}
                 </h4>
               </div>
             </div>
           </div>
         );
       } else {
+        //! <-- ------------------TEXT MESSAGE--send by dashboard-------------- -->
         return (
           <div className="flex justify-end mb-[20px]">
             <div className="flex gap-4">
               {/* Message, Time & UserName  */}
-              <div className="">
+              <div className="relative">
+                {/* <div className="absolute -top-[10px] -left-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
+                  <SupportIcon className="w-6 text-white/50" />
+                </div> */}
                 {/* ----- */}
-                <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
+                <div className="glassed min-w-[200px] rounded-tr-none rounded-2xl   p-[10px] px-[15px]">
                   <h4 className="text-sm font-semibold text-white text-opacity-80">
                     {item?.text?.body}
                   </h4>
-                  <div className="flex justify-start my-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
+                  <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
                     {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
                     <p className="text-xs">{timeConverter(item?.timestamp)}</p>
                   </div>
-                  <span className="custom-triangle-right"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="flex justify-end mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +918949674316
+                  {/* {item?.phone} */}
                 </h4>
               </div>
               {/* Avatar */}
-              <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
+              <div className="flex items-start">
+                {/* <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[2]}
+                  <SupportIcon className="w-6 text-white/50" />
+                </div> */}
               </div>
             </div>
           </div>
         );
       }
-    } else if (item?.type == "template") {
+      //  ! <-- ---------------If the template is send by USER ------------------- -->
+    } else if (item?.type === "template") {
       if (!item.fromMe) {
         return (
           <div className={classnames("flex justify-start mb-[20px]")}>
@@ -726,13 +650,14 @@ export default function Chat(props) {
                   <span className="custom-triangle"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="mt-[15px] text-white text-sm text-opacity-50 font-semibold">
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
                   {item?.phone}
                 </h4>
               </div>
             </div>
           </div>
         );
+        //  ! <-- ---------------If the __TEMPLATE__ is send by DASHBOARD ------------------- -->
       } else {
         return (
           <div className="flex justify-end mb-[20px]">
@@ -740,10 +665,12 @@ export default function Chat(props) {
               {/* Message, Time & UserName  */}
               <div className="">
                 {/* ----- */}
-                <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
-                  <h4 className="text-white mb-[2px] text-opacity-80 font-regular text-right text-sm">
-                    Template
-                  </h4>
+                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      Template
+                    </h4>
+                  </div>
                   <div
                     className={"p-2 bg-appGray-400 rounded flex items-center"}
                   >
@@ -760,62 +687,144 @@ export default function Chat(props) {
                       {item?.text?.name}
                     </p>
                   </div>
-                  <div className="flex justify-start my-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]"/>*/}
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
                     {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px]" />
                     <p className="text-xs">{timeConverter(item?.timestamp)}</p>
                   </div>
-                  <span className="custom-triangle-right"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="flex justify-end mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +918949674316
                 </h4>
               </div>
               {/* Avatar */}
-              <div className="flex items-end">
+              {/* <div className="flex items-start">
                 <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
                   {item?.phone && item?.phone.toString()[0]}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         );
       }
-    } else if (item?.type == "image") {
+      // ! <-- -------------------if the __IMAGE__ send by __USER__------------- -->
+    } else if (item?.type === "image") {
       if (!item.fromMe) {
         return (
           <div className={classnames("flex justify-start mb-[20px]")}>
             <div className="flex gap-4 ">
               {/* Avatar */}
-              <div className="flex items-end">
+              {/* <div className="flex items-end">
                 <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
                   {item?.phone && item?.phone.toString()[0]}
                 </div>
-              </div>
+              </div> */}
               {/* Message, Time & UserName  */}
               <div>
                 {/* ----- */}
-                <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
+                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] pt-[25px]">
+                  <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
-                  <img src={item?.image} />
-                  <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
+                  <img src={item?.image.slice(0, -4)} alt="Notbot" />
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
                     {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
                     <p className="text-xs">{timeConverter(item?.timestamp)}</p>
                   </div>
-                  <span className="custom-triangle"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +{item?.phone}
                 </h4>
               </div>
             </div>
           </div>
         );
+        // ! <-- -------------------if the __IMAGE__ send by __DASHBOARD__------------- -->
+      } else {
+        // console.log(item?.image.slice(0, -4))
+        return (
+          <div className="flex justify-end mb-[20px]">
+            <div className="flex gap-4">
+              {/* Message, Time & UserName  */}
+              <div className="">
+                {/* ----- */}
+                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                  <h4 className="text-sm font-semibold text-white/80 mb-5">
+                    {removeUnderscoreAndCapitalize(item?.filename)}
+                  </h4>
+                  <img src={item?.image.slice(0, -4)} alt="Notbot" />
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                    {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
+                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  </div>
+                </div>
+                {/* ---userName */}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +918949674316
+                </h4>
+              </div>
+              {/* Avatar */}
+              {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+            </div>
+          </div>
+        );
+      }
+      // ! <-- -------------------if the __DOCUMENT__ send by __USER__------------- -->
+    } else if (item?.type === "document") {
+      if (!item.fromMe) {
+        return (
+          <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
+            <div className="flex gap-4 ">
+              {/* Avatar */}
+              {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+              {/* Message, Time & UserName  */}
+              <div>
+                {/* ----- */}
+                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] pt-[25px]">
+                  <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      Document
+                    </h4>
+                  </div>
+                  <div
+                    className={
+                      "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
+                    }
+                  >
+                    <DocumentTextIcon
+                      className={"text-appPurple-400 w-[25px] h-[25px]"}
+                    />
+                    <p className="text-sm text-white/80">
+                      {item?.document?.filename}
+                    </p>
+                  </div>
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                    {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
+                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  </div>
+                </div>
+                {/* ---userName */}
+                <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +{item?.phone}
+                </h4>
+              </div>
+            </div>
+          </div>
+        );
+        // ! <-- -------------------if the __DOCUMENT__ send by __DASHBOARD__------------- -->
       } else {
         return (
           <div className="flex justify-end mb-[20px]">
@@ -823,80 +832,12 @@ export default function Chat(props) {
               {/* Message, Time & UserName  */}
               <div className="">
                 {/* ----- */}
-                <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
-                    {removeUnderscoreAndCapitalize(item?.filename)}
-                  </h4>
-                  <img src={item?.image} />
-                  <div className="flex justify-start my-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
-                    {item?.status && getStatusText(item?.status)}
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      Document
+                    </h4>
                   </div>
-                  <span className="custom-triangle-right"></span>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
-                </h4>
-              </div>
-              {/* Avatar */}
-              <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    } else if (item?.type == "document") {
-      if (!item.fromMe) {
-        return (
-          <div className={classnames("flex justify-start mb-[20px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div>
-              {/* Message, Time & UserName  */}
-              <div>
-                {/* ----- */}
-                <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
-                    Document
-                  </h4>
-                  <div className={"p-10 bg-appPurple-200"}>
-                    <p className="text-sm">{item?.filename}</p>
-                  </div>
-                  <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
-                    {item?.status && getStatusText(item?.status)}
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                  <span className="custom-triangle"></span>
-                </div>
-                {/* ---userName */}
-                <h4 className="mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
-                </h4>
-              </div>
-            </div>
-          </div>
-        );
-      } else {
-        return (
-          <div className="flex justify-end mb-[20px]">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="">
-                {/* ----- */}
-                <div className="bg-appGray-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-right-container">
-                  <h4 className="text-white mb-[2px] text-opacity-80 font-regular text-right text-sm">
-                    Document
-                  </h4>
                   <div
                     className={"p-2 bg-appGray-400 rounded flex items-center"}
                   >
@@ -913,24 +854,23 @@ export default function Chat(props) {
                       {item?.filename}
                     </p>
                   </div>
-                  <div className="flex justify-start mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
                     {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
                     <p className="text-xs">{timeConverter(item?.timestamp)}</p>
                   </div>
-                  <span className="custom-triangle-right"></span>
                 </div>
                 {/* ---userName */}
-                <h4 className="flex justify-end mt-[15px] text-white text-sm text-opacity-50 font-semibold">
-                  {item?.phone}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +918949674316
                 </h4>
               </div>
               {/* Avatar */}
-              <div className="flex items-end">
+              {/* <div className="flex items-end">
                 <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
+                  {item.phone.toString()[2]}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         );
@@ -950,39 +890,61 @@ export default function Chat(props) {
     <div className="grid w-full lg:grid-cols-12">
       <div className="col-span-12 overflow-hidden">
         <div className="grid grid-cols-12">
-          <div className="col-span-4 h-screen bg-appGray-500  px-[30px] py-[30px] overflow-hidden">
-            <div className="h-[100px] ">
+          <div className="col-span-4 h-screen border-r border-white/10 px-[30px] py-[30px] overflow-hidden">
+            <div className="">
               <h2 className="text-white opacity-80 text-[22px] font-semibold">
                 Chats
               </h2>
 
               {/* Search Field */}
-              <div className="relative mt-5 text-gray-600 focus-within:text-gray-400">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <button
-                    type="submit"
-                    className="p-1 focus:outline-none focus:shadow-outline"
-                  >
-                    <SearchIcon className="w-6 h-6 " />
-                  </button>
-                </span>
-                <input
-                  type="search"
-                  name="searchChat"
-                  placeholder="Search message or users"
-                  id=""
-                  className="w-full py-3 pl-12 text-base text-white rounded-md text-opacity-80 bg-appGray-300 focus:outline-none focus:text-white"
-                />
+              <div className=" mt-5 text-gray-600 focus-within:text-gray-400">
+                <div className="relative">
+                  <SearchIcon className="absolute top-[12px] left-[10px] w-6 h-6 " />
+                  <input
+                    type="search"
+                    id="searchChat"
+                    autoComplete="off"
+                    name="searchChat"
+                    value={querry}
+                    onChange={(e) => setQuerry(e.target.value)}
+                    placeholder="Search message or users"
+                    className="w-full py-3 pl-12 text-base text-white rounded-md text-opacity-80 bg-appGray-300 focus:outline-none focus:text-white caret-[#FED500]"
+                  />
+                </div>
+
+                {/* Search Result */}
+                {querry.length > 0 ? (
+                  <div className="flex flex-col gap-2 glassed rounded border border-white/20 p-2 mt-4">
+                    {Search(searchData).map((item, index) => {
+                      return (
+                        <div className="glassed rounded border border-white/20 ">
+                          <NewChatListItem
+                            name={item?.name}
+                            number={item?.number}
+                            status={item?.status}
+                            time={item?.timestamp}
+                            messages={item?.messages}
+                            id={item?._id}
+                            unseenCount={item?.unseen_count}
+                            onClickItem={onClickItem}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             {/* Recent Chat Section */}
-            <div className="h-[30px]">
-              <h4 className="text-white opacity-80 text-[16px] mt-5 font-semibold overflow-auto">
+            <div className="h-[30px] border-b border-white/10">
+              <h4 className="text-white opacity-80 text-[22px] mt-6 font-semibold overflow-auto">
                 Recent
               </h4>
             </div>
 
-            <div className="overflow-y-auto custom-scroll scrollbar scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded">
+            <div className="overflow-y-auto custom-scroll  scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded">
               {getChatListItems()}
             </div>
           </div>
@@ -997,15 +959,15 @@ export default function Chat(props) {
             <div
               ref={chatListRef}
               className={classnames(
-                (chatHistory?.length == 0 || chatHistoryLoading) &&
+                (chatHistory?.length === 0 || chatHistoryLoading) &&
                   "flex justify-center items-center",
-                " chat-custom-scroll bg-appGray-700 overflow-y-auto scrollbar scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded px-[30px]",
+                " chat-custom-scroll overflow-y-auto  scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded px-[30px]",
               )}
             >
               {chatHistoryLoading ? (
                 <CircularProgress style={{ width: "100px", height: "100px" }} />
               ) : (
-                <div className="my-[20px]">
+                <div className="my-[30px]">
                   {chatHistory?.length > 0 ? (
                     <>
                       {chatHistory.map((item) => {
@@ -1019,6 +981,8 @@ export default function Chat(props) {
                       You don't have messages yet
                     </h1>
                   )}
+                  {/* Scroll to bottom div  */}
+                  <div ref={scrollToBottomRef}></div>
                 </div>
               )}
             </div>

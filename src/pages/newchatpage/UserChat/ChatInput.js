@@ -98,9 +98,9 @@ const ChatInput = (props) => {
   };
 
   return (
-    <div className="grid place-items-center  bg-appGray-700 w-full h-[80px] px-[30px] text-white text-opacity-80 font-bold font-[24px]  shadow-xl border-t border-white border-opacity-10">
+    <div className="grid place-items-center w-full h-[80px] px-[30px] text-white text-opacity-80 font-bold font-[24px]  shadow-xl border-t border-white border-opacity-10">
       <div className="grid items-center w-full">
-        <Form>
+        <form onSubmit={onSubmit}>
           <div className="flex w-full gap-2">
             {/* col-1 */}
             <div className="w-[70%] ">
@@ -177,10 +177,9 @@ const ChatInput = (props) => {
               {/*</UncontrolledTooltip>*/}
 
               <button
-                type="button"
+                type="submit"
                 color="primary"
                 disabled={disabled}
-                onClick={onSubmit}
                 className={classnames(
                   disabled && "disabled:cursor-not-allowed",
                   "bg-appPurple-300 p-[10px] rounded-lg hover:bg-appPurple-400",
@@ -190,7 +189,7 @@ const ChatInput = (props) => {
               </button>
             </div>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ export default function App() {
           }else{
               setIsAdmin(false)
           }
-          console.log(jDecode)
+          // console.log(jDecode)
       }
   },[])
 

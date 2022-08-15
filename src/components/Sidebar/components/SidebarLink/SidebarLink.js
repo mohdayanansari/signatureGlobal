@@ -89,7 +89,7 @@ export default function SidebarLink({
       if(isLinkActive){
           return (
               <>
-                  <Link to={link} id={uid} className="glass-des my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+                  <Link to={link} id={uid} className="glass-des my-2 w-4/5 h-14 flex items-center rounded-xl  px-2 pl-3">
                       {activeIcon}
                       {isSidebarOpened && <p className="text-white ml-2">{label}</p>}
                   </Link>
@@ -101,7 +101,7 @@ export default function SidebarLink({
       }else{
           return (
               <>
-                  <Link to={link} id={uid} className="my-2 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60">
+                  <Link to={link} id={uid} className="my-2 w-4/5 h-14 flex items-center rounded-xl hover:bg-white/10 px-2">
                       {inActiveIcon}
                       {isSidebarOpened && <p className="text-appWhiteText-200 ml-2">{label}</p>}
                   </Link>

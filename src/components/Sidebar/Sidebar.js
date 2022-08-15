@@ -25,6 +25,7 @@ import {
   AdjustmentsIcon,
   CollectionIcon,
   DatabaseIcon,
+  BriefcaseIcon,
 } from "@heroicons/react/outline";
 
 import Modal from "../Modal";
@@ -76,11 +77,11 @@ const structure = [
   },
   {
     id: 3,
-    label: "Show Sequence",
-    uid: "showSequence",
-    link: "/app/show-sequence",
-    activeIcon: <CollectionIcon className="w-8 h-8 text-[#ffdc2b]" />,
-    inActiveIcon: <CollectionIcon className="w-8 h-8 text-[#c0a002]" />,
+    label: "Show Jobs",
+    uid: "jobs",
+    link: "/app/jobs",
+    activeIcon: <BriefcaseIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <BriefcaseIcon className="w-8 h-8 text-[#c0a002]" />,
   },
   {
     id: 4,
@@ -136,6 +137,7 @@ function Sidebar(props) {
   const [apiKey, setApiKey] = useState("");
   const error = useSelector((state) => state.utils.error);
   const loading = useSelector((state) => state.utils.loading);
+  const usernameData = useSelector((state) => state.login.username);
 
   const onApiKeyCancelClick = () => {
     setOpenApiKeyModal(false);
@@ -162,7 +164,7 @@ function Sidebar(props) {
           [classes.drawerOpen]: layoutState.isSidebarOpened,
           [classes.drawerClose]: !layoutState.isSidebarOpened,
         },
-        "h-screen border-r border-gray-100 border-opacity-20 hidden lg:col-span-2 lg:flex flex-col items-center  shadow-xl",
+        "h-screen border-r border-gray-100/20 hidden lg:col-span-2 lg:flex flex-col items-center  shadow-xl py-5",
       )}
     >
       {/*<IconButton*/}
@@ -223,6 +225,22 @@ function Sidebar(props) {
         </MuiThemeProvider>
       </Modal>
       {/*<List className={classes.sidebarList}>*/}
+      {isSidebarOpened ? (
+        <div className="my-10 py-5 flex flex-col items-center gap-5 glassed rounded border border-white/20  w-[80%] relative">
+          <div className="w-[50px] h-[50px] rounded-full bg-[#FED500] text-black/90 font-black text-2xl flex justify-center items-center shadow -mt-[45px]">
+            {usernameData.toUpperCase()[0]}
+          </div>
+          <div className="text-white/60 flex flex-col items-center justify-center">
+            {/* <h1>Hey👋,</h1> */}
+            <h1 className="text-lg font-bold">{usernameData}</h1>
+          </div>
+        </div>
+      ) : (
+        <div className="w-[50px] h-[50px] bg-[#FED500] text-black/80 rounded-full shadow-lg my-10 flex justify-center items-center text-2xl font-black">
+          <div className="-mt-[3px]">{usernameData.toUpperCase()[0]}</div>
+        </div>
+      )}
+     
       {isAdmin ? (
         <>
           {adminStructure.map((link) => (
@@ -246,14 +264,13 @@ function Sidebar(props) {
           ))}
         </>
       )}
-      <div className={"pt-[30vh]"}></div>
 
       <div
         onClick={() => {
           dispatch(logout());
           props.history.push("/login");
         }}
-        className="cursor-pointer bg-white/10 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60"
+        className="cursor-pointer bg-white/10 w-4/5 h-14 flex justify-center items-center rounded-xl opacity-60 mt-5"
       >
         <LogoutIcon className="w-8 h-8 text-appWhiteText-200" />
         {isSidebarOpened && (

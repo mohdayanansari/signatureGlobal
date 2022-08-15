@@ -1,122 +1,122 @@
 import { makeStyles } from "@material-ui/styles";
 
-export default makeStyles(theme => ({
-  templateHeading:{
-    marginRight:20
+export default makeStyles((theme) => ({
+  templateHeading: {
+    marginRight: 20,
   },
-  chatWindow:{
-    backgroundColor:"#f5f8ff",
-    padding:50
+  chatWindow: {
+    backgroundColor: "#f5f8ff",
+    padding: 50,
   },
-  chatList:{
+  chatList: {
     background: "#fff",
     paddingBottom: "10px",
     paddingLeft: "20px",
     borderRadius: "10px",
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
   },
-  inputText:{
-    padding:"10px",
-    margin:"10px",
+  inputText: {
+    padding: "10px",
+    margin: "10px",
     borderRadius: "10px",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
+    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
   },
-  templateChip:{
+  templateChip: {
     height: "20px",
     fontSize: "10px",
     textAlign: "left",
-    background:theme.palette.secondary.contrastText
+    background: theme.palette.secondary.contrastText,
   },
-  recipientTitle:{
-    padding:"10px",
-    backgroundColor:"#ffffff",
-    marginBottom:"10px",
-    width:"100%",
+  recipientTitle: {
+    padding: "10px",
+    backgroundColor: "#ffffff",
+    marginBottom: "10px",
+    width: "100%",
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-    borderRadius:10
+    borderRadius: 10,
   },
-  recipientList:{
-    padding:"10px",
-    margin:"10px",
-    backgroundColor:"#ffffff",
-    width:"90%",
+  recipientList: {
+    padding: "10px",
+    margin: "10px",
+    backgroundColor: "#ffffff",
+    width: "90%",
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-    borderRadius:10
+    borderRadius: 10,
   },
-  selectedRecipientList:{
-    padding:"10px",
-    paddingTop:"20px",
-    paddingBottom:"20px",
-    margin:"10px",
-    backgroundColor:"#3f51b521",
-    width:"94%",
-    border:"2px solid #536DFE",
+  selectedRecipientList: {
+    padding: "10px",
+    paddingTop: "20px",
+    paddingBottom: "20px",
+    margin: "10px",
+    backgroundColor: "#3f51b521",
+    width: "94%",
+    border: "2px solid #536DFE",
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-    borderRadius:10
+    borderRadius: 10,
   },
-  bold:{
-    "& > span":{
-      fontWeight:"bold"
-    }
+  bold: {
+    "& > span": {
+      fontWeight: "bold",
+    },
   },
-  templateMsgBlock:{
-    maxWidth:"350px",
+  templateMsgBlock: {
+    maxWidth: "350px",
     // width:"350px"
   },
-  flexTitle:{
-    display:"flex",
-    alignItems:"center",
-    justifyContent:"space-between"
+  flexTitle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  leftMsg:{
-    display:"flex",
-    justifyContent:"flex-start",
-    flexDirection:"column",
-    alignItems:"flex-start"
+  leftMsg: {
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
-  rightMsg:{
-    display:"flex",
-    justifyContent:"flex-end",
-    flexDirection:"column",
-    alignItems:"flex-end"
+  rightMsg: {
+    display: "flex",
+    justifyContent: "flex-end",
+    flexDirection: "column",
+    alignItems: "flex-end",
   },
-  fromMe:{
-    backgroundColor:theme.palette.success.main,
+  fromMe: {
+    backgroundColor: theme.palette.success.main,
   },
-  fromSender:{
-    backgroundColor:theme.palette.secondary.main,
+  fromSender: {
+    backgroundColor: theme.palette.secondary.main,
   },
-  msgText:{
-    color:theme.palette.secondary.contrastText,
-    padding:"5px 10px",
+  msgText: {
+    color: theme.palette.secondary.contrastText,
+    padding: "5px 10px",
     borderRadius: "10px",
     margin: "5px 10px",
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   },
-  beforeLoading:{
-    paddingTop:"10px",
-    height:"45vh",
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
+  beforeLoading: {
+    paddingTop: "10px",
+    height: "45vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     // background:theme.palette.success.light
   },
-  afterLoading:{
-    paddingTop:"10px",
-    "& > div":{
-      height:"45vh",
-      overflowY:"scroll"
-    }
+  afterLoading: {
+    paddingTop: "10px",
+    "& > div": {
+      height: "45vh",
+      overflowY: "scroll",
+    },
     // background:theme.palette.success.light
   },
-  chatWrapperGrid:{
-    display:"flex",
-    flexDirection:"column",
-    paddingLeft:20
+  chatWrapperGrid: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: 20,
   },
 
-  inputFile:{
-    display:"none"
+  inputFile: {
+    display: "none",
   },
   phoneNumberInput: {
     display: "flex",
@@ -127,7 +127,7 @@ export default makeStyles(theme => ({
     "& .PhoneInputInput": {
       flex: "1 1",
       minWidth: 0,
-      height:"30px",
+      height: "30px",
       background: "hsla(0,0%,100%,.4)",
       outline: "none",
       border: "none",
@@ -143,11 +143,11 @@ export default makeStyles(theme => ({
     },
   },
 
-  buttonPrimary:{
-    backgroundColor:theme.palette.primary.main
+  buttonPrimary: {
+    backgroundColor: theme.palette.primary.main,
   },
-  buttonSecondary:{
-    backgroundColor:theme.palette.secondary.main
+  buttonSecondary: {
+    backgroundColor: theme.palette.secondary.main,
   },
   card: {
     minHeight: "100%",
@@ -168,7 +168,7 @@ export default makeStyles(theme => ({
   },
   progress: {
     marginBottom: theme.spacing(1),
-    backgroundColor: 'rgb(236, 236, 236)',
+    backgroundColor: "rgb(236, 236, 236)",
   },
   pieChartLegendWrapper: {
     height: "100%",
@@ -263,25 +263,22 @@ export default makeStyles(theme => ({
     fontSize: "18px !important",
     marginLeft: theme.spacing(1),
   },
-  failed:{
-    color:theme.palette.error.main
+  failed: {
+    color: "red",
   },
-  read:{
-    color:theme.palette.primary.main
+  read: {
+    color: "#FED500",
   },
   success: {
     backgroundColor: theme.palette.success.main,
-    color: '#fff',
+    color: "#fff",
   },
   warning: {
     backgroundColor: theme.palette.warning.main,
-    color: '#fff',
+    color: "#fff",
   },
   secondary: {
     backgroundColor: theme.palette.secondary.main,
-    color: '#fff',
-  }
-
+    color: "#fff",
+  },
 }));
-
-

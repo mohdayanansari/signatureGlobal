@@ -44,6 +44,7 @@ import { useLayoutState } from "../../context/LayoutContext";
 import {useSelector} from "react-redux";
 import jwtDecode from "jwt-decode";
 import ShowSequence from "../../pages/showSequence/ShowSequence";
+import Jobs from "../../pages/jobs/Jobs";
 
 function Layout(props) {
   var classes = useStyles();
@@ -82,6 +83,7 @@ function Layout(props) {
               <Route path="/app/sequence" component={Sequence} />
               <Route path="/app/show-sequence" component={ShowSequence} />
               <Route path="/app/bulk-sequence" component={BulkSequence} />
+              <Route path="/app/jobs" component={Jobs} />
               <Route path="/app/oldsequence" component={OldSequence} />
               <Route path="/app/users" component={Users} />
               <Route path="/app/contacts" component={Contacts} />
