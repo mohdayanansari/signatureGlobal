@@ -86,14 +86,14 @@ const QueryJobs = () => {
             sx={style}
             className="rounded-lg bg-white/70 outline-none border-none shadow-md w-[600px]"
           >
-            <h1 className="text-2xl text-gray-800 font-bold">
+            <h1 className="text-2xl font-bold text-gray-800">
               Query Jobs Sequence
             </h1>
             <hr className="mb-2" />
 
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col item-center gap-4"
+              className="flex flex-col gap-4 item-center"
             >
               <label htmlFor="phone" className="text-sm -mb-[10px] mt-5">
                 Enter Phone Number
@@ -124,11 +124,12 @@ const QueryJobs = () => {
                 label="Limit"
                 variant="standard"
                 type="number"
+                placeholder="Enter the limit"
                 value={limit}
                 min="1"
                 max="50"
                 onChange={(e) => setLimit(e.target.value)}
-                className="focus:outline-none bg-transparent border border-white/20 rounded-lg px-2 py-1"
+                className="px-2 py-1 bg-transparent border rounded-lg focus:outline-none border-white/20"
               />
               <Autocomplete
                 disablePortal
