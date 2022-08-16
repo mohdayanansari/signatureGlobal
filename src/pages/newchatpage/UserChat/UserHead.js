@@ -3,7 +3,7 @@ import React from "react";
 const UserHead = ({ name , number , timestamp , chatDisabled }) => {
   // console.log(activeUser);
   return (
-    <div className="flex items-center bg-appGray-700 w-full h-[80px] px-[30px] text-white text-opacity-80 font-[24px]  gap-4 shadow-xl border-b border-white border-opacity-10">
+    <div className="flex items-center  w-full h-[80px] px-[30px] text-white text-opacity-80 font-[24px]  gap-4 shadow-xl border-b border-white border-opacity-10">
         <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
             {number ? name.toString()[0] : "R"}
 

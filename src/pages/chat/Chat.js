@@ -113,11 +113,12 @@ export default function Chat(props) {
   // scroll to bottom
   useEffect(() => {
     scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatHistory]);
+  }, [typedMsg]);
 
   useEffect(() => {
     setChatWindowScroll(true);
   }, [selectedChat]);
+  
   useEffect(() => {
     let divHeight = chatListRef.current?.scrollHeight;
 

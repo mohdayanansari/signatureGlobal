@@ -11,6 +11,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { axiosInstance } from "../../../../utils/axios-instance";
 
 const style = {
   position: "absolute",
@@ -43,23 +44,15 @@ const SendSequenceModal = () => {
     mins = mins / 10 < 1 ? "0" + mins : mins;
     console.log("mins::", mins, "hours::", hours);
     const time = `${hours}:${mins}:00`;
-    var config = {
-      method: "post",
-      url: "https://api.notbot.in/send_sequence",
-      headers: {
-        Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MDM2MTMyOCwianRpIjoiM2EyOWM1ZDctM2U5Ni00NGU1LTgzNTUtZThhZmFmMDcxMjMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjUwMzYxMzI4fQ.QIPBc1-ykwUe5KcCEXlHPkeFC280c5Mrmic_UNZ__N4",
-        "Content-Type": "application/json",
-      },
-      data: {
-        phone: Number(phone),
-        start_datetime: date + " " + time,
-        sequence_name: seqName,
-      },
+   
+    const data = {
+      phone: Number(phone),
+      start_datetime: date + " " + time,
+      sequence_name: seqName,
     };
 
     try {
-      await axios(config);
+      await axiosInstance.post("send_sequence", data);
     } catch (error) {
       console.log(error);
     }

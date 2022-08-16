@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
+import { axiosInstance } from "../../../../utils/axios-instance";
 
 const style = {
   position: "absolute",
@@ -29,16 +30,8 @@ const SearchSequenceModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var config = {
-      method: "get",
-      url: `https://api.notbot.in/alljobs/${phone}`,
-      headers: {
-        Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MDM2MTMyOCwianRpIjoiM2EyOWM1ZDctM2U5Ni00NGU1LTgzNTUtZThhZmFmMDcxMjMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjUwMzYxMzI4fQ.QIPBc1-ykwUe5KcCEXlHPkeFC280c5Mrmic_UNZ__N4",
-      },
-    };
     try {
-      const res = await axios(config);
+      const res = await axiosInstance.get(`alljobs/${phone}`);
       setSearchSequenceRes(res.data);
       console.log(res.data);
       setIsLoading(true);

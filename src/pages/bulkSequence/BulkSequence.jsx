@@ -10,6 +10,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 import "./styles/bulkStyles.css";
 import axios from "axios";
+import { axiosInstance } from "../../utils/axios-instance";
 
 const BulkSequence = () => {
   const [bulkCSV, setBulkCSV] = useState(null);
@@ -60,20 +61,8 @@ const BulkSequence = () => {
     data.append("brodcast_name", bulkInput.brodcast_name);
     data.append("start_datetime", date + " " + time);
 
-    var config = {
-      method: "post",
-      url: "https://test.notbot.in/sequence/broadcast",
-      headers: {
-        Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MDM2MTMyOCwianRpIjoiM2EyOWM1ZDctM2U5Ni00NGU1LTgzNTUtZThhZmFmMDcxMjMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjUwMzYxMzI4fQ.QIPBc1-ykwUe5KcCEXlHPkeFC280c5Mrmic_UNZ__N4",
-      },
-      data: data,
-    };
-
-    console.log("Date::", date);
-    console.log("Time::", time);
     try {
-      await axios(config);
+      await axiosInstance.post("sequence/broadcast", data);
     } catch (error) {
       console.log(error);
     }

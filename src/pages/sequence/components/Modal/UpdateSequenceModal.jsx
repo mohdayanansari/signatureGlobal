@@ -16,6 +16,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { axiosInstance } from "../../../../utils/axios-instance";
 
 const style = {
   position: "absolute",
@@ -68,18 +69,9 @@ const UpdateSequenceModal = ({ sequenceData, index, templates }) => {
       start_datetime: date + " " + time,
       sequence_details: JobsArray,
     });
-    const config = {
-      method: "post",
-      url: "https://api.notbot.in/updatesequence",
-      headers: {
-        Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MDM2MTMyOCwianRpIjoiM2EyOWM1ZDctM2U5Ni00NGU1LTgzNTUtZThhZmFmMDcxMjMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjUwMzYxMzI4fQ.QIPBc1-ykwUe5KcCEXlHPkeFC280c5Mrmic_UNZ__N4",
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+
     try {
-      await axios(config);
+      await axiosInstance.post("updatesequence", data);
     } catch (error) {
       console.log(error);
     }

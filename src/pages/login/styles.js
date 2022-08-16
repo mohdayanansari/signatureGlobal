@@ -154,7 +154,7 @@ export default makeStyles((theme) => ({
     width: "100%",
     marginTop: theme.spacing(4),
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
   },
   forgetButton: {
@@ -162,7 +162,8 @@ export default makeStyles((theme) => ({
     fontWeight: 400,
   },
   loginLoader: {
-    marginLeft: theme.spacing(4),
+    // marginLeft: theme.spacing(4),
+    color: "#FED500"
   },
   loginBtn: {
     fontWeight: 700,

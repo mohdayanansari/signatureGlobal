@@ -4,6 +4,7 @@ import axios from "axios";
 import { Disclosure, Transition } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import UpdateSequenceModal from "./Modal/UpdateSequenceModal";
+import { axiosInstance } from "../../../utils/axios-instance";
 
 const SequenceTabOne = () => {
   const [sequences, setSequences] = useState([]);
@@ -11,16 +12,8 @@ const SequenceTabOne = () => {
 
   useEffect(() => {
     (async () => {
-      var config = {
-        method: "get",
-        url: "https://api.notbot.in/getsequence",
-        headers: {
-          Authorization:
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MDM2MTMyOCwianRpIjoiM2EyOWM1ZDctM2U5Ni00NGU1LTgzNTUtZThhZmFmMDcxMjMyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImZvb0Bmb28uZm9vIiwibmJmIjoxNjUwMzYxMzI4fQ.QIPBc1-ykwUe5KcCEXlHPkeFC280c5Mrmic_UNZ__N4",
-        },
-      };
       try {
-        const res = await axios(config);
+        const res = await axiosInstance.get("getsequence");
         setSequences(res.data.sequence);
       } catch (error) {
         console.log(error);
@@ -31,15 +24,7 @@ const SequenceTabOne = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(
-          "https://api.notbot.in/v1/configs/templates",
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
-            },
-          },
-        );
+        const res = await axiosInstance.get("v1/configs/templates");
         // console.log("templates data:::", resp.data);
         setTemplates(res.data.waba_templates);
         console.log("Templates::", res.data);

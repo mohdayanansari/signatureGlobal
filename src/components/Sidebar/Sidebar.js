@@ -228,7 +228,7 @@ function Sidebar(props) {
       {isSidebarOpened ? (
         <div className="my-10 py-5 flex flex-col items-center gap-5 glassed rounded border border-white/20  w-[80%] relative">
           <div className="w-[50px] h-[50px] rounded-full bg-[#FED500] text-black/90 font-black text-2xl flex justify-center items-center shadow -mt-[45px]">
-            {usernameData.toUpperCase()[0]}
+            {usernameData?.toUpperCase()[0]}
           </div>
           <div className="text-white/60 flex flex-col items-center justify-center">
             {/* <h1>Hey👋,</h1> */}
@@ -237,7 +237,7 @@ function Sidebar(props) {
         </div>
       ) : (
         <div className="w-[50px] h-[50px] bg-[#FED500] text-black/80 rounded-full shadow-lg my-10 flex justify-center items-center text-2xl font-black">
-          <div className="-mt-[3px]">{usernameData.toUpperCase()[0]}</div>
+          <div className="-mt-[3px]">{usernameData?.toUpperCase()[0]}</div>
         </div>
       )}
      
