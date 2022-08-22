@@ -13,6 +13,18 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTheme } from "@material-ui/styles";
 import SendIcon from "@material-ui/icons/Send";
 import { CloudUpload, Description } from "@material-ui/icons";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 // styles
 import useStyles from "./styles";
 import ImageShowCase from "../../images/image-column.PNG";
@@ -41,6 +53,41 @@ import "react-phone-number-input/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { useRouteMatch } from "react-router-dom";
 import { timeConverter } from "../../utils/date-parse";
+import { axiosInstance } from "../../utils/axios-instance";
+
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  backgroundColor: "rgba(0,0,0,0)",
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor: "rgba(0, 0, 0, 0)",
+  flexDirection: "row-reverse",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
 
 const FirstStep = ({
   data,
@@ -188,57 +235,130 @@ const SecondStep = (props) => {
   );
 };
 const ThirdStep = (props) => {
-  const { classes, onFileLoad, file, onUploadCSV, variables } = props;
+  const {
+    classes,
+    onFileLoad,
+    file,
+    onUploadCSV,
+    variables,
+    downloadSampleCSV,
+    handleWhentoSend,
+    whentoSend,
+    dateValue,
+    setDateValue,
+    timeValue,
+    setTimeValue,
+  } = props;
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography className={classes.text} variant={"subtitle1"} gutterBottom>
-          You have to upload CSV file with extension(.csv).
-        </Typography>
-        <Box display={"flex"} alignItems={"center"}>
-          <Description color={"primary"} />
-          <Typography weight="bold" color="primary" className={classes.text}>
-            {file?.name ? file?.name : "No Files"}
+    <>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography
+            className={classes.text}
+            variant={"subtitle1"}
+            gutterBottom
+          >
+            You have to upload CSV file with extension(.csv).
           </Typography>
-        </Box>
-        <br />
-      </Grid>
-      <Grid item xs={6}>
-        <div>
-          <input
-            accept=".xslx,.csv,.xls,.png"
-            className={classes.inputFile}
-            id="contained-button-file"
-            onChange={onFileLoad}
-            disabled={file !== undefined}
-            type="file"
-          />
-          <label htmlFor="contained-button-file">
-            <Button
-              variant="contained"
-              startIcon={<Description />}
+          <Box display={"flex"} alignItems={"center"}>
+            <Description color={"primary"} />
+            <Typography weight="bold" color="primary" className={classes.text}>
+              {file?.name ? file?.name : "No Files"}
+            </Typography>
+          </Box>
+          <br />
+        </Grid>
+        <Grid item xs={6}>
+          <div className="">
+            <input
+              accept=".xslx,.csv,.xls,.png"
+              className={classes.inputFile}
+              id="contained-button-file"
+              onChange={onFileLoad}
               disabled={file !== undefined}
-              className={classes.buttonPrimary}
-              color={"primary"}
-              component="span"
-            >
-              Choose Files
-            </Button>
-          </label>
-        </div>
-      </Grid>
-      <br />
-      <br />
-      <br />
-      <Typography variant={"subtitle2"} color={"secondary"} gutterBottom>
-        Please read guidelines carefully below before uploading CSV(.csv) file.
-      </Typography>
+              type="file"
+            />
 
-      <Grid item xs={12}>
-        <ShowCaseTemplate classes={classes} variables={variables} />
+            <div className="flex flex-col  gap-2 w-full ">
+              <label htmlFor="contained-button-file">
+                <Button
+                  variant="contained"
+                  startIcon={<Description />}
+                  disabled={file !== undefined}
+                  className={classes.buttonPrimary}
+                  color={"primary"}
+                  component="span"
+                >
+                  Choose Files
+                </Button>
+              </label>
+              <div
+                onClick={downloadSampleCSV}
+                className="hover:cursor-pointer text-xs hover:bg-black/40 hover:text-white hover:p-2 hover:rounded hover:flex hover:justify-center hover:items-center w-[165px] hover:font-bold transition-all transform ease-in-out duration-200"
+              >
+                Download Sample CSV
+              </div>
+            </div>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+      {/* When to send the broadcast */}
+      <div className="mt-8">
+        <h1
+          id="demo-controlled-radio-buttons-group"
+          className="text-black/80 font-bold"
+        >
+          When to send
+        </h1>
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={whentoSend}
+          onChange={handleWhentoSend}
+        >
+          <FormControlLabel value="now" control={<Radio />} label="Now" />
+          <FormControlLabel value="later" control={<Radio />} label="Later" />
+        </RadioGroup>
+      </div>
+      {whentoSend === "later" && (
+        <div className="flex flex-col w-[250px] gap-3 mt-3 mb-10">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Select Date"
+              value={dateValue}
+              inputFormat="yyyy-MM-dd"
+              mask="____-__-__"
+              onChange={(newValue) => setDateValue(newValue)}
+              renderInput={(params) => <TextField {...params} />}
+            />
+
+            <TimePicker
+              label="Select Time"
+              value={timeValue}
+              ampm={false}
+              onChange={(newValue) => setTimeValue(newValue)}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+        </div>
+      )}
+
+      <Accordion>
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <Typography variant={"subtitle2"} color={"secondary"} gutterBottom>
+            Please read guidelines carefully below before uploading CSV(.csv)
+            file.
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {/* Accordion Content */}
+          <Grid item xs={12}>
+            <ShowCaseTemplate classes={classes} variables={variables} />
+          </Grid>
+        </AccordionDetails>
+      </Accordion>
+    </>
   );
 };
 
@@ -272,11 +392,19 @@ const ShowCaseTemplate = (props) => {
             <b>{item?.format.toLowerCase()}</b> urls in it.
           </Typography>
 
-          {item?.format.toLowerCase() == "video" && (
-            <img className={classes.showCaseImage} src={VideoShowCase} />
+          {item?.format.toLowerCase() === "video" && (
+            <img
+              className={classes.showCaseImage}
+              src={VideoShowCase}
+              alt="NotBot"
+            />
           )}
-          {item?.format.toLowerCase() == "image" && <img src={ImageShowCase} />}
-          {item?.format.toLowerCase() == "audio" && <img src={AudioShowCase} />}
+          {item?.format.toLowerCase() === "image" && (
+            <img src={ImageShowCase} alt="NotBot" />
+          )}
+          {item?.format.toLowerCase() === "audio" && (
+            <img src={AudioShowCase} alt="NotBot" />
+          )}
         </>
       );
     }
@@ -287,7 +415,7 @@ const ShowCaseTemplate = (props) => {
         Make a column named <b>to</b> shown in below picture and put the
         recipients phone number in it with country code.
       </Typography>
-      <img className={classes.showCaseImage} src={PhoneShowCase} />
+      <img className={classes.showCaseImage} src={PhoneShowCase} alt="NotBot" />
       {showCaseTextItems}
     </>
   );
@@ -480,6 +608,26 @@ export default function Broadcast() {
 
   const [contactsFile, setContactsFile] = useState(undefined);
   const [selectedDocument, setSelectedDocument] = useState(undefined);
+  const [whentoSend, setWhentoSend] = useState("now");
+  const [dateValue, setDateValue] = useState(new Date());
+  const [timeValue, setTimeValue] = useState(new Date());
+
+  const downloadSampleCSV = async (template_name, language) => {
+    try {
+      const resp = await axiosInstance.post("sample/template_csv", {
+        template_name: selectedTemplate.name,
+        language: selectedTemplate.language,
+      });
+      console.log("Sample CSV Data::", resp.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleWhentoSend = (e) => {
+    // console.log(e.target.value);
+    setWhentoSend(e.target.value);
+  };
 
   const onContactsFileLoad = ({ target }) => {
     console.log(target.files[0].name);
@@ -521,6 +669,13 @@ export default function Broadcast() {
       file={contactsFile}
       variables={variables}
       classes={classes}
+      downloadSampleCSV={downloadSampleCSV}
+      whentoSend={whentoSend}
+      handleWhentoSend={handleWhentoSend}
+      dateValue={dateValue}
+      setDateValue={setDateValue}
+      timeValue={timeValue}
+      setTimeValue={setTimeValue}
     />,
   ];
 
@@ -616,12 +771,35 @@ export default function Broadcast() {
         BroadcastModalStepArray.length - 1
       ) {
         if (contactsFile && selectedTemplate && broadcastName) {
+          const date = `${dateValue.getFullYear()}-${dateValue.getMonth()}-${dateValue.getDate()}`;
+          let hours = timeValue.getHours();
+          let mins = timeValue.getMinutes();
+          hours = hours / 10 < 1 ? "0" + hours : hours;
+          mins = mins / 10 < 1 ? "0" + mins : mins;
+          // console.log("mins::", mins, "hours::", hours);
+          const time = `${hours}:${mins}:00`;
+          // current date
+          var currentdate = new Date();
+          let currHour = currentdate.getHours();
+          let currMinute = currentdate.getMinutes();
+          currHour = currHour / 10 < 1 ? "0" + currHour : currHour;
+          currMinute = currMinute / 10 < 1 ? "0" + currMinute : currMinute;
+          let currSec = currentdate.getSeconds();
+
+          let current_datetime = `${currentdate.getFullYear()}-${currentdate.getMonth()}-${currentdate.getDate()} ${currHour}:${currMinute}:${
+            currSec + 30
+          }`;
+
           let obj = new FormData();
           obj.append("file", contactsFile);
           obj.append("template_name", selectedTemplate.name);
           obj.append("namespace", selectedTemplate.namespace);
           obj.append("language", selectedTemplate.language);
           obj.append("brodcast_name", broadcastName);
+          obj.append(
+            "start_datetime",
+            whentoSend === "now" ? current_datetime : `${date} ${time}`,
+          );
           dispatch(sendBulkUploadTemplateMessage(obj));
 
           const localObj = {
@@ -629,6 +807,7 @@ export default function Broadcast() {
             broadcast_name: broadcastName,
             template_name: selectedTemplate?.name,
             file: contactsFile?.name,
+            start_datetime: `${date} ${time}`,
             type: "Broadcast",
             status: "Sent",
           };
@@ -721,7 +900,7 @@ export default function Broadcast() {
       ) {
         let requestObj = {
           template_name: selectedTemplate?.name,
-          language: selectedTemplate?.language
+          language: selectedTemplate?.language,
         };
         console.log(requestObj);
         dispatch(fetchVariablesFromTemplates(requestObj));
@@ -793,7 +972,7 @@ export default function Broadcast() {
         onClick={addNewBroadCast}
         startIcon={<SendIcon />}
       >
-        New Broadcast
+        Send Bulk
       </Button>
       <Button
         style={{ marginLeft: "20px" }}

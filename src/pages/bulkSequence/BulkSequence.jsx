@@ -73,7 +73,7 @@ const BulkSequence = () => {
       {/* Navbar */}
       <div className="h-[60px] flex items-center px-[30px] border-b border-white/20 py-[20px]">
         <h1 className="text-lg font-semibold text-white/80">
-          Send Sequence in Bulk
+          Schedule Broadcast
         </h1>
       </div>
       {/* Navbar END*/}

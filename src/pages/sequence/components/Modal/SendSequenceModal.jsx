@@ -46,7 +46,7 @@ const SendSequenceModal = () => {
     const time = `${hours}:${mins}:00`;
    
     const data = {
-      phone: Number(phone),
+      phone: `91${phone}` ,
       start_datetime: date + " " + time,
       sequence_name: seqName,
     };

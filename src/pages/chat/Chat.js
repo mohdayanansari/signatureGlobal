@@ -1,35 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Grid,
-  Button,
-  Box,
-  TextField,
-  InputLabel,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  List,
-  Avatar,
-  Divider,
   createMuiTheme,
   MuiThemeProvider,
-  IconButton,
   CircularProgress,
   Chip,
-  ListItemSecondaryAction,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useTheme } from "@material-ui/styles";
-import SendIcon from "@material-ui/icons/Send";
-import {
-  CloudUpload,
-  Description,
-  Face,
-  InsertPhoto,
-  Send,
-  AttachFile,
-  Image,
-} from "@material-ui/icons";
 // styles
 import useStyles from "./styles";
 import {
@@ -67,7 +45,7 @@ import classnames from "classnames";
 import Av1 from "../../images/av1.png";
 import DocIcon from "../../images/docs.png";
 import Chats from "../newchatpage/Tabs/Chats";
-import { CheckIcon, ClockIcon, SearchIcon } from "@heroicons/react/outline";
+import { CheckIcon, ClockIcon, DownloadIcon, SearchIcon } from "@heroicons/react/outline";
 import {
   DocumentTextIcon,
   ExclamationCircleIcon,
@@ -79,10 +57,12 @@ import UserHead from "../newchatpage/UserChat/UserHead";
 import avatar4 from "../../images/av1.png";
 import avatar1 from "../../images/av2.png";
 import ChatInput from "../newchatpage/UserChat/ChatInput";
+import { saveAs } from "file-saver";
+import { Avatar } from "@mui/material";
 
 export default function Chat(props) {
   var classes = useStyles();
-  var theme = useTheme();
+  // var theme = useTheme();
   const dispatch = useDispatch();
   const store = useStore();
 
@@ -118,7 +98,7 @@ export default function Chat(props) {
   useEffect(() => {
     setChatWindowScroll(true);
   }, [selectedChat]);
-  
+
   useEffect(() => {
     let divHeight = chatListRef.current?.scrollHeight;
 
@@ -711,6 +691,7 @@ export default function Chat(props) {
       }
       // ! <-- -------------------if the __IMAGE__ send by __USER__------------- -->
     } else if (item?.type === "image") {
+      // console.log("imges::", item);
       if (!item.fromMe) {
         return (
           <div className={classnames("flex justify-start mb-[20px]")}>
@@ -728,7 +709,17 @@ export default function Chat(props) {
                   <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
-                  <img src={item?.image.slice(0, -4)} alt="Notbot" />
+                  <img src={item?.url} alt="Notbot" />
+                  {/* download image */}
+                  <div className="absolute -top-[10px] -right-[20px] z-50">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                      Download Image
+                    </button>
+                  </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
                     {item?.status && getStatusText(item?.status)}
                     <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
@@ -756,7 +747,17 @@ export default function Chat(props) {
                   <h4 className="text-sm font-semibold text-white/80 mb-5">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
-                  <img src={item?.image.slice(0, -4)} alt="Notbot" />
+                  <img src={item?.url} alt="Notbot" />
+                  {/* download image */}
+                  <div className="absolute -top-[10px] -right-[20px] z-50">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                      Download Image
+                    </button>
+                  </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
                     {item?.status && getStatusText(item?.status)}
                     <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
@@ -781,6 +782,7 @@ export default function Chat(props) {
       // ! <-- -------------------if the __DOCUMENT__ send by __USER__------------- -->
     } else if (item?.type === "document") {
       if (!item.fromMe) {
+        // console.log("Document::::",item);
         return (
           <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
             <div className="flex gap-4 ">
@@ -811,6 +813,16 @@ export default function Chat(props) {
                       {item?.document?.filename}
                     </p>
                   </div>
+                  {/* Download Docs */}
+                  <div className="flex w-full  mt-4">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                    <DownloadIcon className="w-5 text-black/80" />
+                    </button>
+                  </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
                     {item?.status && getStatusText(item?.status)}
                     <ClockIcon className="w-[12px] h-[12px] " />
@@ -827,6 +839,8 @@ export default function Chat(props) {
         );
         // ! <-- -------------------if the __DOCUMENT__ send by __DASHBOARD__------------- -->
       } else {
+        // console.log("Document::::",item);
+
         return (
           <div className="flex justify-end mb-[20px]">
             <div className="flex gap-4">
@@ -854,6 +868,16 @@ export default function Chat(props) {
                     <p className="text-sm text-white font-regular text-opacity-80">
                       {item?.filename}
                     </p>
+                  </div>
+                  {/* Download Docs */}
+                  <div className="flex w-full justify-end mt-4">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                    <DownloadIcon className="w-5 text-black/80" />
+                    </button>
                   </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
                     {item?.status && getStatusText(item?.status)}
