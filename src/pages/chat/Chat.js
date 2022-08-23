@@ -45,7 +45,12 @@ import classnames from "classnames";
 import Av1 from "../../images/av1.png";
 import DocIcon from "../../images/docs.png";
 import Chats from "../newchatpage/Tabs/Chats";
-import { CheckIcon, ClockIcon, DownloadIcon, SearchIcon } from "@heroicons/react/outline";
+import {
+  CheckIcon,
+  ClockIcon,
+  DownloadIcon,
+  SearchIcon,
+} from "@heroicons/react/outline";
 import {
   DocumentTextIcon,
   ExclamationCircleIcon,
@@ -705,11 +710,11 @@ export default function Chat(props) {
               {/* Message, Time & UserName  */}
               <div>
                 {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] pt-[25px]">
+                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
                   <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
-                  <img src={item?.url} alt="Notbot" />
+                  <img src={item?.url} alt="Notbot" className="!w-[200px]" />
                   {/* download image */}
                   <div className="absolute -top-[10px] -right-[20px] z-50">
                     <button
@@ -717,7 +722,7 @@ export default function Chat(props) {
                       onClick={() => saveAs(item?.url)}
                       className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
                     >
-                      Download Image
+                      <DownloadIcon className="w-5 text-black/80" />
                     </button>
                   </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
@@ -743,19 +748,19 @@ export default function Chat(props) {
               {/* Message, Time & UserName  */}
               <div className="">
                 {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl !pt-10  p-[15px] ">
                   <h4 className="text-sm font-semibold text-white/80 mb-5">
                     {removeUnderscoreAndCapitalize(item?.filename)}
                   </h4>
-                  <img src={item?.url} alt="Notbot" />
+                  <img src={item?.url} alt="Notbot" className="!w-[200px]" />
                   {/* download image */}
-                  <div className="absolute -top-[10px] -right-[20px] z-50">
+                  <div className="absolute -top-[10px] -left-[20px] z-50">
                     <button
                       type="button"
                       onClick={() => saveAs(item?.url)}
                       className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
                     >
-                      Download Image
+                      <DownloadIcon className="w-5 text-black/80" />
                     </button>
                   </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
@@ -795,7 +800,7 @@ export default function Chat(props) {
               {/* Message, Time & UserName  */}
               <div>
                 {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] pt-[25px]">
+                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
                   <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
                     <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
                       Document
@@ -814,13 +819,13 @@ export default function Chat(props) {
                     </p>
                   </div>
                   {/* Download Docs */}
-                  <div className="flex w-full  mt-4">
+                  <div className="absolute -top-[10px] -right-[20px] z-50">
                     <button
                       type="button"
                       onClick={() => saveAs(item?.url)}
                       className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
                     >
-                    <DownloadIcon className="w-5 text-black/80" />
+                      <DownloadIcon className="w-5 text-black/80" />
                     </button>
                   </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
@@ -842,7 +847,7 @@ export default function Chat(props) {
         // console.log("Document::::",item);
 
         return (
-          <div className="flex justify-end mb-[20px]">
+          <div className="flex justify-end mb-[20px] ">
             <div className="flex gap-4">
               {/* Message, Time & UserName  */}
               <div className="">
@@ -854,7 +859,9 @@ export default function Chat(props) {
                     </h4>
                   </div>
                   <div
-                    className={"p-2 bg-appGray-400 rounded flex items-center"}
+                    className={
+                      "p-2 bg-appGray-400 rounded flex items-center mt-5"
+                    }
                   >
                     <div
                       className={
@@ -870,13 +877,13 @@ export default function Chat(props) {
                     </p>
                   </div>
                   {/* Download Docs */}
-                  <div className="flex w-full justify-end mt-4">
+                  <div className="absolute -top-[10px] -left-[20px] z-50">
                     <button
                       type="button"
                       onClick={() => saveAs(item?.url)}
                       className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
                     >
-                    <DownloadIcon className="w-5 text-black/80" />
+                      <DownloadIcon className="w-5 text-black/80" />
                     </button>
                   </div>
                   <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
@@ -900,6 +907,112 @@ export default function Chat(props) {
           </div>
         );
       }
+      // !<-----------------------Video Send By USER---------------------->
+    } else if (item?.type === "video") {
+      if (!item.fromMe) {
+        console.log(item);
+        return (
+          <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
+            <div className="flex gap-4 ">
+              {/* Avatar */}
+              {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+              {/* Message, Time & UserName  */}
+              <div>
+                {/* ----- */}
+                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
+                  <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      Video
+                    </h4>
+                  </div>
+                  <div>
+                    <video width="320" height="240" controls autoPlay="off">
+                      <source src={item?.url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  {/* Download Docs */}
+                  <div className="absolute -top-[10px] -right-[20px] z-50">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                      <DownloadIcon className="w-5 text-black/80" />
+                    </button>
+                  </div>
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                    {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
+                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  </div>
+                </div>
+                {/* ---userName */}
+                <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +{item?.phone}
+                </h4>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      // !<-----------------------Video Send By DASHBOARD---------------------->
+    } else {
+      return(
+        <div className="flex justify-end mb-[20px] ">
+            <div className="flex gap-4">
+              {/* Message, Time & UserName  */}
+              <div className="">
+                {/* ----- */}
+                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      Video
+                    </h4>
+                  </div>
+                  <div
+                    className={
+                      "p-2 bg-appGray-400 rounded flex items-center mt-5"
+                    }
+                  >
+                    <div>
+                    <video width="320" height="240" controls autoPlay="off">
+                      <source src={item?.url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                    <p className="text-sm text-white font-regular text-opacity-80">
+                      {item?.filename}
+                    </p>
+                  </div>
+                  {/* Download Docs */}
+                  <div className="absolute -top-[10px] -left-[20px] z-50">
+                    <button
+                      type="button"
+                      onClick={() => saveAs(item?.url)}
+                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                    >
+                      <DownloadIcon className="w-5 text-black/80" />
+                    </button>
+                  </div>
+                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
+                    {item?.status && getStatusText(item?.status)}
+                    <ClockIcon className="w-[12px] h-[12px] " />
+                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  </div>
+                </div>
+                {/* ---userName */}
+                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                  +918949674316
+                </h4>
+              </div>
+            </div>
+          </div>
+      )
     }
   };
 
