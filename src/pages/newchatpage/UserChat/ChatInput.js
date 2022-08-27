@@ -19,6 +19,7 @@ import {
   PaperAirplaneIcon,
   PhotographIcon,
   FolderAddIcon,
+  VideoCameraIcon,
 } from "@heroicons/react/solid";
 import classnames from "classnames";
 import QuickRepliesModal from "./Modals/QuickRepliesModal";
@@ -31,6 +32,7 @@ const ChatInput = (props) => {
     onChangeText,
     onFileLoad,
     onDocLoad,
+    onVideoLoad
   } = props;
 
   const [textMessage, settextMessage] = useState("");
@@ -164,6 +166,24 @@ const ChatInput = (props) => {
                 />
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
                   <PhotographIcon className="text-appPurple-400 w-[20px] h-[20px] " />
+                  {/* <div class="space-y-6 text-center"></div> */}
+                </div>
+              </div>
+              <div
+                className="relative group  flex justify-center items-center w-[40px] h-[40px] p-[5px] "
+                id="images"
+              >
+                <div className="absolute inset-0 rounded-lg bg-white bg-opacity-80 shadow-2xl backdrop-blur-xl group-hover:bg-opacity-70 transition duration-300"></div>
+                <input
+                  onChange={onVideoLoad}
+                  accept=".mp4"
+                  className="relative z-10 opacity-0 h-full w-full cursor-pointer"
+                  type="file"
+                  disabled={disabled}
+                  name="bgfile"
+                />
+                <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+                  <VideoCameraIcon className="text-appPurple-400 w-[20px] h-[20px] " />
                   {/* <div class="space-y-6 text-center"></div> */}
                 </div>
               </div>

@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { DocumentAddIcon, ReplyIcon } from "@heroicons/react/solid";
 import axios from "axios";
+import { axiosInstance } from "../../../../utils/axios-instance";
 
 const style = {
   position: "absolute",
@@ -120,25 +121,22 @@ const QuickRepliesModal = ({ getQuickReplyMsg }) => {
   const [quickReplyData, setQuickReplyData] = useState([]);
 
   useEffect(() => {
+    let isMount = false;
     (async () => {
       try {
-        var config = {
-          method: "get",
-          url: "https://api.notbot.in/get_quick_reply",
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
-          },
-        };
-        const res = await axios(config);
-        setQuickReplyData(res.data.quick_replies);
+        const res = await axiosInstance.get("get_quick_reply");
+        if (!isMount) {
+          setQuickReplyData(res.data.quick_replies);
+        }
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [quickReplyData]);
 
- 
+    return () => {
+      isMount = true;
+    };
+  }, [quickReplyData]);
 
   const handleClick = (text) => {
     getQuickReplyMsg(text);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ListItem,
   ListItemAvatar,
@@ -89,40 +89,37 @@ export default function Chat(props) {
   let intRef = useRef();
   let conRef = useRef();
 
-  const [chatWindowScroll, setChatWindowScroll] = useState(false);
+  // const [chatWindowScroll, setChatWindowScroll] = useState(false);
   // Search Chat State
   const [querry, setQuerry] = useState("");
   const [searchParams] = useState(["name", "number"]);
   const [filterParam, setFilterParam] = useState(["name"]);
 
-  // scroll to bottom
-  useEffect(() => {
-    scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [typedMsg]);
 
-  useEffect(() => {
-    setChatWindowScroll(true);
-  }, [selectedChat]);
 
-  useEffect(() => {
-    let divHeight = chatListRef.current?.scrollHeight;
+  // useEffect(() => {
+  //   setChatWindowScroll(true);
+  // }, [selectedChat]);
 
-    if (divHeight != undefined) {
-      if (chatListRef.current.scrollTop == 0 && chatWindowScroll) {
-        chatListRef.current.scrollTop = divHeight;
-        console.log(chatListRef.current);
+  // useEffect(() => {
+  //   let divHeight = chatListRef.current?.scrollHeight;
 
-        setChatWindowScroll(false);
-      }
-    }
-    clearTimeout(intRef);
-    if (selectedChat != null) {
-      intRef = setTimeout(
-        () => dispatch(getBackgroundChatHistory(selectedChat)),
-        2000,
-      );
-    }
-  }, [chatHistory]);
+  //   if (divHeight != undefined) {
+  //     if (chatListRef.current.scrollTop == 0 && chatWindowScroll) {
+  //       chatListRef.current.scrollTop = divHeight;
+  //       console.log(chatListRef.current);
+
+  //       setChatWindowScroll(false);
+  //     }
+  //   }
+  //   clearTimeout(intRef);
+  //   if (selectedChat != null) {
+  //     intRef = setTimeout(
+  //       () => dispatch(getBackgroundChatHistory(selectedChat)),
+  //       2000,
+  //     );
+  //   }
+  // }, [chatHistory]);
 
   useEffect(() => {
     let number = contacts[0]?.number;
@@ -264,6 +261,7 @@ export default function Chat(props) {
   const onClickItem = (item, name, number) => {
     if (item !== null) {
       clearInterval(intRef);
+      console.log("Selected Chat:::", item);
       setSelectedChat(item);
       setSelectedChatName(name);
       dispatch(getSelectedChatHistory(number));
@@ -272,6 +270,7 @@ export default function Chat(props) {
 
   const onFileLoad = ({ target }) => {
     let file = target.files[0];
+    console.log(file);
     let url = URL.createObjectURL(file);
     let obj = new FormData();
     obj.append("file", file);
@@ -292,6 +291,28 @@ export default function Chat(props) {
     let newChatHistory = [...chatHistory, newMsg];
     dispatch(setTemplateChatHistory(newChatHistory));
     dispatch(sendMediaChat(obj));
+  };
+  const onVideoLoad = ({ target }) => {
+    let file = target.files[0];
+    let url = URL.createObjectURL(file);
+    let obj = new FormData();
+    obj.append("file", file);
+    obj.append("phone", selectedChat);
+    let newMsg = {
+      fromMe: true,
+      filename: file?.name,
+      document: url,
+      url: url,
+      send_type: "single",
+      status: "sending",
+      type: "video",
+      phone: selectedChat,
+      timestamp: 1643197893,
+      _id: "gBEGkXhRiGVlAgnRrgK6hgWe5_M",
+    };
+    let newChatHistory = [...chatHistory, newMsg];
+    dispatch(setTemplateChatHistory(newChatHistory));
+    dispatch(sendDocChat(obj));
   };
 
   const onDocLoad = ({ target }) => {
@@ -318,30 +339,28 @@ export default function Chat(props) {
   };
 
   const sendMsg = (e) => {
-    if (e.keyCode == 13 || e.keyCode == undefined) {
-      if (typedMsg != null && selectedChat != null) {
-        //todo: conditon to set the user or sender phone number in "phone key value pair"::
-        let obj = {
-          phone: selectedChat,
-          type: "text",
-          text: typedMsg.toString(),
-        };
-        let newMsg = {
-          fromMe: true,
-          phone: selectedChat,
-          text: { body: typedMsg },
-          send_type: "single",
-          status: "delivered",
-          timestamp: 1643197893,
-          type: "text",
-          _id: "gBEGkXhRiGVlAgnRrgK6hgWe5_M",
-        };
-        dispatch(sendTemplateMessage(obj));
-        let newChatHistory = [...chatHistory, newMsg];
-        dispatch(setTemplateChatHistory(newChatHistory));
-        setTimeout(() => dispatch(getSelectedChatHistory(selectedChat)), 1000);
-        setTypedMsg("");
-      }
+    if (typedMsg != null && selectedChat != null) {
+      //todo: conditon to set the user or sender phone number in "phone key value pair"::
+      let obj = {
+        phone: selectedChat,
+        type: "text",
+        text: typedMsg.toString(),
+      };
+      let newMsg = {
+        fromMe: true,
+        phone: selectedChat,
+        text: { body: typedMsg },
+        send_type: "single",
+        status: "delivered",
+        timestamp: 1643197893,
+        type: "text",
+        _id: "gBEGkXhRiGVlAgnRrgK6hgWe5_M",
+      };
+      dispatch(sendTemplateMessage(obj));
+      let newChatHistory = [...chatHistory, newMsg];
+      dispatch(setTemplateChatHistory(newChatHistory));
+      setTimeout(() => dispatch(getSelectedChatHistory(selectedChat)), 1000);
+      setTypedMsg("");
     }
   };
 
@@ -518,7 +537,7 @@ export default function Chat(props) {
   };
 
   //! <-- -----------------------TEXT MESSAGES-- SEND BY USER--------------- -->
-  const GetNewMessages = ({ item }) => {
+  const GetNewMessages = useCallback( ({ item }) => {
     if (item?.type === "text") {
       if (!item.fromMe) {
         // console.log(item);
@@ -910,7 +929,7 @@ export default function Chat(props) {
       // !<-----------------------Video Send By USER---------------------->
     } else if (item?.type === "video") {
       if (!item.fromMe) {
-        console.log(item);
+        // console.log("video::::",item);
         return (
           <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
             <div className="flex gap-4 ">
@@ -929,13 +948,17 @@ export default function Chat(props) {
                       Video
                     </h4>
                   </div>
-                  <div>
-                    <video width="320" height="240" controls autoPlay="off">
-                      <source src={item?.url} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                  <div
+                    className={
+                      "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
+                    }
+                  >
+                    <DocumentTextIcon
+                      className={"text-appPurple-400 w-[25px] h-[25px]"}
+                    />
+                    <p className="text-sm text-white/80">{item?.filename}</p>
                   </div>
-                  {/* Download Docs */}
+                  {/* Download Video */}
                   <div className="absolute -top-[10px] -right-[20px] z-50">
                     <button
                       type="button"
@@ -959,11 +982,12 @@ export default function Chat(props) {
             </div>
           </div>
         );
-      }
-      // !<-----------------------Video Send By DASHBOARD---------------------->
-    } else {
-      return(
-        <div className="flex justify-end mb-[20px] ">
+        // ! <-- -------------------if the ::VIDEO:: send by __DASHBOARD__------------- -->
+      } else {
+        // console.log("Video::::",item);
+
+        return (
+          <div className="flex justify-end mb-[20px] ">
             <div className="flex gap-4">
               {/* Message, Time & UserName  */}
               <div className="">
@@ -979,12 +1003,15 @@ export default function Chat(props) {
                       "p-2 bg-appGray-400 rounded flex items-center mt-5"
                     }
                   >
-                    <div>
-                    <video width="320" height="240" controls autoPlay="off">
-                      <source src={item?.url} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                    <div
+                      className={
+                        "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                      }
+                    >
+                      <DocumentTextIcon
+                        className={"text-appPurple-400 w-[25px] h-[25px]"}
+                      />
+                    </div>
                     <p className="text-sm text-white font-regular text-opacity-80">
                       {item?.filename}
                     </p>
@@ -1012,9 +1039,15 @@ export default function Chat(props) {
               </div>
             </div>
           </div>
-      )
+        );
+      }
     }
-  };
+  }, [getStatusText]);
+
+    // scroll to bottom
+    useEffect(() => {
+      scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [GetNewMessages]);
 
   const lastDateOfChat = [];
   Object.assign(lastDateOfChat, chatHistory);
@@ -1108,10 +1141,21 @@ export default function Chat(props) {
                 <div className="my-[30px]">
                   {chatHistory?.length > 0 ? (
                     <>
-                      {chatHistory.map((item) => {
-                        if (item?.phone == selectedChat) {
-                          return <GetNewMessages item={item} />;
-                        }
+                      {chatHistory.map((item, i) => {
+                        return (
+                          <div key={i}>
+                            {
+                              item?.phone === selectedChat ? (
+                                <GetNewMessages item={item} />
+                              ) : (
+                                ""
+                              )
+                              // if (item?.phone == selectedChat) {
+                              //   return <GetNewMessages item={item} />;
+                              // }
+                            }
+                          </div>
+                        );
                       })}
                     </>
                   ) : (
@@ -1130,107 +1174,11 @@ export default function Chat(props) {
               onSubmit={sendMsg}
               onChangeText={setTypedMsg}
               onFileLoad={onFileLoad}
+              onVideoLoad={onVideoLoad}
               onDocLoad={onDocLoad}
             />
           </div>
         </div>
-        {/*<Grid item xs={4}>*/}
-        {/*  <Typography variant={"h5"} style={{marginLeft:"10px", fontWeight:"bold"}}>Chats</Typography>*/}
-        {/*  <br/>*/}
-        {/*  <List style={{height:"64vh" , overflowY:"scroll" , display:"flex",overflowX:"hidden",*/}
-        {/*    flexDirection:"column",alignItems:"center"}}>*/}
-        {/*    {getChatListItems()}*/}
-        {/*  </List>*/}
-        {/*</Grid>*/}
-        {/*<Grid item xs={8} className={classes.chatWrapperGrid}>*/}
-        {/*  <ListItem className={classes.recipientTitle} disableGutters>*/}
-        {/*    <ListItemAvatar>*/}
-        {/*      <Avatar src={AvatarArray[0]} />*/}
-        {/*    </ListItemAvatar>*/}
-        {/*    <ListItemText primary={selectedChat ? selectedChat : "Recipient name"}*/}
-        {/*    secondary={timestamp && (chatDisabled ? "Your chat is disabled" :`Your chat will be active till ${timestamp}`)}*/}
-        {/*    /><br/>*/}
-        {/*  </ListItem>*/}
-        {/*  <div className={classes.chatList}>*/}
-        {/*    <Box flex={1}*/}
-        {/*         className={chatHistoryLoading || chatHistory.length ==0 ?*/}
-        {/*           classes.beforeLoading : classes.afterLoading}>*/}
-        {/*      {chatHistoryLoading*/}
-        {/*        ?<CircularProgress style={{width:"100px" , height:"100px"}}/>*/}
-        {/*        :*/}
-        {/*        <div ref={chatListRef}>*/}
-        {/*          {chatHistory.length > 0*/}
-        {/*            ? <>*/}
-        {/*              {chatHistory.map((item)=>{*/}
-
-        {/*                if(item?.phone == selectedChat){*/}
-        {/*                  if(item.fromMe){*/}
-        {/*                    return(*/}
-        {/*                      <Box className={classes.rightMsg}>*/}
-        {/*                        <GetMessages classes={classes} item={item}/>*/}
-        {/*                      </Box>*/}
-        {/*                    )*/}
-        {/*                  }else{*/}
-        {/*                    return (*/}
-        {/*                      <Box className={classes.leftMsg}>*/}
-        {/*                        <GetMessages classes={classes} item={item}/>*/}
-        {/*                      </Box>*/}
-        {/*                    )*/}
-        {/*                  }*/}
-        {/*                }*/}
-        {/*              })}*/}
-        {/*            </>*/}
-        {/*            : <Typography size={"xl"}>You don't have messages yet</Typography>*/}
-        {/*          }*/}
-        {/*        </div>*/}
-        {/*      }*/}
-        {/*    </Box>*/}
-        {/*    <Box display={"flex"} className={classes.inputText}>*/}
-        {/*      <TextField*/}
-        {/*        fullWidth*/}
-        {/*        value={typedMsg}*/}
-        {/*        disabled={chatDisabled}*/}
-        {/*        placeholder={"Type your message here"}*/}
-        {/*        variant={"outlined"}*/}
-        {/*        onKeyDown={sendMsg}*/}
-        {/*        onChange={(e)=>setTypedMsg(e.target.value)}/>*/}
-        {/*      <IconButton disabled={chatDisabled} color={"primary"} onClick={sendMsg}>*/}
-        {/*        <Send/>*/}
-        {/*      </IconButton>*/}
-        {/*      <div>*/}
-        {/*        <input*/}
-        {/*            accept="image/png, image/jpeg ,.png,.jpg,.jpeg"*/}
-        {/*            className={classes.inputFile}*/}
-        {/*            id="contained-button-image"*/}
-        {/*            onChange={onFileLoad}*/}
-        {/*            disabled={chatDisabled}*/}
-        {/*            type="file"*/}
-        {/*        />*/}
-        {/*        <label htmlFor="contained-button-image">*/}
-        {/*          <IconButton disabled={chatDisabled} color={"secondary"} component={"span"}>*/}
-        {/*            <Image />*/}
-        {/*          </IconButton>*/}
-        {/*        </label>*/}
-        {/*      </div>*/}
-        {/*      <div>*/}
-        {/*        <input*/}
-        {/*            accept="application/pdf"*/}
-        {/*            className={classes.inputFile}*/}
-        {/*            id="contained-button-file"*/}
-        {/*            onChange={onDocLoad}*/}
-        {/*            disabled={chatDisabled}*/}
-        {/*            type="file"*/}
-        {/*        />*/}
-        {/*        <label htmlFor="contained-button-file">*/}
-        {/*          <IconButton disabled={chatDisabled} color={"secondary"} component={"span"}>*/}
-        {/*            <AttachFile />*/}
-        {/*          </IconButton>*/}
-        {/*        </label>*/}
-        {/*      </div>*/}
-
-        {/*    </Box>*/}
-        {/*  </div>*/}
-        {/*</Grid>*/}
       </div>
     </div>
   );
