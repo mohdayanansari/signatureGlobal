@@ -53,7 +53,10 @@ import "react-phone-number-input/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { useRouteMatch } from "react-router-dom";
 import { timeConverter } from "../../utils/date-parse";
-import { axiosInstance } from "../../utils/axios-instance";
+import {
+  axiosInstance,
+  downloadCSVFileInstance,
+} from "../../utils/axios-instance";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -613,12 +616,16 @@ export default function Broadcast() {
   const [timeValue, setTimeValue] = useState(new Date());
 
   const downloadSampleCSV = async (template_name, language) => {
+    console.log(selectedTemplate);
     try {
-      const resp = await axiosInstance.post("sample/template_csv", {
-        template_name: selectedTemplate.name,
-        language: selectedTemplate.language,
-      });
-      console.log("Sample CSV Data::", resp.data);
+      let myData = new FormData();
+      myData.append("template_name", String(selectedTemplate.name));
+      myData.append("language", String(selectedTemplate.language));
+      const resp = await downloadCSVFileInstance.post(
+        "sample/template_csv",
+        myData,
+      );
+      console.log("Sample CSV Data::", resp);
     } catch (error) {
       console.log(error);
     }

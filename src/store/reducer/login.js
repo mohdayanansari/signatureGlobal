@@ -32,6 +32,7 @@ export const loginSlice = createSlice({
       state.isAuthenticated = false;
       state.access_token = null;
       localStorage.removeItem("id_token");
+      localStorage.removeItem("username");
     },
   },
   extraReducers: (builder) => {

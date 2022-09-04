@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 const drawerWidth = 240;
 
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
@@ -15,13 +15,13 @@ export default makeStyles(theme => ({
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
-  paper:{
-    backgroundColor:theme.palette.background
+  paper: {
+    backgroundColor: "transparent",
   },
   headerMenuButtonSandwich: {
     marginLeft: 9,
     [theme.breakpoints.down("sm")]: {
-      marginLeft: 0
+      marginLeft: 0,
     },
     padding: theme.spacing(0.5),
   },

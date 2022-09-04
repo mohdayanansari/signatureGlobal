@@ -2,18 +2,13 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "https://api.notbot.in/",
-  timeout: 15000,
+  timeout: 30000,
   withCredentials: false,
-  // headers: {
-  //   "Content-Type": "application/json",
-  //   "Authorization":
-  //     "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
-  // },
 });
 
 export const downloadCSVFileInstance = axios.create({
   baseURL: "https://api.notbot.in/",
-  timeout: 15000,
+  timeout: 30000,
   withCredentials: false,
   responseType: "blob",
 });

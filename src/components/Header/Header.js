@@ -7,7 +7,9 @@ import {
   Menu,
   MenuItem,
   Fab,
-  Link, MuiThemeProvider, createMuiTheme,
+  Link,
+  MuiThemeProvider,
+  createMuiTheme,
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
@@ -35,9 +37,8 @@ import {
   toggleSidebar,
 } from "../../context/LayoutContext";
 import { useUserDispatch, signOut } from "../../context/UserContext";
-import { useDispatch , useStore , useSelector} from "react-redux";
-import {logout} from "../../store/reducer/login"
-
+import { useDispatch, useStore, useSelector } from "react-redux";
+import { logout } from "../../store/reducer/login";
 
 const messages = [
   {
@@ -95,7 +96,7 @@ const notifications = [
 export default function Header(props) {
   var classes = useStyles();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // global
   var layoutState = useLayoutState();
@@ -110,15 +111,16 @@ export default function Header(props) {
   var [profileMenu, setProfileMenu] = useState(null);
   var [isSearchOpen, setSearchOpen] = useState(false);
 
-  const AppBarTheme = (theme)=>createMuiTheme({
-    overrides:{
-      MuiAppBar:{
-        root:{
-          backgroundColor:theme.palette.primary.main
-        }
-      }
-    }
-  })
+  const AppBarTheme = (theme) =>
+    createMuiTheme({
+      overrides: {
+        MuiAppBar: {
+          root: {
+            backgroundColor: theme.palette.primary.main,
+          },
+        },
+      },
+    });
 
   return (
     <MuiThemeProvider theme={AppBarTheme}>
@@ -216,7 +218,7 @@ export default function Header(props) {
             color="inherit"
             className={classes.headerMenuButton}
             aria-controls="profile-menu"
-            onClick={e => setProfileMenu(e.currentTarget)}
+            onClick={(e) => setProfileMenu(e.currentTarget)}
           >
             <AccountIcon classes={{ root: classes.headerIcon }} />
           </IconButton>
@@ -344,8 +346,8 @@ export default function Header(props) {
                 className={classes.profileMenuLink}
                 color="primary"
                 onClick={() => {
-                  dispatch(logout())
-                  props.history.push("/login")
+                  dispatch(logout());
+                  props.history.push("/login");
                 }}
               >
                 Sign Out

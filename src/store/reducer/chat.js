@@ -106,7 +106,7 @@ export const chatSlice = createSlice({
           state.mediaSendingLoading = false
           state.error = true
         })
-      .addCase(getBackgroundChatHistory .pending,(state , action )=>{
+      .addCase(getBackgroundChatHistory.pending,(state , action )=>{
         state.error = null
       })
       .addCase(getBackgroundChatHistory.fulfilled, (state , action)=>{

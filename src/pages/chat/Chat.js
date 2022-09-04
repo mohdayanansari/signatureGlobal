@@ -95,8 +95,6 @@ export default function Chat(props) {
   const [searchParams] = useState(["name", "number"]);
   const [filterParam, setFilterParam] = useState(["name"]);
 
-
-
   // useEffect(() => {
   //   setChatWindowScroll(true);
   // }, [selectedChat]);
@@ -381,7 +379,7 @@ export default function Chat(props) {
     return listItems;
   };
 
-  const getStatusText = (param) => {
+  const getStatusText = useCallback((param) => {
     if (param === "read") {
       return (
         <>
@@ -411,7 +409,7 @@ export default function Chat(props) {
         </>
       );
     }
-  };
+  }, [classes.failed]);
 
   const GetMessages = ({ classes, item }) => {
     if (item?.type === "template") {
@@ -537,517 +535,544 @@ export default function Chat(props) {
   };
 
   //! <-- -----------------------TEXT MESSAGES-- SEND BY USER--------------- -->
-  const GetNewMessages = useCallback( ({ item }) => {
-    if (item?.type === "text") {
-      if (!item.fromMe) {
-        // console.log(item);
-        return (
-          <div className={classnames("flex justify-start mb-[30px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              {/* <div className="flex items-start">
+  const GetNewMessages = useCallback(
+    ({ item }) => {
+      if (item?.type === "text") {
+        if (!item.fromMe) {
+          // console.log(item);
+          return (
+            <div className={classnames("flex justify-start mb-[30px]")}>
+              <div className="flex gap-4 ">
+                {/* Avatar */}
+                {/* <div className="flex items-start">
                 <div className="w-[40px] h-[40px] bg-[#FED500] rounded-full flex justify-center items-center text-black/80 font-bold">
                   {item.phone.toString()[2]}
                 </div>
               </div> */}
-              {/* Message, Time & UserName  */}
-              <div className="relative">
-                {/* <div className="absolute -top-[10px] -right-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
+                {/* Message, Time & UserName  */}
+                <div className="relative">
+                  {/* <div className="absolute -top-[10px] -right-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
                   <UserCircleIcon className="w-6 text-white/50" />
                 </div> */}
-                {/* ----- */}
-                <div className="glassed min-w-[200px] rounded-tl-none rounded-2xl  p-[10px] px-[15px]">
-                  <h4 className="text-sm font-semibold text-white/90 ">
-                    {item?.text?.body}
-                  </h4>
-                  <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  {/* ----- */}
+                  <div className="glassed min-w-[200px] rounded-tl-none rounded-2xl  p-[10px] px-[15px]">
+                    <h4 className="text-sm font-semibold text-white/90 ">
+                      {item?.text?.body}
+                    </h4>
+                    <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
                   </div>
+                  {/* ---userName */}
+                  <h4 className=" text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +{item?.phone}
+                  </h4>
                 </div>
-                {/* ---userName */}
-                <h4 className=" text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +{item?.phone}
-                </h4>
               </div>
             </div>
-          </div>
-        );
-      } else {
-        //! <-- ------------------TEXT MESSAGE--send by dashboard-------------- -->
-        return (
-          <div className="flex justify-end mb-[20px]">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="relative">
-                {/* <div className="absolute -top-[10px] -left-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
+          );
+        } else {
+          //! <-- ------------------TEXT MESSAGE--send by dashboard-------------- -->
+          return (
+            <div className="flex justify-end mb-[20px]">
+              <div className="flex gap-4">
+                {/* Message, Time & UserName  */}
+                <div className="relative">
+                  {/* <div className="absolute -top-[10px] -left-[10px] z-10 glassed w-[30px] h-[30px] rounded-full flex justify-center items-center">
                   <SupportIcon className="w-6 text-white/50" />
                 </div> */}
-                {/* ----- */}
-                <div className="glassed min-w-[200px] rounded-tr-none rounded-2xl   p-[10px] px-[15px]">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
-                    {item?.text?.body}
-                  </h4>
-                  <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
+                  {/* ----- */}
+                  <div className="glassed min-w-[200px] rounded-tr-none rounded-2xl   p-[10px] px-[15px]">
+                    <h4 className="text-sm font-semibold text-white text-opacity-80">
+                      {item?.text?.body}
+                    </h4>
+                    <div className="flex justify-start mt-[20px] text-white/40 gap-[2px] items-center ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
                   </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +918949674316
+                    {/* {item?.phone} */}
+                  </h4>
                 </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +918949674316
-                  {/* {item?.phone} */}
-                </h4>
-              </div>
-              {/* Avatar */}
-              <div className="flex items-start">
-                {/* <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                {/* Avatar */}
+                <div className="flex items-start">
+                  {/* <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
                   {item?.phone && item?.phone.toString()[2]}
                   <SupportIcon className="w-6 text-white/50" />
                 </div> */}
-              </div>
-            </div>
-          </div>
-        );
-      }
-      //  ! <-- ---------------If the template is send by USER ------------------- -->
-    } else if (item?.type === "template") {
-      if (!item.fromMe) {
-        return (
-          <div className={classnames("flex justify-start mb-[20px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
                 </div>
               </div>
-              {/* Message, Time & UserName  */}
-              <div>
-                {/* ----- */}
-                <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80">
-                    Template
-                  </h4>
-                  <div
-                    className={"p-2 bg-appGray-400 rounded flex items-center"}
-                  >
-                    <div
-                      className={
-                        "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
-                      }
-                    >
-                      <DocumentTextIcon
-                        className={"text-appPurple-400 w-[25px] h-[25px]"}
-                      />
-                    </div>
-                    <p className="text-sm text-white font-regular text-opacity-80">
-                      {item?.text?.name}
-                    </p>
-                  </div>
-                  <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
-                    {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
-                    {item?.status && getStatusText(item?.status)}
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                  <span className="custom-triangle"></span>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  {item?.phone}
-                </h4>
-              </div>
             </div>
-          </div>
-        );
-        //  ! <-- ---------------If the __TEMPLATE__ is send by DASHBOARD ------------------- -->
-      } else {
-        return (
-          <div className="flex justify-end mb-[20px]">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="">
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
-                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+          );
+        }
+        //  ! <-- ---------------If the template is send by USER ------------------- -->
+      } else if (item?.type === "template") {
+        if (!item.fromMe) {
+          return (
+            <div className={classnames("flex justify-start mb-[20px]")}>
+              <div className="flex gap-4 ">
+                {/* Avatar */}
+                <div className="flex items-end">
+                  <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                    {item?.phone && item?.phone.toString()[0]}
+                  </div>
+                </div>
+                {/* Message, Time & UserName  */}
+                <div>
+                  {/* ----- */}
+                  <div className="bg-appPurple-300 min-w-[150px] rounded-lg  p-[10px] custom-design-chat-container">
+                    <h4 className="text-sm font-semibold text-white text-opacity-80">
                       Template
                     </h4>
+                    <div
+                      className={"p-2 bg-appGray-400 rounded flex items-center"}
+                    >
+                      <div
+                        className={
+                          "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        }
+                      >
+                        <DocumentTextIcon
+                          className={"text-appPurple-400 w-[25px] h-[25px]"}
+                        />
+                      </div>
+                      <p className="text-sm text-white font-regular text-opacity-80">
+                        {item?.text?.name}
+                      </p>
+                    </div>
+                    <div className="flex justify-end mt-[5px] text-white text-opacity-50 gap-[2px] items-center ">
+                      {/*<ClockIcon className="w-[12px] h-[12px] mt-[2px]" />*/}
+                      {item?.status && getStatusText(item?.status)}
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
+                    <span className="custom-triangle"></span>
                   </div>
-                  <div
-                    className={"p-2 bg-appGray-400 rounded flex items-center"}
-                  >
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    {item?.phone}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          );
+          //  ! <-- ---------------If the __TEMPLATE__ is send by DASHBOARD ------------------- -->
+        } else {
+          return (
+            <div className="flex justify-end mb-[20px]">
+              <div className="flex gap-4">
+                {/* Message, Time & UserName  */}
+                <div className="">
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                    <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                        Template
+                      </h4>
+                    </div>
+                    <div
+                      className={"p-2 bg-appGray-400 rounded flex items-center"}
+                    >
+                      <div
+                        className={
+                          "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        }
+                      >
+                        <DocumentTextIcon
+                          className={"text-appPurple-400 w-[25px] h-[25px]"}
+                        />
+                      </div>
+                      <p className="text-sm text-white font-regular text-opacity-80">
+                        {item?.text?.name}
+                      </p>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px]" />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +918949674316
+                  </h4>
+                </div>
+                {/* Avatar */}
+                {/* <div className="flex items-start">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+              </div>
+            </div>
+          );
+        }
+        // ! <-- -------------------if the __IMAGE__ send by __USER__------------- -->
+      } else if (item?.type === "image") {
+        // console.log("imges::", item);
+        if (!item.fromMe) {
+          return (
+            <div className={classnames("flex justify-start mb-[20px]")}>
+              <div className="flex gap-4 ">
+                {/* Avatar */}
+                {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+                {/* Message, Time & UserName  */}
+                <div>
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
+                    <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
+                      {removeUnderscoreAndCapitalize(item?.filename)}
+                    </h4>
+                    <img src={item?.url} alt="Notbot" className="!w-[200px]" />
+                    {/* download image */}
+                    <div className="absolute -top-[10px] -right-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +{item?.phone}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          );
+          // ! <-- -------------------if the __IMAGE__ send by __DASHBOARD__------------- -->
+        } else {
+          // console.log(item?.image.slice(0, -4))
+          return (
+            <div className="flex justify-end mb-[20px]">
+              <div className="flex gap-4">
+                {/* Message, Time & UserName  */}
+                <div className="">
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl !pt-10  p-[15px] ">
+                    <h4 className="text-sm font-semibold text-white/80 mb-5">
+                      {removeUnderscoreAndCapitalize(item?.filename)}
+                    </h4>
+                    <img src={item?.url} alt="Notbot" className="!w-[200px]" />
+                    {/* download image */}
+                    <div className="absolute -top-[10px] -left-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +918949674316
+                  </h4>
+                </div>
+                {/* Avatar */}
+                {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+              </div>
+            </div>
+          );
+        }
+        // ! <-- -------------------if the __DOCUMENT__ send by __USER__------------- -->
+      } else if (item?.type === "document") {
+        if (!item.fromMe) {
+          // console.log("Document::::",item);
+          return (
+            <div
+              className={classnames("flex justify-start mt-[20px] mb-[20px]")}
+            >
+              <div className="flex gap-4 ">
+                {/* Avatar */}
+                {/* <div className="flex items-end">
+                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
+                  {item?.phone && item?.phone.toString()[0]}
+                </div>
+              </div> */}
+                {/* Message, Time & UserName  */}
+                <div>
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
+                    <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                        Document
+                      </h4>
+                    </div>
                     <div
                       className={
-                        "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
                       }
                     >
                       <DocumentTextIcon
                         className={"text-appPurple-400 w-[25px] h-[25px]"}
                       />
+                      <p className="text-sm text-white/80">
+                        {item?.document?.filename}
+                      </p>
                     </div>
-                    <p className="text-sm text-white font-regular text-opacity-80">
-                      {item?.text?.name}
-                    </p>
+                    {/* Download Docs */}
+                    <div className="absolute -top-[10px] -right-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px]" />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +918949674316
-                </h4>
-              </div>
-              {/* Avatar */}
-              {/* <div className="flex items-start">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div> */}
-            </div>
-          </div>
-        );
-      }
-      // ! <-- -------------------if the __IMAGE__ send by __USER__------------- -->
-    } else if (item?.type === "image") {
-      // console.log("imges::", item);
-      if (!item.fromMe) {
-        return (
-          <div className={classnames("flex justify-start mb-[20px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              {/* <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div> */}
-              {/* Message, Time & UserName  */}
-              <div>
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
-                  <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
-                    {removeUnderscoreAndCapitalize(item?.filename)}
+                  {/* ---userName */}
+                  <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +{item?.phone}
                   </h4>
-                  <img src={item?.url} alt="Notbot" className="!w-[200px]" />
-                  {/* download image */}
-                  <div className="absolute -top-[10px] -right-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
                 </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +{item?.phone}
-                </h4>
               </div>
             </div>
-          </div>
-        );
-        // ! <-- -------------------if the __IMAGE__ send by __DASHBOARD__------------- -->
-      } else {
-        // console.log(item?.image.slice(0, -4))
-        return (
-          <div className="flex justify-end mb-[20px]">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="">
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl !pt-10  p-[15px] ">
-                  <h4 className="text-sm font-semibold text-white/80 mb-5">
-                    {removeUnderscoreAndCapitalize(item?.filename)}
-                  </h4>
-                  <img src={item?.url} alt="Notbot" className="!w-[200px]" />
-                  {/* download image */}
-                  <div className="absolute -top-[10px] -left-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] mt-[2px]" />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +918949674316
-                </h4>
-              </div>
-              {/* Avatar */}
-              {/* <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div> */}
-            </div>
-          </div>
-        );
-      }
-      // ! <-- -------------------if the __DOCUMENT__ send by __USER__------------- -->
-    } else if (item?.type === "document") {
-      if (!item.fromMe) {
-        // console.log("Document::::",item);
-        return (
-          <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              {/* <div className="flex items-end">
-                <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-                  {item?.phone && item?.phone.toString()[0]}
-                </div>
-              </div> */}
-              {/* Message, Time & UserName  */}
-              <div>
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
-                  <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
-                      Document
-                    </h4>
-                  </div>
-                  <div
-                    className={
-                      "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
-                    }
-                  >
-                    <DocumentTextIcon
-                      className={"text-appPurple-400 w-[25px] h-[25px]"}
-                    />
-                    <p className="text-sm text-white/80">
-                      {item?.document?.filename}
-                    </p>
-                  </div>
-                  {/* Download Docs */}
-                  <div className="absolute -top-[10px] -right-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +{item?.phone}
-                </h4>
-              </div>
-            </div>
-          </div>
-        );
-        // ! <-- -------------------if the __DOCUMENT__ send by __DASHBOARD__------------- -->
-      } else {
-        // console.log("Document::::",item);
+          );
+          // ! <-- -------------------if the __DOCUMENT__ send by __DASHBOARD__------------- -->
+        } else {
+          // console.log("Document::::",item);
 
-        return (
-          <div className="flex justify-end mb-[20px] ">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="">
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
-                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
-                      Document
-                    </h4>
-                  </div>
-                  <div
-                    className={
-                      "p-2 bg-appGray-400 rounded flex items-center mt-5"
-                    }
-                  >
+          return (
+            <div className="flex justify-end mb-[20px] ">
+              <div className="flex gap-4">
+                {/* Message, Time & UserName  */}
+                <div className="">
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                    <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                        Document
+                      </h4>
+                    </div>
                     <div
                       className={
-                        "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        "p-2 bg-appGray-400 rounded flex items-center mt-5"
                       }
                     >
-                      <DocumentTextIcon
-                        className={"text-appPurple-400 w-[25px] h-[25px]"}
-                      />
+                      <div
+                        className={
+                          "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        }
+                      >
+                        <DocumentTextIcon
+                          className={"text-appPurple-400 w-[25px] h-[25px]"}
+                        />
+                      </div>
+                      <p className="text-sm text-white font-regular text-opacity-80">
+                        {item?.filename}
+                      </p>
                     </div>
-                    <p className="text-sm text-white font-regular text-opacity-80">
-                      {item?.filename}
-                    </p>
+                    {/* Download Docs */}
+                    <div className="absolute -top-[10px] -left-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
                   </div>
-                  {/* Download Docs */}
-                  <div className="absolute -top-[10px] -left-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +918949674316
+                  </h4>
                 </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +918949674316
-                </h4>
-              </div>
-              {/* Avatar */}
-              {/* <div className="flex items-end">
+                {/* Avatar */}
+                {/* <div className="flex items-end">
                 <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
                   {item.phone.toString()[2]}
                 </div>
               </div> */}
+              </div>
             </div>
-          </div>
-        );
-      }
-      // !<-----------------------Video Send By USER---------------------->
-    } else if (item?.type === "video") {
-      if (!item.fromMe) {
-        // console.log("video::::",item);
-        return (
-          <div className={classnames("flex justify-start mt-[20px] mb-[20px]")}>
-            <div className="flex gap-4 ">
-              {/* Avatar */}
-              {/* <div className="flex items-end">
+          );
+        }
+        // !<-----------------------Video Send By USER---------------------->
+      } else if (item?.type === "video") {
+        if (!item.fromMe) {
+          // console.log("video::::",item);
+          return (
+            <div
+              className={classnames("flex justify-start mt-[20px] mb-[20px]")}
+            >
+              <div className="flex gap-4 ">
+                {/* Avatar */}
+                {/* <div className="flex items-end">
                 <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
                   {item?.phone && item?.phone.toString()[0]}
                 </div>
               </div> */}
-              {/* Message, Time & UserName  */}
-              <div>
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
-                  <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
-                      Video
-                    </h4>
-                  </div>
-                  <div
-                    className={
-                      "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
-                    }
-                  >
-                    <DocumentTextIcon
-                      className={"text-appPurple-400 w-[25px] h-[25px]"}
-                    />
-                    <p className="text-sm text-white/80">{item?.filename}</p>
-                  </div>
-                  {/* Download Video */}
-                  <div className="absolute -top-[10px] -right-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
-                </div>
-                {/* ---userName */}
-                <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +{item?.phone}
-                </h4>
-              </div>
-            </div>
-          </div>
-        );
-        // ! <-- -------------------if the ::VIDEO:: send by __DASHBOARD__------------- -->
-      } else {
-        // console.log("Video::::",item);
-
-        return (
-          <div className="flex justify-end mb-[20px] ">
-            <div className="flex gap-4">
-              {/* Message, Time & UserName  */}
-              <div className="">
-                {/* ----- */}
-                <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
-                  <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                    <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
-                      Video
-                    </h4>
-                  </div>
-                  <div
-                    className={
-                      "p-2 bg-appGray-400 rounded flex items-center mt-5"
-                    }
-                  >
+                {/* Message, Time & UserName  */}
+                <div>
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
+                    <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                        Video
+                      </h4>
+                    </div>
                     <div
                       className={
-                        "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        "p-2 gap-2 rounded  bg-appPurple-200 flex items-center"
                       }
                     >
                       <DocumentTextIcon
                         className={"text-appPurple-400 w-[25px] h-[25px]"}
                       />
+                      <p className="text-sm text-white/80">{item?.filename}</p>
                     </div>
-                    <p className="text-sm text-white font-regular text-opacity-80">
-                      {item?.filename}
-                    </p>
+                    {/* Download Video */}
+                    <div className="absolute -top-[10px] -right-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center  ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
                   </div>
-                  {/* Download Docs */}
-                  <div className="absolute -top-[10px] -left-[20px] z-50">
-                    <button
-                      type="button"
-                      onClick={() => saveAs(item?.url)}
-                      className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
-                    >
-                      <DownloadIcon className="w-5 text-black/80" />
-                    </button>
-                  </div>
-                  <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
-                    {item?.status && getStatusText(item?.status)}
-                    <ClockIcon className="w-[12px] h-[12px] " />
-                    <p className="text-xs">{timeConverter(item?.timestamp)}</p>
-                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-start text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +{item?.phone}
+                  </h4>
                 </div>
-                {/* ---userName */}
-                <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
-                  +918949674316
-                </h4>
               </div>
             </div>
-          </div>
-        );
-      }
-    }
-  }, [getStatusText]);
+          );
+          // ! <-- -------------------if the ::VIDEO:: send by __DASHBOARD__------------- -->
+        } else {
+          // console.log("Video::::",item);
 
-    // scroll to bottom
-    useEffect(() => {
-      scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [GetNewMessages]);
+          return (
+            <div className="flex justify-end mb-[20px] ">
+              <div className="flex gap-4">
+                {/* Message, Time & UserName  */}
+                <div className="">
+                  {/* ----- */}
+                  <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
+                    <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
+                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                        Video
+                      </h4>
+                    </div>
+                    <div
+                      className={
+                        "p-2 bg-appGray-400 rounded flex items-center mt-5"
+                      }
+                    >
+                      <div
+                        className={
+                          "bg-appPurple-500 mr-[10px] rounded w-[40px] h-[40px] flex justify-center items-center"
+                        }
+                      >
+                        <DocumentTextIcon
+                          className={"text-appPurple-400 w-[25px] h-[25px]"}
+                        />
+                      </div>
+                      <p className="text-sm text-white font-regular text-opacity-80">
+                        {item?.filename}
+                      </p>
+                    </div>
+                    {/* Download Docs */}
+                    <div className="absolute -top-[10px] -left-[20px] z-50">
+                      <button
+                        type="button"
+                        onClick={() => saveAs(item?.url)}
+                        className="rounded-lg bg-[#FED500] text-black/80 font-semibold p-2 text-xs"
+                      >
+                        <DownloadIcon className="w-5 text-black/80" />
+                      </button>
+                    </div>
+                    <div className="flex justify-start mt-[30px] text-white/50 gap-[2px] items-center ">
+                      {item?.status && getStatusText(item?.status)}
+                      <ClockIcon className="w-[12px] h-[12px] " />
+                      <p className="text-xs">
+                        {timeConverter(item?.timestamp)}
+                      </p>
+                    </div>
+                  </div>
+                  {/* ---userName */}
+                  <h4 className="flex justify-end text-white/70 text-[10px] text-opacity-50 font-semibold">
+                    +918949674316
+                  </h4>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      }
+    },
+    [getStatusText],
+  );
+
+  // scroll to bottom
+  useEffect(() => {
+    scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [GetNewMessages]);
 
   const lastDateOfChat = [];
   Object.assign(lastDateOfChat, chatHistory);

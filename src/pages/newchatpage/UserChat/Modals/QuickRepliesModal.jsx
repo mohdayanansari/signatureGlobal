@@ -120,23 +120,24 @@ const QuickRepliesModal = ({ getQuickReplyMsg }) => {
   const handleClose = () => setOpen(false);
   const [quickReplyData, setQuickReplyData] = useState([]);
 
-  useEffect(() => {
-    let isMount = false;
-    (async () => {
-      try {
-        const res = await axiosInstance.get("get_quick_reply");
-        if (!isMount) {
-          setQuickReplyData(res.data.quick_replies);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+  // useEffect(() => {
+  //   let isMount = false;
+  //   (async () => {
+      
+  //     try {
+  //       const res = await axiosInstance.get("get_quick_reply");
+  //       if (!isMount) {
+  //         setQuickReplyData(res.data.quick_replies);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
 
-    return () => {
-      isMount = true;
-    };
-  }, [quickReplyData]);
+  //   return () => {
+  //     isMount = true;
+  //   };
+  // }, [quickReplyData]);
 
   const handleClick = (text) => {
     getQuickReplyMsg(text);
@@ -149,16 +150,7 @@ const QuickRepliesModal = ({ getQuickReplyMsg }) => {
     data.append("text", text);
 
     try {
-      var config = {
-        method: "post",
-        url: "https://api.notbot.in/del_quick_reply",
-        headers: {
-          Authorization:
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1ODA1OTUzOSwianRpIjoiOWZhMzIyMWItYTEzZC00ZTBiLWIzNDgtOWNkMTU0ZmJkNGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImF5YWFuQG5vdGJvdC5pbiIsIm5iZiI6MTY1ODA1OTUzOX0.RRmRL1c46AmLSzTIMDgsS4EYq8ouVOIILXgCRS3lqDo",
-        },
-        data: data,
-      };
-      await axios(config);
+      await axiosInstance.post("del_quick_reply", data);
     } catch (error) {
       console.log(error);
     }

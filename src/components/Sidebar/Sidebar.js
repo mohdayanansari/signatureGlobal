@@ -26,6 +26,7 @@ import {
   CollectionIcon,
   DatabaseIcon,
   BriefcaseIcon,
+  UserGroupIcon as UserGroupIconOutline
 } from "@heroicons/react/outline";
 
 import Modal from "../Modal";
@@ -49,6 +50,7 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import { logout } from "../../store/reducer/login";
+import { UserGroupIcon } from "@heroicons/react/solid";
 
 const structure = [
   {
@@ -90,6 +92,14 @@ const structure = [
     link: "/app/bulk-sequence",
     activeIcon: <DatabaseIcon className="w-8 h-8 text-[#ffdc2b]" />,
     inActiveIcon: <DatabaseIcon className="w-8 h-8 text-[#c0a002]" />,
+  },
+  {
+    id: 5,
+    label: "Contact",
+    uid: "contact",
+    link: "/app/contacts",
+    activeIcon: <UserGroupIcon className="w-8 h-8 text-[#ffdc2b]" />,
+    inActiveIcon: <UserGroupIconOutline className="w-8 h-8 text-[#c0a002]" />,
   },
 ];
 const adminStructure = [
