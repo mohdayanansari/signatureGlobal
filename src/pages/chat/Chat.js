@@ -89,35 +89,35 @@ export default function Chat(props) {
   let intRef = useRef();
   let conRef = useRef();
 
-  // const [chatWindowScroll, setChatWindowScroll] = useState(false);
+  const [chatWindowScroll, setChatWindowScroll] = useState(false);
   // Search Chat State
   const [querry, setQuerry] = useState("");
   const [searchParams] = useState(["name", "number"]);
   const [filterParam, setFilterParam] = useState(["name"]);
 
-  // useEffect(() => {
-  //   setChatWindowScroll(true);
-  // }, [selectedChat]);
+  useEffect(() => {
+    setChatWindowScroll(true);
+  }, [selectedChat]);
 
-  // useEffect(() => {
-  //   let divHeight = chatListRef.current?.scrollHeight;
+  useEffect(() => {
+    let divHeight = chatListRef.current?.scrollHeight;
 
-  //   if (divHeight != undefined) {
-  //     if (chatListRef.current.scrollTop == 0 && chatWindowScroll) {
-  //       chatListRef.current.scrollTop = divHeight;
-  //       console.log(chatListRef.current);
+    if (divHeight != undefined) {
+      if (chatListRef.current.scrollTop == 0 && chatWindowScroll) {
+        chatListRef.current.scrollTop = divHeight;
+        console.log(chatListRef.current);
 
-  //       setChatWindowScroll(false);
-  //     }
-  //   }
-  //   clearTimeout(intRef);
-  //   if (selectedChat != null) {
-  //     intRef = setTimeout(
-  //       () => dispatch(getBackgroundChatHistory(selectedChat)),
-  //       2000,
-  //     );
-  //   }
-  // }, [chatHistory]);
+        setChatWindowScroll(false);
+      }
+    }
+    clearTimeout(intRef);
+    if (selectedChat != null) {
+      intRef = setTimeout(
+        () => dispatch(getBackgroundChatHistory(selectedChat)),
+        2000,
+      );
+    }
+  }, [chatHistory]);
 
   useEffect(() => {
     let number = contacts[0]?.number;
@@ -338,7 +338,7 @@ export default function Chat(props) {
 
   const sendMsg = (e) => {
     if (typedMsg != null && selectedChat != null) {
-      //todo: conditon to set the user or sender phone number in "phone key value pair"::
+      //todo: condition to set the user or sender phone number in "phone key value pair"::
       let obj = {
         phone: selectedChat,
         type: "text",

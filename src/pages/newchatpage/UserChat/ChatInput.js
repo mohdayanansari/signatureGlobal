@@ -102,7 +102,6 @@ const ChatInput = (props) => {
   return (
     <div className="grid place-items-center w-full h-[80px] px-[30px] text-white text-opacity-80 font-bold font-[24px]  shadow-xl border-t border-white border-opacity-10">
       <div className="grid items-center w-full">
-        <form onSubmit={onSubmit}>
           <div className="flex w-full gap-2">
             {/* col-1 */}
             <div className="w-[70%] ">
@@ -135,7 +134,6 @@ const ChatInput = (props) => {
                   className="  relative z-10 opacity-0 h-full w-full cursor-pointer"
                   type="file"
                   disabled={disabled}
-                  name="bgfile"
                 />
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
                   <FolderAddIcon className="text-appPurple-400 w-[20px] h-[20px]" />
@@ -162,7 +160,6 @@ const ChatInput = (props) => {
                   className="relative z-10 opacity-0 h-full w-full cursor-pointer"
                   type="file"
                   disabled={disabled}
-                  name="bgfile"
                 />
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
                   <PhotographIcon className="text-appPurple-400 w-[20px] h-[20px] " />
@@ -180,7 +177,6 @@ const ChatInput = (props) => {
                   className="relative z-10 opacity-0 h-full w-full cursor-pointer"
                   type="file"
                   disabled={disabled}
-                  name="bgfile"
                 />
                 <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
                   <VideoCameraIcon className="text-appPurple-400 w-[20px] h-[20px] " />
@@ -200,6 +196,7 @@ const ChatInput = (props) => {
                 type="submit"
                 color="primary"
                 disabled={disabled}
+                onClick={onSubmit}
                 className={classnames(
                   disabled && "disabled:cursor-not-allowed",
                   "bg-appPurple-300 p-[10px] rounded-lg hover:bg-appPurple-400",
@@ -209,7 +206,6 @@ const ChatInput = (props) => {
               </button>
             </div>
           </div>
-        </form>
       </div>
     </div>
   );
