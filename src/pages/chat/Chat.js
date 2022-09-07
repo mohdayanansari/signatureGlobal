@@ -44,7 +44,7 @@ import { getContacts, getSelectedChatHistory } from "../../store/reducer/chat";
 import classnames from "classnames";
 import Av1 from "../../images/av1.png";
 import DocIcon from "../../images/docs.png";
-import Chats from "../newchatpage/Tabs/Chats";
+// import Chats from "../newchatpage/Tabs/Chats";
 import {
   CheckIcon,
   ClockIcon,
@@ -54,13 +54,13 @@ import {
 import {
   DocumentTextIcon,
   ExclamationCircleIcon,
-  SupportIcon,
-  UserCircleIcon,
+  // SupportIcon,
+  // UserCircleIcon,
 } from "@heroicons/react/solid";
 import TypingAnimation from "../../components/TypingAnimation";
 import UserHead from "../newchatpage/UserChat/UserHead";
-import avatar4 from "../../images/av1.png";
-import avatar1 from "../../images/av2.png";
+// import avatar4 from "../../images/av1.png";
+// import avatar1 from "../../images/av2.png";
 import ChatInput from "../newchatpage/UserChat/ChatInput";
 import { saveAs } from "file-saver";
 import { Avatar } from "@mui/material";
@@ -236,7 +236,7 @@ export default function Chat(props) {
           {/* User Image Container ENDS-- */}
           <div className="mt-[-5px] pl-4 w-full text-white text-opacity-80">
             <div className="flex justify-between pr-[10px]">
-              <h1 className="font-bold ">{name}</h1>
+              <h1 className="font-bold ">{!name ? "User": name}</h1>
               <div className="">
                 <p className="text-xs ">{timeConverter(time)}</p>
               </div>
@@ -387,7 +387,7 @@ export default function Chat(props) {
           <CheckIcon className="w-4 text-green-600  -ml-[13px]" />
         </>
       );
-    } else if (param == "failed") {
+    } else if (param === "failed") {
       return (
         <>
           <Typography
@@ -677,7 +677,7 @@ export default function Chat(props) {
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
                     <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      <h4 className="text-sm font-bold text-center uppercase text-white/70">
                         Template
                       </h4>
                     </div>
@@ -737,7 +737,7 @@ export default function Chat(props) {
                 <div>
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
-                    <h4 className="text-sm font-semibold text-white text-opacity-80 mb-5">
+                    <h4 className="mb-5 text-sm font-semibold text-white text-opacity-80">
                       {removeUnderscoreAndCapitalize(item?.filename)}
                     </h4>
                     <img src={item?.url} alt="Notbot" className="!w-[200px]" />
@@ -777,7 +777,7 @@ export default function Chat(props) {
                 <div className="">
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl !pt-10  p-[15px] ">
-                    <h4 className="text-sm font-semibold text-white/80 mb-5">
+                    <h4 className="mb-5 text-sm font-semibold text-white/80">
                       {removeUnderscoreAndCapitalize(item?.filename)}
                     </h4>
                     <img src={item?.url} alt="Notbot" className="!w-[200px]" />
@@ -834,7 +834,7 @@ export default function Chat(props) {
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
                     <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      <h4 className="text-sm font-bold text-center uppercase text-white/70">
                         Document
                       </h4>
                     </div>
@@ -888,7 +888,7 @@ export default function Chat(props) {
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
                     <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      <h4 className="text-sm font-bold text-center uppercase text-white/70">
                         Document
                       </h4>
                     </div>
@@ -963,7 +963,7 @@ export default function Chat(props) {
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tl-none rounded-2xl   p-[15px] !pt-10">
                     <div className="absolute -top-[20px] -left-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      <h4 className="text-sm font-bold text-center uppercase text-white/70">
                         Video
                       </h4>
                     </div>
@@ -1015,7 +1015,7 @@ export default function Chat(props) {
                   {/* ----- */}
                   <div className="relative glassed min-w-[250px] rounded-tr-none rounded-2xl   p-[15px] pt-[25px]">
                     <div className="absolute -top-[20px] -right-[10px] glassed rounded-md px-3 py-1 border border-white/10">
-                      <h4 className=" text-white/70  font-bold uppercase text-center text-sm">
+                      <h4 className="text-sm font-bold text-center uppercase text-white/70">
                         Video
                       </h4>
                     </div>
@@ -1093,7 +1093,7 @@ export default function Chat(props) {
               </h2>
 
               {/* Search Field */}
-              <div className=" mt-5 text-gray-600 focus-within:text-gray-400">
+              <div className="mt-5 text-gray-600 focus-within:text-gray-400">
                 <div className="relative">
                   <SearchIcon className="absolute top-[12px] left-[10px] w-6 h-6 " />
                   <input
@@ -1110,10 +1110,10 @@ export default function Chat(props) {
 
                 {/* Search Result */}
                 {querry.length > 0 ? (
-                  <div className="flex flex-col gap-2 glassed rounded border border-white/20 p-2 mt-4">
+                  <div className="flex flex-col gap-2 p-2 mt-4 border rounded glassed border-white/20">
                     {Search(searchData).map((item, index) => {
                       return (
-                        <div className="glassed rounded border border-white/20 ">
+                        <div className="border rounded glassed border-white/20 ">
                           <NewChatListItem
                             name={item?.name}
                             number={item?.number}
@@ -1140,7 +1140,7 @@ export default function Chat(props) {
               </h4>
             </div>
 
-            <div className="overflow-y-auto custom-scroll  scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded">
+            <div className="overflow-y-auto custom-scroll scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded">
               {getChatListItems()}
             </div>
           </div>
