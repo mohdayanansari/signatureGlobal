@@ -230,7 +230,7 @@ export default function Chat(props) {
           {/* User Image Container */}
           <div>
             <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-              {name.toUpperCase()[0]}
+              {!name ? "?" :name.toUpperCase()[0]}
             </div>
           </div>
           {/* User Image Container ENDS-- */}
