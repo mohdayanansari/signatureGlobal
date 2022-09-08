@@ -40,6 +40,7 @@ import "react-phone-number-input/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { useRouteMatch } from "react-router-dom";
 import { AccountCircle } from "@material-ui/icons";
+import Fab from "@mui/material/Fab";
 import { getContacts, getSelectedChatHistory } from "../../store/reducer/chat";
 import classnames from "classnames";
 import Av1 from "../../images/av1.png";
@@ -52,6 +53,7 @@ import {
   SearchIcon,
 } from "@heroicons/react/outline";
 import {
+  ChevronDownIcon,
   DocumentTextIcon,
   ExclamationCircleIcon,
   // SupportIcon,
@@ -102,10 +104,10 @@ export default function Chat(props) {
   useEffect(() => {
     let divHeight = chatListRef.current?.scrollHeight;
 
-    if (divHeight != undefined) {
-      if (chatListRef.current.scrollTop == 0 && chatWindowScroll) {
+    if (divHeight !== undefined) {
+      if (chatListRef.current.scrollTop === 0 && chatWindowScroll) {
         chatListRef.current.scrollTop = divHeight;
-        console.log(chatListRef.current);
+        // console.log(chatListRef.current);
 
         setChatWindowScroll(false);
       }
@@ -230,13 +232,13 @@ export default function Chat(props) {
           {/* User Image Container */}
           <div>
             <div className="w-[40px] h-[40px] bg-appPurple-200 rounded-full flex justify-center items-center text-white text-opacity-80">
-              {!name ? "?" :name.toUpperCase()[0]}
+              {!name ? "?" : name.toUpperCase()[0]}
             </div>
           </div>
           {/* User Image Container ENDS-- */}
           <div className="mt-[-5px] pl-4 w-full text-white text-opacity-80">
             <div className="flex justify-between pr-[10px]">
-              <h1 className="font-bold ">{!name ? "User": name}</h1>
+              <h1 className="font-bold ">{!name ? "User" : name}</h1>
               <div className="">
                 <p className="text-xs ">{timeConverter(time)}</p>
               </div>
@@ -259,7 +261,7 @@ export default function Chat(props) {
   const onClickItem = (item, name, number) => {
     if (item !== null) {
       clearInterval(intRef);
-      console.log("Selected Chat:::", item);
+      // console.log("Selected Chat:::", item);
       setSelectedChat(item);
       setSelectedChatName(name);
       dispatch(getSelectedChatHistory(number));
@@ -379,37 +381,40 @@ export default function Chat(props) {
     return listItems;
   };
 
-  const getStatusText = useCallback((param) => {
-    if (param === "read") {
-      return (
-        <>
-          <CheckIcon className="w-4 text-green-600 " />
-          <CheckIcon className="w-4 text-green-600  -ml-[13px]" />
-        </>
-      );
-    } else if (param === "failed") {
-      return (
-        <>
-          <Typography
-            variant={"caption"}
-            color={"secondary"}
-            className={classes.failed}
-            style={{ marginRight: "10px" }}
-          >
-            {capitalize(param)}
-          </Typography>
-          <ExclamationCircleIcon className="w-4 text-red-600 " />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <CheckIcon className="w-4 text-[#FED500]" />
-          <CheckIcon className="w-4 text-[#FED500] -ml-[13px]" />
-        </>
-      );
-    }
-  }, [classes.failed]);
+  const getStatusText = useCallback(
+    (param) => {
+      if (param === "read") {
+        return (
+          <>
+            <CheckIcon className="w-4 text-green-600 " />
+            <CheckIcon className="w-4 text-green-600  -ml-[13px]" />
+          </>
+        );
+      } else if (param === "failed") {
+        return (
+          <>
+            <Typography
+              variant={"caption"}
+              color={"secondary"}
+              className={classes.failed}
+              style={{ marginRight: "10px" }}
+            >
+              {capitalize(param)}
+            </Typography>
+            <ExclamationCircleIcon className="w-4 text-red-600 " />
+          </>
+        );
+      } else {
+        return (
+          <>
+            <CheckIcon className="w-4 text-[#FED500]" />
+            <CheckIcon className="w-4 text-[#FED500] -ml-[13px]" />
+          </>
+        );
+      }
+    },
+    [classes.failed],
+  );
 
   const GetMessages = ({ classes, item }) => {
     if (item?.type === "template") {
@@ -1069,14 +1074,19 @@ export default function Chat(props) {
     [getStatusText],
   );
 
+  const handleScrollToBottom = (e) => {
+    scrollToBottomRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   // scroll to bottom
-  useEffect(() => {
-    scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [GetNewMessages]);
+  // useEffect(() => {
+  //   scrollToBottomRef.current !== null &&
+  //     scrollToBottomRef.current.scrollIntoView({ behavior: "smooth" });
+  // }, [onClickItem]);
 
   const lastDateOfChat = [];
   Object.assign(lastDateOfChat, chatHistory);
-  const d = lastDateOfChat.reverse().filter((item) => item?.fromMe != true);
+  const d = lastDateOfChat.reverse().filter((item) => item?.fromMe !== true);
   const timestamp = d[0]?.timestamp
     ? timeConverter(parseInt(d[0]?.timestamp) + 24 * 3600)
     : null;
@@ -1157,7 +1167,7 @@ export default function Chat(props) {
               className={classnames(
                 (chatHistory?.length === 0 || chatHistoryLoading) &&
                   "flex justify-center items-center",
-                " chat-custom-scroll overflow-y-auto  scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded px-[30px]",
+                " chat-custom-scroll overflow-y-auto  scrollbar-thumb-appPurple-200 scrollbar-track-transparent scrollbar-thin scrollbar-thumb-rounded px-[30px] relative",
               )}
             >
               {chatHistoryLoading ? (
@@ -1190,6 +1200,17 @@ export default function Chat(props) {
                   )}
                   {/* Scroll to bottom div  */}
                   <div ref={scrollToBottomRef}></div>
+                  {scrollToBottomRef.current !== null ? (
+                    <Fab
+                      variant="extended"
+                      className="!rounded-full !w-[0px] !h-[50px] !p-0 !sticky !bottom-5  !bg-white/20"
+                      onClick={handleScrollToBottom}
+                    >
+                      <ChevronDownIcon className="w-8" />
+                    </Fab>
+                  ) : (
+                    ""
+                  )}
                 </div>
               )}
             </div>
@@ -1201,6 +1222,7 @@ export default function Chat(props) {
               onFileLoad={onFileLoad}
               onVideoLoad={onVideoLoad}
               onDocLoad={onDocLoad}
+              handleScrollToBottom={handleScrollToBottom}
             />
           </div>
         </div>

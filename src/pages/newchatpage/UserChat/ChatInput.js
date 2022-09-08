@@ -32,7 +32,8 @@ const ChatInput = (props) => {
     onChangeText,
     onFileLoad,
     onDocLoad,
-    onVideoLoad
+    onVideoLoad,
+    handleScrollToBottom
   } = props;
 
   const [textMessage, settextMessage] = useState("");
@@ -106,6 +107,7 @@ const ChatInput = (props) => {
             {/* col-1 */}
             <div className="w-[70%] ">
               <Input
+              onClick={handleScrollToBottom}
                 type="text"
                 value={textValue}
                 onChange={(e) => onChangeText(e.target.value)}
