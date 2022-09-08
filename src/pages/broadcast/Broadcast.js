@@ -995,7 +995,7 @@ export default function Broadcast() {
   );
 
   return (
-    <div className="grid w-full h-screen lg:grid-cols-12 ">
+    <div className="grid w-full h-screen lg:grid-cols-12 !overflow-y-hidden">
       <div className="col-span-12 overflow-auto">
         <PageTitle title="Template History" button={<HeaderBtnComponent />} />
         {/*broadcast modal*/}
@@ -1047,7 +1047,9 @@ export default function Broadcast() {
           disableWidgetMenu={true}
           bodyClass={classes.tableWidget}
         >
-          <Table data={listData} />
+          <div className="px-9 py-5 overflow-y-auto  h-[80vh]">
+            <Table data={listData} />
+          </div>
         </Widget>
         {/*  </Grid>*/}
         {/*</Grid>*/}

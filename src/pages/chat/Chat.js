@@ -1200,7 +1200,8 @@ export default function Chat(props) {
                   )}
                   {/* Scroll to bottom div  */}
                   <div ref={scrollToBottomRef}></div>
-                  {scrollToBottomRef.current !== null ? (
+                  
+                  {chatHistory?.length > 0  ? (
                     <Fab
                       variant="extended"
                       className="!rounded-full !w-[0px] !h-[50px] !p-0 !sticky !bottom-5  !bg-white/20"

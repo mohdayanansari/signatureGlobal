@@ -23,24 +23,24 @@ export default function TableComponent({ data }) {
   if(data.length > 0){
     var keys = Object.keys(data[0]).map(i => removeUnderscoreAndCapitalize(i));
     return (
-      <Table className="table-auto mt-5 m-[20px] shadow-2xl rounded-sm">
-        <TableHead className={"bg-appGray-700"}>
+      <Table className="table-auto   shadow-2xl rounded-sm">
+        <TableHead className={"bg-white/20"}>
           <TableRow>
             {keys.map(key => (
-              <TableCell key={key} style={{fontWeight:"bold"}} className={"text-appWhiteText-200 border-slate-600"}>{key}</TableCell>
+              <TableCell key={key} style={{fontWeight:"bold"}} className={"text-white/80 border-b-white/10 "}>{key}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map(({template_name, number,file,type,broadcast_name, status , timestamp}, index) => (
-            <TableRow key={index}>
-              <TableCell align={"left"} className={"text-white border-0"} style={{width:10,overflow:"hidden"}}>{number}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"}>{type}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"} >{template_name}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"}>{broadcast_name}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"}>{file}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"}>{timeConverter(timestamp)}</TableCell>
-              <TableCell align={"left"} className={"text-white border-0"}>
+            <TableRow key={index} className="border-r !border-white/10">
+              <TableCell align={"left"} className={"text-white !border-x !border-white/10"} style={{width:10,overflow:"hidden"}}>{number}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"}>{type}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"} >{template_name}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"}>{broadcast_name}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"}>{file}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"}>{timeConverter(timestamp)}</TableCell>
+              <TableCell align={"left"} className={"text-white !border-r !border-white/10"}>
                 <Chip label={status} classes={{root: classes[states[status.toLowerCase()]]}}/>
               </TableCell>
             </TableRow>

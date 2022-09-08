@@ -6,7 +6,7 @@ import Fade from "@mui/material/Fade";
 
 import Typography from "@mui/material/Typography";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Button, Box, TextField } from "@material-ui/core";
+import { Button, Box, TextField, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { axiosInstance } from "../../../utils/axios-instance";
@@ -28,6 +28,7 @@ const UserHead = ({ name, number, timestamp, chatDisabled }) => {
   const templateData = useSelector((state) => state.broadcast.templateMessages);
 
   const [open, setOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [selectedTemplate, setSelectedTemplate] = useState(undefined);
@@ -42,6 +43,7 @@ const UserHead = ({ name, number, timestamp, chatDisabled }) => {
 
   const handleResumeSession = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const data = {
       // broadcast_name: "none",
       language: String(selectedTemplate.language),
@@ -56,6 +58,8 @@ const UserHead = ({ name, number, timestamp, chatDisabled }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setIsLoading(false);
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +148,14 @@ const UserHead = ({ name, number, timestamp, chatDisabled }) => {
                         type="submit"
                         className="rounded px-[10px] py-[5px] bg-[#FED500] text-black/80 font-bold mt-5"
                       >
-                        Resume Session
+                        {isLoading ? (
+                          <CircularProgress
+                            style={{ width: "15px", height: "15px" }}
+                            className="!text-black "
+                          />
+                        ) : (
+                          " Resume Session"
+                        )}
                       </button>
                     </div>
                   </form>
