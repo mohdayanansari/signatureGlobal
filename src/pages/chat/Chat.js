@@ -102,19 +102,16 @@ export default function Chat(props) {
   }, [selectedChat]);
 
   useEffect(() => {
-    let divHeight = chatListRef.current?.scrollHeight;
+    // let divHeight = chatListRef.current?.scrollHeight;
 
-    if (divHeight !== undefined) {
-      if (chatListRef.current.scrollTop === 0 && chatWindowScroll) {
-        chatListRef.current.scrollTop = divHeight;
-        // console.log(chatListRef.current);
-
-        setChatWindowScroll(false);
-      }
+    if (selectedChat) {
+      // chatListRef.current.scrollTop = divHeight;
+      scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      setChatWindowScroll(false);
     }
     clearTimeout(intRef);
     if (selectedChat != null) {
-      intRef = setTimeout(
+      intRef.current = setTimeout(
         () => dispatch(getBackgroundChatHistory(selectedChat)),
         2000,
       );
@@ -131,7 +128,7 @@ export default function Chat(props) {
 
   useEffect(() => {
     dispatch(getContacts());
-    conRef = setInterval(() => {
+    conRef.current = setInterval(() => {
       dispatch(getContacts());
     }, 5000);
     return () => {
@@ -1075,7 +1072,7 @@ export default function Chat(props) {
   );
 
   const handleScrollToBottom = (e) => {
-    scrollToBottomRef.current.scrollIntoView({ behavior: "smooth" });
+    scrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   // scroll to bottom
@@ -1200,8 +1197,8 @@ export default function Chat(props) {
                   )}
                   {/* Scroll to bottom div  */}
                   <div ref={scrollToBottomRef}></div>
-                  
-                  {chatHistory?.length > 0  ? (
+{/* 
+                  {chatHistory?.length > 0 ? (
                     <Fab
                       variant="extended"
                       className="!rounded-full !w-[0px] !h-[50px] !p-0 !sticky !bottom-5  !bg-white/20"
@@ -1211,7 +1208,7 @@ export default function Chat(props) {
                     </Fab>
                   ) : (
                     ""
-                  )}
+                  )} */}
                 </div>
               )}
             </div>
