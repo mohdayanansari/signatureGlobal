@@ -72,10 +72,10 @@ function Login(props) {
           className=""
         />
         <div className="pt-24 -mt-[50px]">
-          <Typography className="text-[52px] text-white/90 font-bold mb-10">
-            <span className="text-[#FED500]">Grow</span> your business
+          <Typography className="text-[42px] text-white/90 font-bold mb-10">
+            <span className="text-[#FED500]">Automate</span> your business & grow
             <span className="text-[#0085f8]"> faster </span>with{" "}
-            <span className="text-[#4ec247]">whatsapp</span>.
+            <span className="text-[#4ec247]">WhatsApp</span>.
           </Typography>
         </div>
         <div className="border border-white/20 p-12 rounded-xl">
