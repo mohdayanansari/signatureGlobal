@@ -878,6 +878,7 @@ export default function Broadcast() {
         return 0;
       });
       setListData(newData);
+      console.log(newData)
     } catch (e) {
       console.log(e);
     }

@@ -64,21 +64,22 @@ function Login(props) {
   return (
     <Grid container className="h-screen">
       <div className="flex flex-col items-center justify-center w-full">
-        <img
+        {/* <img
           src={
             "https://notbot.in/wp-content/uploads/2022/05/Notbot_Logo-Green.svg"
           }
           alt="logo"
-          className=""
-        />
-        <div className="pt-24 -mt-[50px]">
-          <Typography className="text-[42px] text-white/90 font-bold mb-10">
+          className=""          
+        /> */}
+        <h1 className="text-[42px] text-white/90 font-bold ">Signature Global</h1>
+        <div className="pt-24 -mt-[40px]">
+          <Typography className="text-[22px] text-white/90 -mt-8 mb-8">
             <span className="text-[#FED500]">Automate</span> your business & grow
             <span className="text-[#0085f8]"> faster </span>with{" "}
             <span className="text-[#4ec247]">WhatsApp</span>.
           </Typography>
         </div>
-        <div className="border border-white/20 p-12 rounded-xl">
+        <div className="p-12 border border-white/20 rounded-xl">
           <Tabs
             value={activeTabId}
             onChange={(e, id) => setActiveTabId(id)}
@@ -106,7 +107,7 @@ function Login(props) {
                 </Fade>
               )}
               {/*<FormLabel for={"email"}>Enter Email</FormLabel>*/}
-              <div className="pt-1 pb-3 px-4 rounded-lg">
+              <div className="px-4 pt-1 pb-3 rounded-lg">
                 <div className="flex items-center relative gap-2 p-4 border border-white/20 rounded-lg w-[500px] mb-5">
                   <Email className="text-white/90" />
                   <input
@@ -207,8 +208,8 @@ function Login(props) {
           )}
           {activeTabId === 1 && (
             <>
-              <div className="flex justify-center items-center p-5">
-                <h1 className="text-white/70 text-xl ">
+              <div className="flex items-center justify-center p-5">
+                <h1 className="text-xl text-white/70 ">
                   This feature is coming soon...
                 </h1>
               </div>
